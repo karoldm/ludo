@@ -59,7 +59,7 @@ public class Jogo {
         System.out.print("Qual peao gostaria de mover? " + jogador === 0 ? "[0-3]" : "[4-7]");
 
         int index = in.nextInt(); //index do peao desejado no array de peoes 
-        if(checarPosicao(peoes.get(index, dado)))
+        if(checarPosicao(peoes.get(index), dado))
             System.out.println("Peão movido, nova posição: ", peoes.get(index).getPosicao());
         else 
             System.out.println("Um peão inimigo está nessa casa, nova posição: ", peoes.get(index).getPosicao());
