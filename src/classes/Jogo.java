@@ -10,7 +10,6 @@ import java.util.Iterator;
  */
 public class Jogo {
     private ArrayList<Peao> peoes = new ArrayList<>(); 
-    private ArrayList<Peao> peoes = new ArrayList<>(); 
     
     public Jogo(){
         //iniciando arrays de peoes 
