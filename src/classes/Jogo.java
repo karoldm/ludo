@@ -16,20 +16,19 @@ public class Jogo {
         //iniciando arrays de peoes 
         //4 peoes para cada jogador
         
-        this.peoes.add(new Peao((byte)0), 0);
-        this.peoes.add(new Peao((byte)0), 0);
-        this.peoes.add(new Peao((byte)0), 0);
-        this.peoes.add(new Peao((byte)0), 0);
+        this.peoes.add(new Peao((byte)0, 0));
+        this.peoes.add(new Peao((byte)0, 0));
+        this.peoes.add(new Peao((byte)0, 0));
+        this.peoes.add(new Peao((byte)0, 0));
         
-        this.peoes.add(new Peao((byte)1), 14);
-        this.peoes.add(new Peao((byte)1), 14);
-        this.peoes.add(new Peao((byte)1), 14);
-        this.peoes.add(new Peao((byte)1), 14);
+        this.peoes.add(new Peao((byte)1, 14));
+        this.peoes.add(new Peao((byte)1, 14));
+        this.peoes.add(new Peao((byte)1, 14));
+        this.peoes.add(new Peao((byte)1, 14));
 
         //Iniciando tabuleiro
-        tabuleiro.setSize(51);
-        for(Square s: tabuleiro){
-            s = new Square(null);
+        for(int i = 0; i < 51; i++){
+            tabuleiro.add(new Square(null));
         }
 
         tabuleiro.get(0).setPeao(peoes.get(0));
@@ -56,18 +55,19 @@ public class Jogo {
         
         int dado = jogarDado();
         System.out.println("Resultado do dado: " + dado);
-        System.out.print("Qual peao gostaria de mover? " + jogador === 0 ? "[0-3]" : "[4-7]");
+        System.out.print("Qual peao gostaria de mover? " + (jogador == 0 ? "[0-3]" : "[4-7]"));
 
         int index = in.nextInt(); //index do peao desejado no array de peoes 
         if(checarPosicao(peoes.get(index), dado))
-            System.out.println("Peão movido, nova posição: ", peoes.get(index).getPosicao());
+            System.out.println("Peão movido, nova posição: " + peoes.get(index).getPosicao());
         else 
-            System.out.println("Um peão inimigo está nessa casa, nova posição: ", peoes.get(index).getPosicao());
+            System.out.println("Um peão inimigo está nessa casa, nova posição: " + peoes.get(index).getPosicao());
     }
     
     //Checa se um peao pode ser movido para a nova posição
     public boolean checarPosicao(Peao p, int dado){
-        Peao peaoNovaPosicao = tabuleiro.get(p.getPosicao() + dado).getPeao();
+        int novaPosicao = p.getPosicao() + dado;
+        Peao peaoNovaPosicao = tabuleiro.get(novaPosicao).getPeao();
         //Já existe um peão nesse quadrado do tabuleiro, e ele tem a cor diferente
         //ou seja, é do inimigo, logo o peao p deve retornar a casa incial
         if(peaoNovaPosicao != null &&  peaoNovaPosicao.getCor() != p.getCor()){ 
