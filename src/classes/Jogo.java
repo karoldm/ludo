@@ -46,7 +46,7 @@ public class Jogo {
     }
 
     //retorna um numero aleatório entre 1 e 6 para simular o dado D6
-    public int jogarDado() {
+    public int jogarDado(int jogador) {
         RandomGenerator randomGenerator = new Random();
         return randomGenerator.nextInt(6);
     }
@@ -55,16 +55,16 @@ public class Jogo {
     public void jogar(int jogador) {
         Scanner in = new Scanner(System.in);
 
-        int dado = jogarDado();
+        int dado = jogarDado(jogador);
         System.out.println("Resultado do dado: " + dado);
         System.out.print("Qual peao gostaria de mover? " + (jogador == 0 ? "[0-3]" : "[4-7]"));
 
         int index = in.nextInt(); //index do peao desejado no array de peoes 
         Peao curr = peoes.get(index);
         if (checarPosicao(curr, dado)) {
-            System.out.println("Peao movido, nova posicao: " + (curr.getPosicao() - curr.posicaoInicial));
+            System.out.println("Peao movido, nova posicao: " + curr.getPosicao());
         } else {
-            System.out.println("Um peao inimigo está nessa casa, nova posicao: " + (curr.getPosicao() - curr.posicaoInicial));
+            System.out.println("Um peao inimigo esta nessa casa, nova posicao: " + curr.getPosicao());
         }
     }
 
