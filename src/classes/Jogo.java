@@ -10,6 +10,7 @@ import java.util.Iterator;
  */
 public class Jogo {
     private ArrayList<Peao> peoes = new ArrayList<>(); 
+    private ArrayList<Peao> peoes = new ArrayList<>(); 
     
     public Jogo(){
         //iniciando arrays de peoes 
@@ -36,15 +37,15 @@ public class Jogo {
     //Se existir e os peões forem da mesma cor, retorna true (jogava válida) 
     //Se existir e os peões forem de cores diferentes, retorna false (jogada
     //inválida, peao p retorna a casa inicial)
-    public boolean checkPositions(Peao p){
+    public boolean checkPositions(Peao p, int novaPosicao){
         Iterator<Peao> peoesIterator = peoes.iterator();
         
         while(peoesIterator.hasNext()){
             Peao curr = peoesIterator.next();
-            if(curr.getPosicao() == p.getPosicao() &&
-                    curr.getCor() != p.getCor())
-                return false;
+            if(curr.getPosicao() == novaPosicao && //peao curr esta na mesma posicao 
+                    curr.getCor() != p.getCor()) //cores diferentes
+                p.setPosicao(p.posicaoInicial); //retornando o peao a posicao incial
         }
-        return true;
+        p.setPosicao(novaPosicao); //jogada válida, peao move para nova posicao
     }
 }
