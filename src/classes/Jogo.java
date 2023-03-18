@@ -16,15 +16,15 @@ public class Jogo {
         //iniciando arrays de peoes 
         //4 peoes para cada jogador
         
-        this.peoes.add(new Peao((byte)0));
-        this.peoes.add(new Peao((byte)0));
-        this.peoes.add(new Peao((byte)0));
-        this.peoes.add(new Peao((byte)0));
+        this.peoes.add(new Peao((byte)0), 0);
+        this.peoes.add(new Peao((byte)0), 0);
+        this.peoes.add(new Peao((byte)0), 0);
+        this.peoes.add(new Peao((byte)0), 0);
         
-        this.peoes.add(new Peao((byte)1));
-        this.peoes.add(new Peao((byte)1));
-        this.peoes.add(new Peao((byte)1));
-        this.peoes.add(new Peao((byte)1));/
+        this.peoes.add(new Peao((byte)1), 14);
+        this.peoes.add(new Peao((byte)1), 14);
+        this.peoes.add(new Peao((byte)1), 14);
+        this.peoes.add(new Peao((byte)1), 14);
 
         //Iniciando tabuleiro
         tabuleiro.setSize(51);
@@ -70,7 +70,7 @@ public class Jogo {
         Peao peaoNovaPosicao = tabuleiro.get(p.getPosicao() + dado).getPeao();
         //Já existe um peão nesse quadrado do tabuleiro, e ele tem a cor diferente
         //ou seja, é do inimigo, logo o peao p deve retornar a casa incial
-        if(peaoNovaPosicao != null &&  peaoNovaPosicao.getCor() === p.getCor()){ 
+        if(peaoNovaPosicao != null &&  peaoNovaPosicao.getCor() != p.getCor()){ 
             p.setPosicao(p.posicaoInicial);
             tabuleiro.get(p.posicaoInicial).setPeao(p);
             return false;
