@@ -9,7 +9,7 @@ public class Peao {
     private int posicao; //posicao atual do peao no tabuleiro, considerando 
     //o tabuleiro como um array
     private byte cor; //0 = vermelho, 1 = azul 
-    public int posicaoInicial;
+    public int posicaoInicial; //posição que o peao inicia no tabuleiro
     
     public Peao(byte cor, int posicaoInicial){
         this.cor = cor;
