@@ -138,23 +138,11 @@ public class UIJogo extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>                        
-    public static String getLocalIP() {
-        String localIP = null;
-        try {
-            InetAddress address = InetAddress.getLocalHost();
-            localIP = address.getHostAddress();
-        } catch (UnknownHostException e) {
-            // handle the exception
-        }
-        return localIP;
-    }
+
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {                                           
-        try {
-            JOptionPane.showMessageDialog(this,  "000.000.000.000", "IP", JOptionPane.INFORMATION_MESSAGE);
+
+        JOptionPane.showMessageDialog(this,  "000.000.000.000", "IP", JOptionPane.INFORMATION_MESSAGE);
             
-        } catch() {
-            JOptionPane.showMessageDialog(this, "Erro ao do catch", "Erro", JOptionPane.ERROR_MESSAGE);
-        }
     }                                          
 
     private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {                                           
@@ -185,11 +173,9 @@ public class UIJogo extends javax.swing.JFrame {
     }                                          
 
     private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {                                           
-        try {
-            String hostIP = JOptionPane.showInputDialog("Digite o IP do host");
-        } catch (){
-        
-    }
+
+        String hostIP = JOptionPane.showInputDialog("Digite o IP do host");
+
     }                                          
 
     /**
