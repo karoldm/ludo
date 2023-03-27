@@ -20,7 +20,6 @@ public class IP extends javax.swing.JFrame {
         initComponents();
         try {
             ipAddress.setText(InetAddress.getLocalHost().getHostAddress());
-
         } catch (UnknownHostException e) {
             System.out.println(e);
         }
