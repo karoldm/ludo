@@ -7,6 +7,7 @@ package views;
 import java.io.IOException;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -74,14 +75,18 @@ public class ConnectIP extends javax.swing.JFrame {
 
         } catch (UnknownHostException e) {
             System.out.println(e);
+            JOptionPane.showMessageDialog(null, "Não foi possível conectar!\nMotivo: " + e, "Erro de conexão", JOptionPane.ERROR_MESSAGE);
         }
         try {
             if (ip.isReachable(10)) {
                 System.out.println("O ip existe");
+                JOptionPane.showMessageDialog(null, "Conectado com sucesso!");
             } else {
                 System.out.println("não existe");
+                JOptionPane.showMessageDialog(null, "Não foi possível conectar!", "Erro de conexão", JOptionPane.ERROR_MESSAGE);
             }
         } catch (IOException i) {
+
             System.out.println(i);
         }
     }//GEN-LAST:event_jButton1ActionPerformed
