@@ -6,6 +6,7 @@ package views;
 
 import java.net.InetAddress;
 import java.net.UnknownHostException;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -22,6 +23,7 @@ public class IP extends javax.swing.JFrame {
             ipAddress.setText(InetAddress.getLocalHost().getHostAddress());
         } catch (UnknownHostException e) {
             System.out.println(e);
+            JOptionPane.showMessageDialog(null, "Não foi possivel obter o IP!", "Erro", JOptionPane.ERROR_MESSAGE);
         }
     }
 
