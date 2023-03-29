@@ -8,7 +8,7 @@ import classes.Jogo;
 
 /**
  *
- * @author Alunos
+ * @author Karol
  */
 public class UIJogo extends javax.swing.JFrame {
     private Jogo jogo = new Jogo();
@@ -145,12 +145,14 @@ public class UIJogo extends javax.swing.JFrame {
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
        IP hostIP = new IP();
+       hostIP.setDefaultCloseOperation(EXIT_ON_CLOSE);
        hostIP.setVisible(true);
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
         // TODO add your handling code here:
         ConnectIP connect = new ConnectIP();
+        connect.setDefaultCloseOperation(EXIT_ON_CLOSE);
         connect.setVisible(true);
     }//GEN-LAST:event_jMenuItem2ActionPerformed
 
