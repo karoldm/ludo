@@ -145,19 +145,21 @@ public class UIJogo extends javax.swing.JFrame {
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
        IP hostIP = new IP();
-       hostIP.setDefaultCloseOperation(EXIT_ON_CLOSE);
+       hostIP.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
        hostIP.setVisible(true);
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
         // TODO add your handling code here:
         ConnectIP connect = new ConnectIP();
-        connect.setDefaultCloseOperation(EXIT_ON_CLOSE);
+        connect.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         connect.setVisible(true);
     }//GEN-LAST:event_jMenuItem2ActionPerformed
 
     private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
-        
+        Rules rules = new Rules();
+        rules.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+        rules.setVisible(true);
     }//GEN-LAST:event_jMenuItem3ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
