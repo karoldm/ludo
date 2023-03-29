@@ -77,7 +77,13 @@ public class ConnectIP extends javax.swing.JFrame {
         // TODO add your handling code here:
         InetAddress ip = null;
         try {
-            ip = InetAddress.getByName(jTextField1.getText());
+            String inputIP = jTextField1.getText();
+            if(inputIP.isEmpty()) {
+                JOptionPane.showMessageDialog(null, "O campo IP não pode ser vazio!", "Erro de conexão", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+            
+            ip = InetAddress.getByName(inputIP);
 
         } catch (UnknownHostException e) {
             System.out.println(e);
@@ -87,6 +93,7 @@ public class ConnectIP extends javax.swing.JFrame {
             if (ip.isReachable(10)) {
                 System.out.println("O ip existe");
                 JOptionPane.showMessageDialog(null, "Conectado com sucesso!");
+                this.dispose();
             } else {
                 System.out.println("não existe");
                 JOptionPane.showMessageDialog(null, "Não foi possível conectar!", "Erro de conexão", JOptionPane.ERROR_MESSAGE);
