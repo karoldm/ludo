@@ -49,7 +49,7 @@ public class Jogo {
     //retorna um numero aleatório entre 1 e 6 para simular o dado D6
     public int jogarDado(int jogador) {
         RandomGenerator randomGenerator = new Random();
-        return randomGenerator.nextInt(6);
+        return randomGenerator.nextInt(6)+1;
     }
 
     //Jogador é um byte (0 representa um jogador e 1 o outro)
