@@ -6,6 +6,7 @@ package views;
 
 import java.net.InetAddress;
 import java.net.UnknownHostException;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -20,9 +21,9 @@ public class IP extends javax.swing.JFrame {
         initComponents();
         try {
             ipAddress.setText(InetAddress.getLocalHost().getHostAddress());
-
         } catch (UnknownHostException e) {
             System.out.println(e);
+            JOptionPane.showMessageDialog(null, "Não foi possivel obter o IP!", "Erro", JOptionPane.ERROR_MESSAGE);
         }
     }
 
@@ -41,7 +42,8 @@ public class IP extends javax.swing.JFrame {
 
         jCheckBox1.setText("jCheckBox1");
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Conectar");
 
         jLabel1.setText("Endereço IP local:");
 

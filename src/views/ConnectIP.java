@@ -7,6 +7,7 @@ package views;
 import java.io.IOException;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -32,17 +33,18 @@ public class ConnectIP extends javax.swing.JFrame {
 
         jTextField1 = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
-        jTextField1.setText("jTextField1");
-
-        jButton1.setText("jButton1");
+        jButton1.setText("Conectar");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
             }
         });
+
+        jLabel1.setText("Digite o IP do host");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -51,18 +53,21 @@ public class ConnectIP extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton1))
-                .addContainerGap(319, Short.MAX_VALUE))
+                    .addComponent(jButton1)
+                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 242, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel1))
+                .addGap(8, 8, 8))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
+                .addComponent(jLabel1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton1)
-                .addContainerGap(243, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         pack();
@@ -72,16 +77,29 @@ public class ConnectIP extends javax.swing.JFrame {
         // TODO add your handling code here:
         InetAddress ip = null;
         try {
-            ip = InetAddress.getByName(jTextField1.getText());
+            String inputIP = jTextField1.getText();
+            if(inputIP.isEmpty()) {
+                JOptionPane.showMessageDialog(null, "O campo IP não pode ser vazio!", "Erro de conexão", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+            
+            ip = InetAddress.getByName(inputIP);
 
         } catch (UnknownHostException e) {
             System.out.println(e);
+            JOptionPane.showMessageDialog(null, "Não foi possível conectar!\nMotivo: " + e, "Erro de conexão", JOptionPane.ERROR_MESSAGE);
         }
         try {
             if (ip.isReachable(10)) {
                 System.out.println("O ip existe");
+                JOptionPane.showMessageDialog(null, "Conectado com sucesso!");
+                this.dispose();
+            } else {
+                System.out.println("não existe");
+                JOptionPane.showMessageDialog(null, "Não foi possível conectar!", "Erro de conexão", JOptionPane.ERROR_MESSAGE);
             }
         } catch (IOException i) {
+
             System.out.println(i);
         }
     }//GEN-LAST:event_jButton1ActionPerformed
@@ -123,6 +141,7 @@ public class ConnectIP extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JTextField jTextField1;
     // End of variables declaration//GEN-END:variables
 }
