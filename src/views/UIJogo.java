@@ -22,6 +22,12 @@ public class UIJogo extends javax.swing.JFrame {
     private int jogador = 0;
     private JButton[][] squares = new JButton[15][15];
 
+    //peões
+    private Image peaoAmarelo;
+    private Image peaoVermelho;
+    private Image peaoAzul;
+    private Image peaoVerde;
+
     /**
      * Creates new form NewJFrame
      */
@@ -29,6 +35,91 @@ public class UIJogo extends javax.swing.JFrame {
         initComponents();
 
         generateLudoBoard();
+        loadPeoesImage();
+        initPawns();
+    }
+
+    private void loadPeoesImage() {
+        try {
+            this.peaoAmarelo = ImageIO.read(getClass().getResource("/assets/peao-amarelo.png"));
+            this.peaoVermelho = ImageIO.read(getClass().getResource("/assets/peao-vermelho.png"));
+            this.peaoAzul = ImageIO.read(getClass().getResource("/assets/peao-azul.png"));
+            this.peaoVerde = ImageIO.read(getClass().getResource("/assets/peao-verde.png"));
+        } catch (Exception ex) {
+            System.out.println(ex);
+            JOptionPane.showMessageDialog(this, "Erro ao carregar peoes!", "Erro", JOptionPane.ERROR_MESSAGE);
+            this.dispose();
+        }
+    }
+
+    private void initPawns() {
+        // Iniciando peões azul
+        squares[1][1].setIcon(new ImageIcon(peaoAzul));
+        squares[1][1].setDisabledIcon(new ImageIcon(peaoAzul));
+        squares[1][1].setBackground(Color.WHITE);
+
+        squares[4][4].setIcon(new ImageIcon(peaoAzul));
+        squares[4][4].setDisabledIcon(new ImageIcon(peaoAzul));
+        squares[4][4].setBackground(Color.WHITE);
+
+        squares[4][1].setIcon(new ImageIcon(peaoAzul));
+        squares[4][1].setDisabledIcon(new ImageIcon(peaoAzul));
+        squares[4][1].setBackground(Color.WHITE);
+
+        squares[1][4].setIcon(new ImageIcon(peaoAzul));
+        squares[1][4].setDisabledIcon(new ImageIcon(peaoAzul));
+        squares[1][4].setBackground(Color.WHITE);
+
+        // Iniciando peões verde
+        squares[10][10].setIcon(new ImageIcon(peaoVerde));
+        squares[10][10].setDisabledIcon(new ImageIcon(peaoVerde));
+        squares[10][10].setBackground(Color.WHITE);
+
+        squares[13][13].setIcon(new ImageIcon(peaoVerde));
+        squares[13][13].setDisabledIcon(new ImageIcon(peaoVerde));
+        squares[13][13].setBackground(Color.WHITE);
+
+        squares[13][10].setIcon(new ImageIcon(peaoVerde));
+        squares[13][10].setDisabledIcon(new ImageIcon(peaoVerde));
+        squares[13][10].setBackground(Color.WHITE);
+
+        squares[10][13].setIcon(new ImageIcon(peaoVerde));
+        squares[10][13].setDisabledIcon(new ImageIcon(peaoVerde));
+        squares[10][13].setBackground(Color.WHITE);
+
+        // Iniciando peões vermelho
+        squares[1][13].setIcon(new ImageIcon(peaoVermelho));
+        squares[1][13].setDisabledIcon(new ImageIcon(peaoVermelho));
+        squares[1][13].setBackground(Color.WHITE);
+
+        squares[4][13].setIcon(new ImageIcon(peaoVermelho));
+        squares[4][13].setDisabledIcon(new ImageIcon(peaoVermelho));
+        squares[4][13].setBackground(Color.WHITE);
+
+        squares[4][10].setIcon(new ImageIcon(peaoVermelho));
+        squares[4][10].setDisabledIcon(new ImageIcon(peaoVermelho));
+        squares[4][10].setBackground(Color.WHITE);
+
+        squares[1][10].setIcon(new ImageIcon(peaoVermelho));
+        squares[1][10].setDisabledIcon(new ImageIcon(peaoVermelho));
+        squares[1][10].setBackground(Color.WHITE);
+
+        // Iniciando peões amarelo            
+        squares[13][1].setIcon(new ImageIcon(peaoAmarelo));
+        squares[13][1].setDisabledIcon(new ImageIcon(peaoAmarelo));
+        squares[13][1].setBackground(Color.WHITE);
+
+        squares[13][4].setIcon(new ImageIcon(peaoAmarelo));
+        squares[13][4].setDisabledIcon(new ImageIcon(peaoAmarelo));
+        squares[13][4].setBackground(Color.WHITE);
+
+        squares[10][1].setIcon(new ImageIcon(peaoAmarelo));
+        squares[10][1].setDisabledIcon(new ImageIcon(peaoAmarelo));
+        squares[10][1].setBackground(Color.WHITE);
+
+        squares[10][4].setIcon(new ImageIcon(peaoAmarelo));
+        squares[10][4].setDisabledIcon(new ImageIcon(peaoAmarelo));
+        squares[10][4].setBackground(Color.WHITE);
     }
 
     private void generateLudoBoard() {
@@ -116,6 +207,7 @@ public class UIJogo extends javax.swing.JFrame {
             Image img = ImageIO.read(getClass().getResource("/assets/goal.bmp"));
             Image newImage = img.getScaledInstance(30, 25, Image.SCALE_DEFAULT);
             squares[7][7].setIcon(new ImageIcon(newImage));
+            squares[7][7].setDisabledIcon(new ImageIcon(newImage));
         } catch (Exception ex) {
             System.out.println(ex);
             JOptionPane.showMessageDialog(this, "Erro ao criar tabuleiro!", "Erro", JOptionPane.ERROR_MESSAGE);
