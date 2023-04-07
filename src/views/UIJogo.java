@@ -1,7 +1,4 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
+
 package views;
 
 import classes.Jogo;
@@ -29,144 +26,149 @@ public class UIJogo extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPanel1 = new javax.swing.JPanel();
-        jPanel2 = new javax.swing.JPanel();
-        jScrollPane1 = new javax.swing.JScrollPane();
+        boardGame = new javax.swing.JPanel();
+        buttonJogarDado = new javax.swing.JButton();
+        scrollPaneJogadas = new javax.swing.JScrollPane();
         textJogadas = new javax.swing.JTextArea();
-        jButton1 = new javax.swing.JButton();
-        jMenuBar1 = new javax.swing.JMenuBar();
-        jMenu1 = new javax.swing.JMenu();
-        jMenuItem1 = new javax.swing.JMenuItem();
-        jMenuItem2 = new javax.swing.JMenuItem();
-        jMenu2 = new javax.swing.JMenu();
-        jMenuItem3 = new javax.swing.JMenuItem();
+        menuBar = new javax.swing.JMenuBar();
+        menuJogar = new javax.swing.JMenu();
+        menuSerHost = new javax.swing.JMenuItem();
+        menuConectar = new javax.swing.JMenuItem();
+        menuRegras = new javax.swing.JMenu();
+        menuVerRegras = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setBackground(new java.awt.Color(255, 255, 255));
+        setMinimumSize(new java.awt.Dimension(900, 600));
+        setName("frameGame"); // NOI18N
+        setResizable(false);
 
-        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
+        boardGame.setBackground(new java.awt.Color(255, 255, 255));
+        boardGame.setMaximumSize(new java.awt.Dimension(600, 580));
+        boardGame.setMinimumSize(new java.awt.Dimension(600, 580));
+        boardGame.setPreferredSize(new java.awt.Dimension(600, 580));
 
-        jPanel2.setBackground(new java.awt.Color(204, 204, 204));
+        javax.swing.GroupLayout boardGameLayout = new javax.swing.GroupLayout(boardGame);
+        boardGame.setLayout(boardGameLayout);
+        boardGameLayout.setHorizontalGroup(
+            boardGameLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 600, Short.MAX_VALUE)
+        );
+        boardGameLayout.setVerticalGroup(
+            boardGameLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
+
+        buttonJogarDado.setBackground(new java.awt.Color(153, 153, 255));
+        buttonJogarDado.setForeground(new java.awt.Color(255, 255, 255));
+        buttonJogarDado.setText("Jogar dado");
+        buttonJogarDado.setMaximumSize(new java.awt.Dimension(300, 60));
+        buttonJogarDado.setMinimumSize(new java.awt.Dimension(300, 60));
+        buttonJogarDado.setPreferredSize(new java.awt.Dimension(300, 60));
+        buttonJogarDado.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonJogarDadoActionPerformed(evt);
+            }
+        });
+
+        scrollPaneJogadas.setBackground(new java.awt.Color(255, 255, 255));
+        scrollPaneJogadas.setMaximumSize(new java.awt.Dimension(300, 540));
+        scrollPaneJogadas.setMinimumSize(new java.awt.Dimension(300, 540));
+        scrollPaneJogadas.setPreferredSize(new java.awt.Dimension(300, 540));
 
         textJogadas.setColumns(20);
         textJogadas.setRows(5);
         textJogadas.setEnabled(false);
-        jScrollPane1.setViewportView(textJogadas);
+        scrollPaneJogadas.setViewportView(textJogadas);
 
-        jButton1.setBackground(new java.awt.Color(153, 153, 255));
-        jButton1.setForeground(new java.awt.Color(255, 255, 255));
-        jButton1.setText("Jogar dado");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        menuBar.setPreferredSize(new java.awt.Dimension(95, 20));
+
+        menuJogar.setText("Jogar");
+
+        menuSerHost.setText("Ser host");
+        menuSerHost.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                menuSerHostActionPerformed(evt);
             }
         });
+        menuJogar.add(menuSerHost);
 
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jScrollPane1)
-                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(0, 0, Short.MAX_VALUE))
-        );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 411, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0)
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0))
-        );
-
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addGap(0, 429, Short.MAX_VALUE)
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-        );
-
-        jMenu1.setText("Jogar");
-
-        jMenuItem1.setText("Ser host");
-        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+        menuConectar.setText("Conectar");
+        menuConectar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem1ActionPerformed(evt);
+                menuConectarActionPerformed(evt);
             }
         });
-        jMenu1.add(jMenuItem1);
+        menuJogar.add(menuConectar);
 
-        jMenuItem2.setText("Conectar");
-        jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
+        menuBar.add(menuJogar);
+
+        menuRegras.setText("Regras");
+
+        menuVerRegras.setText("Ver regras");
+        menuVerRegras.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem2ActionPerformed(evt);
+                menuVerRegrasActionPerformed(evt);
             }
         });
-        jMenu1.add(jMenuItem2);
+        menuRegras.add(menuVerRegras);
 
-        jMenuBar1.add(jMenu1);
+        menuBar.add(menuRegras);
 
-        jMenu2.setText("Regras");
-
-        jMenuItem3.setText("Ver regras");
-        jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem3ActionPerformed(evt);
-            }
-        });
-        jMenu2.add(jMenuItem3);
-
-        jMenuBar1.add(jMenu2);
-
-        setJMenuBar(jMenuBar1);
+        setJMenuBar(menuBar);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+                .addComponent(boardGame, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(scrollPaneJogadas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(buttonJogarDado, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(scrollPaneJogadas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(buttonJogarDado, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(boardGame, javax.swing.GroupLayout.DEFAULT_SIZE, 586, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+    private void menuSerHostActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuSerHostActionPerformed
        IP hostIP = new IP();
        hostIP.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
        hostIP.setVisible(true);
-    }//GEN-LAST:event_jMenuItem1ActionPerformed
+    }//GEN-LAST:event_menuSerHostActionPerformed
 
-    private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
+    private void menuConectarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuConectarActionPerformed
         // TODO add your handling code here:
         ConnectIP connect = new ConnectIP();
         connect.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         connect.setVisible(true);
-    }//GEN-LAST:event_jMenuItem2ActionPerformed
+    }//GEN-LAST:event_menuConectarActionPerformed
 
-    private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
+    private void menuVerRegrasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuVerRegrasActionPerformed
         Rules rules = new Rules();
         rules.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         rules.setVisible(true);
-    }//GEN-LAST:event_jMenuItem3ActionPerformed
+    }//GEN-LAST:event_menuVerRegrasActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void buttonJogarDadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonJogarDadoActionPerformed
         int result = jogo.jogarDado(jogador);
         jogador = jogador == 0 ? 1 : 0;
         textJogadas.setText(textJogadas.getText() + "\nJogador " + jogador + ": " + result);
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_buttonJogarDadoActionPerformed
 
     /**
      * @param args the command line arguments
@@ -205,16 +207,15 @@ public class UIJogo extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JMenu jMenu1;
-    private javax.swing.JMenu jMenu2;
-    private javax.swing.JMenuBar jMenuBar1;
-    private javax.swing.JMenuItem jMenuItem1;
-    private javax.swing.JMenuItem jMenuItem2;
-    private javax.swing.JMenuItem jMenuItem3;
-    private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel2;
-    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JPanel boardGame;
+    private javax.swing.JButton buttonJogarDado;
+    private javax.swing.JMenuBar menuBar;
+    private javax.swing.JMenuItem menuConectar;
+    private javax.swing.JMenu menuJogar;
+    private javax.swing.JMenu menuRegras;
+    private javax.swing.JMenuItem menuSerHost;
+    private javax.swing.JMenuItem menuVerRegras;
+    private javax.swing.JScrollPane scrollPaneJogadas;
     private javax.swing.JTextArea textJogadas;
     // End of variables declaration//GEN-END:variables
 }
