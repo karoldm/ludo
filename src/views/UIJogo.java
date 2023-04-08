@@ -1,16 +1,17 @@
 package views;
 
 import classes.Jogo;
+import classes.Peao;
 import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.Image;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import javax.imageio.ImageIO;
-import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
-import javax.swing.JButton;
 import javax.swing.JOptionPane;
-import javax.swing.border.Border;
+import utils.PosicoesPeaoAzul;
+import utils.PosicoesPeaoVerde;
 
 /**
  *
@@ -20,13 +21,18 @@ public class UIJogo extends javax.swing.JFrame {
 
     private Jogo jogo = new Jogo();
     private int jogador = 0;
-    private JButton[][] squares = new JButton[15][15];
+    private Square[][] tabuleiro = new Square[15][15];
+    private int dado = 0;
 
     //peões
     private Image peaoAmarelo;
     private Image peaoVermelho;
     private Image peaoAzul;
     private Image peaoVerde;
+
+    //mapeamento das posicoes
+    private PosicoesPeaoAzul posicoesPeaoAzul = new PosicoesPeaoAzul();
+    private PosicoesPeaoVerde posicoesPeaoVerde = new PosicoesPeaoVerde();
 
     /**
      * Creates new form NewJFrame
@@ -35,98 +41,58 @@ public class UIJogo extends javax.swing.JFrame {
         initComponents();
 
         generateLudoBoard();
-        loadPeoesImage();
         initPawns();
-    }
-
-    private void loadPeoesImage() {
-        try {
-            this.peaoAmarelo = ImageIO.read(getClass().getResource("/assets/peao-amarelo.png"));
-            this.peaoVermelho = ImageIO.read(getClass().getResource("/assets/peao-vermelho.png"));
-            this.peaoAzul = ImageIO.read(getClass().getResource("/assets/peao-azul.png"));
-            this.peaoVerde = ImageIO.read(getClass().getResource("/assets/peao-verde.png"));
-        } catch (Exception ex) {
-            System.out.println(ex);
-            JOptionPane.showMessageDialog(this, "Erro ao carregar peoes!", "Erro", JOptionPane.ERROR_MESSAGE);
-            this.dispose();
-        }
     }
 
     private void initPawns() {
         // Iniciando peões azul
-        squares[1][1].setIcon(new ImageIcon(peaoAzul));
-        squares[1][1].setDisabledIcon(new ImageIcon(peaoAzul));
-        squares[1][1].setBackground(Color.WHITE);
+        tabuleiro[1][1].setBackground(Color.WHITE);
+        tabuleiro[1][1].setPeao(jogo.getPeao(0));
 
-        squares[4][4].setIcon(new ImageIcon(peaoAzul));
-        squares[4][4].setDisabledIcon(new ImageIcon(peaoAzul));
-        squares[4][4].setBackground(Color.WHITE);
+        tabuleiro[4][4].setBackground(Color.WHITE);
+        tabuleiro[4][4].setPeao(jogo.getPeao(1));
 
-        squares[4][1].setIcon(new ImageIcon(peaoAzul));
-        squares[4][1].setDisabledIcon(new ImageIcon(peaoAzul));
-        squares[4][1].setBackground(Color.WHITE);
+        tabuleiro[4][1].setBackground(Color.WHITE);
+        tabuleiro[4][1].setPeao(jogo.getPeao(2));
 
-        squares[1][4].setIcon(new ImageIcon(peaoAzul));
-        squares[1][4].setDisabledIcon(new ImageIcon(peaoAzul));
-        squares[1][4].setBackground(Color.WHITE);
+        tabuleiro[1][4].setBackground(Color.WHITE);
+        tabuleiro[1][4].setPeao(jogo.getPeao(3));
 
         // Iniciando peões verde
-        squares[10][10].setIcon(new ImageIcon(peaoVerde));
-        squares[10][10].setDisabledIcon(new ImageIcon(peaoVerde));
-        squares[10][10].setBackground(Color.WHITE);
+        tabuleiro[10][10].setBackground(Color.WHITE);
+        tabuleiro[10][10].setPeao(jogo.getPeao(4));
 
-        squares[13][13].setIcon(new ImageIcon(peaoVerde));
-        squares[13][13].setDisabledIcon(new ImageIcon(peaoVerde));
-        squares[13][13].setBackground(Color.WHITE);
+        tabuleiro[13][13].setBackground(Color.WHITE);
+        tabuleiro[13][13].setPeao(jogo.getPeao(5));
 
-        squares[13][10].setIcon(new ImageIcon(peaoVerde));
-        squares[13][10].setDisabledIcon(new ImageIcon(peaoVerde));
-        squares[13][10].setBackground(Color.WHITE);
+        tabuleiro[13][10].setBackground(Color.WHITE);
+        tabuleiro[13][10].setPeao(jogo.getPeao(6));
 
-        squares[10][13].setIcon(new ImageIcon(peaoVerde));
-        squares[10][13].setDisabledIcon(new ImageIcon(peaoVerde));
-        squares[10][13].setBackground(Color.WHITE);
+        tabuleiro[10][13].setBackground(Color.WHITE);
+        tabuleiro[10][13].setPeao(jogo.getPeao(7));
 
         // Iniciando peões vermelho
-        squares[1][13].setIcon(new ImageIcon(peaoVermelho));
-        squares[1][13].setDisabledIcon(new ImageIcon(peaoVermelho));
-        squares[1][13].setBackground(Color.WHITE);
+        tabuleiro[1][13].setBackground(Color.WHITE);
 
-        squares[4][13].setIcon(new ImageIcon(peaoVermelho));
-        squares[4][13].setDisabledIcon(new ImageIcon(peaoVermelho));
-        squares[4][13].setBackground(Color.WHITE);
+        tabuleiro[4][13].setBackground(Color.WHITE);
 
-        squares[4][10].setIcon(new ImageIcon(peaoVermelho));
-        squares[4][10].setDisabledIcon(new ImageIcon(peaoVermelho));
-        squares[4][10].setBackground(Color.WHITE);
+        tabuleiro[4][10].setBackground(Color.WHITE);
 
-        squares[1][10].setIcon(new ImageIcon(peaoVermelho));
-        squares[1][10].setDisabledIcon(new ImageIcon(peaoVermelho));
-        squares[1][10].setBackground(Color.WHITE);
+        tabuleiro[1][10].setBackground(Color.WHITE);
 
         // Iniciando peões amarelo            
-        squares[13][1].setIcon(new ImageIcon(peaoAmarelo));
-        squares[13][1].setDisabledIcon(new ImageIcon(peaoAmarelo));
-        squares[13][1].setBackground(Color.WHITE);
+        tabuleiro[13][1].setBackground(Color.WHITE);
 
-        squares[13][4].setIcon(new ImageIcon(peaoAmarelo));
-        squares[13][4].setDisabledIcon(new ImageIcon(peaoAmarelo));
-        squares[13][4].setBackground(Color.WHITE);
+        tabuleiro[13][4].setBackground(Color.WHITE);
 
-        squares[10][1].setIcon(new ImageIcon(peaoAmarelo));
-        squares[10][1].setDisabledIcon(new ImageIcon(peaoAmarelo));
-        squares[10][1].setBackground(Color.WHITE);
+        tabuleiro[10][1].setBackground(Color.WHITE);
 
-        squares[10][4].setIcon(new ImageIcon(peaoAmarelo));
-        squares[10][4].setDisabledIcon(new ImageIcon(peaoAmarelo));
-        squares[10][4].setBackground(Color.WHITE);
+        tabuleiro[10][4].setBackground(Color.WHITE);
     }
 
     private void generateLudoBoard() {
         boardGame.setSize(600, 600);
         boardGame.setLayout(new GridLayout(15, 15));
-
-        Border lineBorder = BorderFactory.createLineBorder(Color.black);
 
         // Criando tabuleiro 15x15
         // O grid layout do java cria uma tabela da seguinte forma: 
@@ -135,85 +101,107 @@ public class UIJogo extends javax.swing.JFrame {
         // |0,0  0,1  0,2|
         for (int i = 0; i < 15; i++) {
             for (int j = 0; j < 15; j++) {
-                JButton squareButton = new JButton();
-                squareButton.setPreferredSize(new Dimension(40, 40));
-                squareButton.setBackground(Color.WHITE);
-                squareButton.setBorder(lineBorder);
-                squareButton.setEnabled(false);
+                Square squareButton = new Square();
+                squareButton.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        moverPeao(squareButton);
+                    }
+                });
                 boardGame.add(squareButton, i, j);
-                squares[i][j] = squareButton;
+                tabuleiro[i][j] = squareButton;
             }
         }
 
         // Criando os quatro quadrados coloridos dos cantos
         for (int i = 0; i < 6; i++) {
             for (int j = 0; j < 6; j++) {
-                squares[i][j].setBackground(Color.BLUE);
+                tabuleiro[i][j].setBackground(Color.BLUE);
             }
         }
         for (int i = 9; i < 15; i++) {
             for (int j = 0; j < 6; j++) {
-                squares[i][j].setBackground(Color.YELLOW);
+                tabuleiro[i][j].setBackground(Color.YELLOW);
             }
         }
         for (int i = 0; i < 6; i++) {
             for (int j = 9; j < 15; j++) {
-                squares[i][j].setBackground(Color.RED);
+                tabuleiro[i][j].setBackground(Color.RED);
             }
         }
         for (int i = 9; i < 15; i++) {
             for (int j = 9; j < 15; j++) {
-                squares[i][j].setBackground(Color.GREEN);
+                tabuleiro[i][j].setBackground(Color.GREEN);
             }
         }
 
         // Desenhando trilhas
-        squares[8][1].setBackground(Color.YELLOW);
-        squares[7][1].setBackground(Color.YELLOW);
+        tabuleiro[8][1].setBackground(Color.YELLOW);
+        tabuleiro[7][1].setBackground(Color.YELLOW);
 
         for (int i = 1; i < 6; i++) {
-            squares[7][i].setBackground(Color.YELLOW);
+            tabuleiro[7][i].setBackground(Color.YELLOW);
         }
 
-        squares[6][13].setBackground(Color.RED);
-        squares[7][13].setBackground(Color.RED);
+        tabuleiro[6][13].setBackground(Color.RED);
+        tabuleiro[7][13].setBackground(Color.RED);
 
         for (int i = 9; i < 13; i++) {
-            squares[7][i].setBackground(Color.RED);
+            tabuleiro[7][i].setBackground(Color.RED);
         }
 
-        squares[1][6].setBackground(Color.BLUE);
-        squares[1][7].setBackground(Color.BLUE);
+        tabuleiro[1][6].setBackground(Color.BLUE);
+        tabuleiro[1][7].setBackground(Color.BLUE);
 
         for (int i = 2; i < 6; i++) {
-            squares[i][7].setBackground(Color.BLUE);
+            tabuleiro[i][7].setBackground(Color.BLUE);
         }
 
-        squares[13][8].setBackground(Color.GREEN);
-        squares[13][7].setBackground(Color.GREEN);
+        tabuleiro[13][8].setBackground(Color.GREEN);
+        tabuleiro[13][7].setBackground(Color.GREEN);
 
         for (int i = 9; i < 13; i++) {
-            squares[i][7].setBackground(Color.GREEN);
+            tabuleiro[i][7].setBackground(Color.GREEN);
         }
 
         // Desenhando quadrado central (chegada)
         for (int i = 6; i < 9; i++) {
             for (int j = 6; j < 9; j++) {
-                squares[i][j].setBackground(Color.BLACK);
+                tabuleiro[i][j].setBackground(Color.BLACK);
             }
         }
 
         try {
             Image img = ImageIO.read(getClass().getResource("/assets/goal.bmp"));
             Image newImage = img.getScaledInstance(30, 25, Image.SCALE_DEFAULT);
-            squares[7][7].setIcon(new ImageIcon(newImage));
-            squares[7][7].setDisabledIcon(new ImageIcon(newImage));
+            tabuleiro[7][7].setIcon(new ImageIcon(newImage));
+            tabuleiro[7][7].setDisabledIcon(new ImageIcon(newImage));
         } catch (Exception ex) {
             System.out.println(ex);
             JOptionPane.showMessageDialog(this, "Erro ao criar tabuleiro!", "Erro", JOptionPane.ERROR_MESSAGE);
             this.dispose();
         }
 
+    }
+
+    private void moverPeao(Square square) {
+        if (dado == 0) {
+            return;
+        }
+        Peao p = square.getPeao();
+        if (p != null && (jogador == 1 && p.getCor() == 0
+                || jogador == 0 && p.getCor() == 1)) {
+            jogo.checarPosicao(p, this.dado);
+            int[] posicoes;
+            if (this.jogador == 0) {
+                posicoes = posicoesPeaoVerde.posicao.get(p.getPosicao());
+            } else {
+                posicoes = posicoesPeaoAzul.posicao.get(p.getPosicao());
+            }
+            tabuleiro[posicoes[0]][posicoes[1]].setPeao(p);
+            square.removePeao();
+            this.dado = 0;
+        }
     }
 
     /**
@@ -364,9 +352,9 @@ public class UIJogo extends javax.swing.JFrame {
     }//GEN-LAST:event_menuVerRegrasActionPerformed
 
     private void buttonJogarDadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonJogarDadoActionPerformed
-        int result = jogo.jogarDado(jogador);
+        this.dado = jogo.jogarDado();
         jogador = jogador == 0 ? 1 : 0;
-        textJogadas.setText(textJogadas.getText() + "\nJogador " + jogador + ": " + result);
+        textJogadas.setText(textJogadas.getText() + "\nJogador " + jogador + ": " + this.dado);
     }//GEN-LAST:event_buttonJogarDadoActionPerformed
 
     /**
