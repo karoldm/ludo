@@ -191,14 +191,29 @@ public class UIJogo extends javax.swing.JFrame {
         Peao p = square.getPeao();
         if (p != null && (jogador == 1 && p.getCor() == 0
                 || jogador == 0 && p.getCor() == 1)) {
+            int[] posicoes = new int[2];
             jogo.checarPosicao(p, this.dado);
-            int[] posicoes;
-            if (this.jogador == 0) {
-                posicoes = posicoesPeaoVerde.posicao.get(p.getPosicao());
+            if (p.getPosicao() == 0) {
+                if(this.jogador == 0){
+                    if(tabuleiro[10][10].getPeao() == null) posicoes = new int[]{10, 10};
+                    else if(tabuleiro[13][13].getPeao() == null) posicoes = new int[]{13, 13};                    
+                    else if(tabuleiro[10][13].getPeao() == null) posicoes = new int[]{10, 13};                    
+                    else if(tabuleiro[13][10].getPeao() == null) posicoes = new int[]{13, 10};
+                }
+                else {
+                    if(tabuleiro[1][1].getPeao() == null) posicoes = new int[]{1, 1};
+                    else if(tabuleiro[1][4].getPeao() == null) posicoes = new int[]{1, 4};                    
+                    else if(tabuleiro[4][1].getPeao() == null) posicoes = new int[]{4, 1};                    
+                    else if(tabuleiro[4][4].getPeao() == null) posicoes = new int[]{4, 4};
+                }
             } else {
-                posicoes = posicoesPeaoAzul.posicao.get(p.getPosicao());
+                if (this.jogador == 0) {
+                    posicoes = posicoesPeaoVerde.posicao.get(p.getPosicao());
+                } else {
+                    posicoes = posicoesPeaoAzul.posicao.get(p.getPosicao());
+                }
             }
-            tabuleiro[posicoes[0]][posicoes[1]].setPeao(p);
+                tabuleiro[posicoes[0]][posicoes[1]].setPeao(p);
             square.removePeao();
             this.dado = 0;
         }
