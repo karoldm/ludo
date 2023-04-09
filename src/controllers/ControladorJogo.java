@@ -1,5 +1,7 @@
-package classes;
+package controllers;
 
+import classes.Peao;
+import classes.Square;
 import java.util.ArrayList;
 import java.util.Random;
 import java.util.random.RandomGenerator;
@@ -8,12 +10,12 @@ import java.util.random.RandomGenerator;
  *
  * @author Karol
  */
-public class Jogo {
+public class ControladorJogo {
 
     private ArrayList<Peao> peoes = new ArrayList<>();
     private ArrayList<Square> tabuleiro = new ArrayList<>();
 
-    public Jogo() {
+    public ControladorJogo() {
         //iniciando arrays de peoes 
         //4 peoes para cada jogador
 

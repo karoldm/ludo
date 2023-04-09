@@ -1,12 +1,13 @@
 package views;
 
-import classes.Jogo;
+import controllers.ControladorJogo;
 import classes.Peao;
 import java.awt.Color;
 import java.awt.GridLayout;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
@@ -19,20 +20,15 @@ import utils.PosicoesPeaoVerde;
  */
 public class UIJogo extends javax.swing.JFrame {
 
-    private Jogo jogo = new Jogo();
+    private final ControladorJogo jogo = new ControladorJogo();
     private int jogador = 0;
-    private Square[][] tabuleiro = new Square[15][15];
+    private final Square[][] tabuleiro = new Square[15][15];
     private int dado = 0;
-
     //peões
-    private Image peaoAmarelo;
-    private Image peaoVermelho;
-    private Image peaoAzul;
-    private Image peaoVerde;
 
     //mapeamento das posicoes
-    private PosicoesPeaoAzul posicoesPeaoAzul = new PosicoesPeaoAzul();
-    private PosicoesPeaoVerde posicoesPeaoVerde = new PosicoesPeaoVerde();
+    private final PosicoesPeaoAzul posicoesPeaoAzul = new PosicoesPeaoAzul();
+    private final PosicoesPeaoVerde posicoesPeaoVerde = new PosicoesPeaoVerde();
 
     /**
      * Creates new form NewJFrame
@@ -102,11 +98,8 @@ public class UIJogo extends javax.swing.JFrame {
         for (int i = 0; i < 15; i++) {
             for (int j = 0; j < 15; j++) {
                 Square squareButton = new Square();
-                squareButton.addActionListener(new ActionListener() {
-                    @Override
-                    public void actionPerformed(ActionEvent e) {
-                        moverPeao(squareButton);
-                    }
+                squareButton.addActionListener((ActionEvent e) -> {
+                    moverPeao(squareButton);
                 });
                 boardGame.add(squareButton, i, j);
                 tabuleiro[i][j] = squareButton;
@@ -176,7 +169,7 @@ public class UIJogo extends javax.swing.JFrame {
             Image newImage = img.getScaledInstance(30, 25, Image.SCALE_DEFAULT);
             tabuleiro[7][7].setIcon(new ImageIcon(newImage));
             tabuleiro[7][7].setDisabledIcon(new ImageIcon(newImage));
-        } catch (Exception ex) {
+        } catch (IOException ex) {
             System.out.println(ex);
             JOptionPane.showMessageDialog(this, "Erro ao criar tabuleiro!", "Erro", JOptionPane.ERROR_MESSAGE);
             this.dispose();
