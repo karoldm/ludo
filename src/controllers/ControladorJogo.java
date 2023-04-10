@@ -142,7 +142,9 @@ public class ControladorJogo {
                 }
             }
         }
-        //Se o movimento é válido o peao é movido para a nova casa
-        this.move(p, novaPosicao);
+        else {
+            //Se o movimento é válido o peao é movido para a nova casa
+            this.move(p, novaPosicao);
+        }
     }
 }
