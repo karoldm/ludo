@@ -29,8 +29,6 @@ public class UIJogo extends javax.swing.JFrame {
 
         generateLudoBoard();
         initPawns();
-        Debug debug = new Debug();
-        debug.setVisible(true);
     }
 
     private void initPawns() {
