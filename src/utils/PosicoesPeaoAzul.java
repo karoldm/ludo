@@ -1,14 +1,10 @@
 package utils;
 
-import java.util.HashMap;
-
 /**
  *
  * @author Karol
  */
-public class PosicoesPeaoAzul {
-
-    public HashMap<Integer, int[]> posicao = new HashMap<>();
+public class PosicoesPeaoAzul extends PosicaoPeaoMap {
 
     public PosicoesPeaoAzul() {
         int[] values = new int[]{1, 6};

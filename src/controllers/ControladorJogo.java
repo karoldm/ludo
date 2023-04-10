@@ -24,7 +24,7 @@ public class ControladorJogo {
     private final Jogador jogador2 = new Jogador(1, 4, new PosicoesPeaoAzul(), "Jogador 2");
 
     public ControladorJogo() {
-        //iniciando arrays de peoes
+        //iniciando arrays de peoes 
         //4 peoes para cada jogador
 
         this.peoes.add(new Peao((byte) 0));
@@ -113,11 +113,6 @@ public class ControladorJogo {
         this.dado = randomGenerator.nextInt(6) + 1;
     }
 
-    public void jogarDado(int numero) {
-//        RandomGenerator randomGenerator = new Random();
-        this.dado = numero;
-    }
-
     public int[] getPosicaoMap(int posicao) {
         return jogadorAtual.getPosicaoMap(posicao);
     }
@@ -143,7 +138,7 @@ public class ControladorJogo {
         //Já existe um peão nesse quadrado do tabuleiro, e ele tem a cor diferente
         //ou seja, é do inimigo, logo o peao p deve retornar a casa incial
         System.out.println("Peao parametro: " + p.toString());
-        for (Peao pTeste : this.peoes) {
+        for(Peao pTeste : this.peoes){
             System.out.println("Peao: " + pTeste.toString() + "Posicao: " + pTeste.getPosicao());
         }
         if (!peoesNovaPosicao.isEmpty()) {
