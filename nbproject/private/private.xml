@@ -4,8 +4,9 @@
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
             <file>file:/C:/Users/Karol/faculdade/ludo/src/ludo/Ludo.java</file>
-            <file>file:/C:/Users/Karol/faculdade/ludo/src/classes/Jogo.java</file>
             <file>file:/C:/Users/Karol/faculdade/ludo/src/utils/PosicoesPeaoVernelho.java</file>
+            <file>file:/C:/Users/Karol/faculdade/ludo/src/views/ButtonSquare.java</file>
+            <file>file:/C:/Users/Karol/faculdade/ludo/src/utils/PosicaoPeaoMap.java</file>
             <file>file:/C:/Users/Karol/faculdade/ludo/src/classes/Peao.java</file>
             <file>file:/C:/Users/Karol/faculdade/ludo/src/views/ConnectIP.java</file>
             <file>file:/C:/Users/Karol/faculdade/ludo/src/utils/PosicoesPeaoVerde.java</file>
@@ -14,7 +15,8 @@
             <file>file:/C:/Users/Karol/faculdade/ludo/src/utils/PosicoesPeaoAmarelo.java</file>
             <file>file:/C:/Users/Karol/faculdade/ludo/src/views/IP.java</file>
             <file>file:/C:/Users/Karol/faculdade/ludo/src/views/Rules.java</file>
-            <file>file:/C:/Users/Karol/faculdade/ludo/src/views/Square.java</file>
+            <file>file:/C:/Users/Karol/faculdade/ludo/src/classes/Jogador.java</file>
+            <file>file:/C:/Users/Karol/faculdade/ludo/src/controllers/ControladorJogo.java</file>
             <file>file:/C:/Users/Karol/faculdade/ludo/src/classes/Square.java</file>
         </group>
     </open-files>

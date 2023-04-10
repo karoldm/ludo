@@ -126,6 +126,12 @@ public class ControladorJogo {
     //Checa se um peao pode ser movido para a nova posição
     public void checarPosicao(Peao p) {
         int novaPosicao = p.getPosicao() + this.dado;
+        //Se o jogador passou da casa final, ele deve voltar
+        //Só pode chegar na casa final se tirar o número exato no dado para parar nela
+        if(novaPosicao > 57) { 
+            int dif = novaPosicao - 57;
+            novaPosicao = novaPosicao - 2*dif;
+        }
         ArrayList<Peao> peoesNovaPosicao = tabuleiro.get(novaPosicao).getPeoes();
         //Já existe um peão nesse quadrado do tabuleiro, e ele tem a cor diferente
         //ou seja, é do inimigo, logo o peao p deve retornar a casa incial
