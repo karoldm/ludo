@@ -37,8 +37,8 @@ public class ButtonSquare extends JButton {
         }
     }
 
-    public void removePeao() {
-        peoes.remove(0);
+    public void removePeao(Peao p) {
+        peoes.remove(p);
         if (peoes.isEmpty()) {
             this.setIcon(null);
         }

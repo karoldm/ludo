@@ -187,16 +187,20 @@ public class UIJogo extends javax.swing.JFrame {
                 }
             }
             int[] posicoes;
-            jogo.checarPosicao(p);
-            if (p.getPosicao() == 0) {
-                System.out.println("Voltou a posicao inicial");
+            Peao pInimigo = jogo.checarPosicao(p);
+            if (pInimigo != null) {
+                System.out.println("peao inimigo voltou a posicao inicial");
+                jogo.proximoJogador();
                 posicoes = jogo.getPosicaoInicialDisp(this.tabuleiro);
-            } else {
-                posicoes = jogo.getPosicaoMap(p.getPosicao());
-                System.out.println("Nova posicao: " + p.getPosicao());
+                tabuleiro[posicoes[0]][posicoes[1]].addPeao(pInimigo);
+                jogo.proximoJogador();
+                square.removePeao(pInimigo);
             }
+
+            posicoes = jogo.getPosicaoMap(p.getPosicao());
+            System.out.println("Nova posicao: " + p.getPosicao());
             tabuleiro[posicoes[0]][posicoes[1]].addPeao(p);
-            square.removePeao();
+            square.removePeao(p);
             jogo.setDado(0);
             buttonJogarDado.setEnabled(true);
 
@@ -363,7 +367,9 @@ public class UIJogo extends javax.swing.JFrame {
 
         if (jogo.getJogadorAtual().isJogadorLiberado()) {
             buttonJogarDado.setEnabled(false);
-            if(jogo.getDado() == 6) this.jogarDeNovo = true;
+            if (jogo.getDado() == 6) {
+                this.jogarDeNovo = true;
+            }
         } else if (jogo.getDado() == 6) {
             jogo.getJogadorAtual().setJogadorLiberado(true);
             buttonJogarDado.setEnabled(false);

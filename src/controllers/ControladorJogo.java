@@ -20,8 +20,8 @@ public class ControladorJogo {
     private final ArrayList<Square> tabuleiro = new ArrayList<>();
     private Jogador jogadorAtual = null;
     private int dado = 0;
-    private final Jogador jogador1 = new Jogador( 10, 13, new PosicoesPeaoVerde(), "Jogador 1");
-    private final Jogador jogador2 = new Jogador( 1, 4, new PosicoesPeaoAzul(), "Jogador 2");
+    private final Jogador jogador1 = new Jogador(10, 13, new PosicoesPeaoVerde(), "Jogador 1");
+    private final Jogador jogador2 = new Jogador(1, 4, new PosicoesPeaoAzul(), "Jogador 2");
 
     public ControladorJogo() {
         //iniciando arrays de peoes 
@@ -102,8 +102,8 @@ public class ControladorJogo {
     public void proximoJogador() {
         this.jogadorAtual = this.jogadorAtual == jogador1 ? jogador2 : jogador1;
     }
-    
-    public boolean jogoIniciado(){
+
+    public boolean jogoIniciado() {
         return this.jogador1.isJogadorLiberado() || this.jogador2.isJogadorLiberado();
     }
 
@@ -124,27 +124,33 @@ public class ControladorJogo {
     }
 
     //Checa se um peao pode ser movido para a nova posição
-    public void checarPosicao(Peao p) {
+    public Peao checarPosicao(Peao p) {
+        Peao pInimigo = null;
         int novaPosicao = p.getPosicao() + this.dado;
         //Se o jogador passou da casa final, ele deve voltar
         //Só pode chegar na casa final se tirar o número exato no dado para parar nela
-        if(novaPosicao > 57) { 
+        if (novaPosicao > 57) {
             int dif = novaPosicao - 57;
-            novaPosicao = novaPosicao - 2*dif;
+            novaPosicao = novaPosicao - 2 * dif;
         }
         ArrayList<Peao> peoesNovaPosicao = tabuleiro.get(novaPosicao).getPeoes();
+        System.out.println("NOVA POSICAO: " + novaPosicao);
         //Já existe um peão nesse quadrado do tabuleiro, e ele tem a cor diferente
         //ou seja, é do inimigo, logo o peao p deve retornar a casa incial
+        System.out.println("Peao parametro: " + p.toString());
+        for(Peao pTeste : this.peoes){
+            System.out.println("Peao: " + pTeste.toString() + "Posicao: " + pTeste.getPosicao());
+        }
         if (!peoesNovaPosicao.isEmpty()) {
             for (Peao pNovaPosicao : peoesNovaPosicao) {
                 if (pNovaPosicao.getCor() != p.getCor()) {
-                    this.move(p, 0);
+                    this.move(pNovaPosicao, 0);
+                    pInimigo = pNovaPosicao;
+                    break;
                 }
             }
-        }
-        else {
-            //Se o movimento é válido o peao é movido para a nova casa
-            this.move(p, novaPosicao);
-        }
+        } //Se o movimento é válido o peao é movido para a nova casa
+        this.move(p, novaPosicao);
+        return pInimigo;
     }
 }
