@@ -42,6 +42,8 @@ public class UIJogo extends javax.swing.JFrame {
 
         generateLudoBoard();
         initPawns();
+        Debug debug = new Debug();
+        debug.setVisible(true);
     }
 
     private void initPawns() {
@@ -80,7 +82,7 @@ public class UIJogo extends javax.swing.JFrame {
 
         tabuleiro[1][10].setBackground(Color.WHITE);
 
-        // Iniciando peões amarelo            
+        // Iniciando peões amarelo
         tabuleiro[13][1].setBackground(Color.WHITE);
 
         tabuleiro[13][4].setBackground(Color.WHITE);
@@ -95,7 +97,7 @@ public class UIJogo extends javax.swing.JFrame {
         boardGame.setLayout(new GridLayout(15, 15));
 
         // Criando tabuleiro 15x15
-        // O grid layout do java cria uma tabela da seguinte forma: 
+        // O grid layout do java cria uma tabela da seguinte forma:
         // |2,0  2,1  2,2|
         // |1,0  1,1  1,2|
         // |0,0  0,1  0,2|
@@ -232,6 +234,8 @@ public class UIJogo extends javax.swing.JFrame {
         buttonJogarDado = new javax.swing.JButton();
         scrollPaneJogadas = new javax.swing.JScrollPane();
         textJogadas = new javax.swing.JTextArea();
+        selecaoNumero = new javax.swing.JSpinner();
+        jogarSelecionado = new javax.swing.JButton();
         menuBar = new javax.swing.JMenuBar();
         menuJogar = new javax.swing.JMenu();
         menuSerHost = new javax.swing.JMenuItem();
@@ -283,6 +287,13 @@ public class UIJogo extends javax.swing.JFrame {
         textJogadas.setEnabled(false);
         scrollPaneJogadas.setViewportView(textJogadas);
 
+        jogarSelecionado.setText("Jogar");
+        jogarSelecionado.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jogarSelecionadoActionPerformed(evt);
+            }
+        });
+
         menuBar.setPreferredSize(new java.awt.Dimension(95, 20));
 
         menuJogar.setText("Jogar");
@@ -328,7 +339,12 @@ public class UIJogo extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(scrollPaneJogadas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(buttonJogarDado, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(buttonJogarDado, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jogarSelecionado, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(selecaoNumero))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -336,10 +352,14 @@ public class UIJogo extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(scrollPaneJogadas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(scrollPaneJogadas, javax.swing.GroupLayout.PREFERRED_SIZE, 426, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(buttonJogarDado, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(selecaoNumero, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jogarSelecionado)
+                        .addGap(0, 57, Short.MAX_VALUE))
                     .addComponent(boardGame, javax.swing.GroupLayout.DEFAULT_SIZE, 586, Short.MAX_VALUE))
                 .addContainerGap())
         );
@@ -371,6 +391,25 @@ public class UIJogo extends javax.swing.JFrame {
         jogador = jogador == 0 ? 1 : 0;
         textJogadas.setText(textJogadas.getText() + "\nJogador " + jogador + ": " + this.dado);
     }//GEN-LAST:event_buttonJogarDadoActionPerformed
+
+    private void jogarSelecionadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jogarSelecionadoActionPerformed
+        // TODO add your handling code here:
+        jogo.jogarDado((int) selecaoNumero.getValue());
+        textJogadas.setText(textJogadas.getText() + "\nJogador " + jogo.getJogadorAtual().toString() + ": " + jogo.getDado());
+        jogo.proximoJogador();
+
+        if (jogo.getJogadorAtual().isJogadorLiberado()) {
+            buttonJogarDado.setEnabled(false);
+            if (jogo.getDado() == 6) {
+                this.jogarDeNovo = true;
+            }
+        } else if (jogo.getDado() == 6) {
+            jogo.getJogadorAtual().setJogadorLiberado(true);
+            buttonJogarDado.setEnabled(false);
+            jogarSelecionado.setEnabled(false);
+            this.jogarDeNovo = true;
+        }
+    }//GEN-LAST:event_jogarSelecionadoActionPerformed
 
     /**
      * @param args the command line arguments
@@ -411,6 +450,7 @@ public class UIJogo extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel boardGame;
     private javax.swing.JButton buttonJogarDado;
+    private javax.swing.JButton jogarSelecionado;
     private javax.swing.JMenuBar menuBar;
     private javax.swing.JMenuItem menuConectar;
     private javax.swing.JMenu menuJogar;
@@ -418,6 +458,7 @@ public class UIJogo extends javax.swing.JFrame {
     private javax.swing.JMenuItem menuSerHost;
     private javax.swing.JMenuItem menuVerRegras;
     private javax.swing.JScrollPane scrollPaneJogadas;
+    private javax.swing.JSpinner selecaoNumero;
     private javax.swing.JTextArea textJogadas;
     // End of variables declaration//GEN-END:variables
 }
