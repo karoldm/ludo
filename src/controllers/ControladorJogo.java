@@ -27,15 +27,15 @@ public class ControladorJogo {
         //iniciando arrays de peoes 
         //4 peoes para cada jogador
 
-        this.peoes.add(new Peao((byte) 0));
-        this.peoes.add(new Peao((byte) 0));
-        this.peoes.add(new Peao((byte) 0));
-        this.peoes.add(new Peao((byte) 0));
+        this.peoes.add(new Peao((byte) 0, 0));
+        this.peoes.add(new Peao((byte) 0, 0));
+        this.peoes.add(new Peao((byte) 0, 0));
+        this.peoes.add(new Peao((byte) 0, 0));
 
-        this.peoes.add(new Peao((byte) 1));
-        this.peoes.add(new Peao((byte) 1));
-        this.peoes.add(new Peao((byte) 1));
-        this.peoes.add(new Peao((byte) 1));
+        this.peoes.add(new Peao((byte) 1, 14));
+        this.peoes.add(new Peao((byte) 1, 14));
+        this.peoes.add(new Peao((byte) 1, 14));
+        this.peoes.add(new Peao((byte) 1, 14));
 
         //Iniciando tabuleiro com 51 casas
         for (int i = 0; i < 58; i++) {
@@ -133,23 +133,15 @@ public class ControladorJogo {
             int dif = novaPosicao - 57;
             novaPosicao = novaPosicao - 2 * dif;
         }
-        ArrayList<Peao> peoesNovaPosicao = tabuleiro.get(novaPosicao).getPeoes();
-        System.out.println("NOVA POSICAO: " + novaPosicao);
-        //Já existe um peão nesse quadrado do tabuleiro, e ele tem a cor diferente
-        //ou seja, é do inimigo, logo o peao p deve retornar a casa incial
-        System.out.println("Peao parametro: " + p.toString());
-        for(Peao pTeste : this.peoes){
-            System.out.println("Peao: " + pTeste.toString() + "Posicao: " + pTeste.getPosicao());
-        }
-        if (!peoesNovaPosicao.isEmpty()) {
-            for (Peao pNovaPosicao : peoesNovaPosicao) {
-                if (pNovaPosicao.getCor() != p.getCor()) {
-                    this.move(pNovaPosicao, 0);
-                    pInimigo = pNovaPosicao;
-                    break;
-                }
+
+        for (Peao pTeste : this.peoes) {
+            if (pTeste.getPosicao() - pTeste.getPosicaoInicial() == novaPosicao && pTeste.getCor() != p.getCor()) {
+                this.move(pTeste, 0);
+                pInimigo = pTeste;
+                break;
             }
-        } //Se o movimento é válido o peao é movido para a nova casa
+        }
+        //Se o movimento é válido o peao é movido para a nova casa
         this.move(p, novaPosicao);
         return pInimigo;
     }

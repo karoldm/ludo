@@ -13,8 +13,10 @@ public class Peao {
     //o tabuleiro como um array
     private byte cor; //0 = vermelho, 1 = azul, 2 = verde, 3 = amarelo
     public ImageIcon icon;
+    private int posicaoInicial;
 
-    public Peao(byte cor) {
+    public Peao(byte cor, int posicaoInicial) {
+        this.posicaoInicial = posicaoInicial;
         this.cor = cor;
         this.posicao = 0;
         try {
@@ -29,6 +31,16 @@ public class Peao {
         }
 
     }
+
+    public int getPosicaoInicial() {
+        return posicaoInicial;
+    }
+
+    public void setPosicaoInicial(int posicaoInicial) {
+        this.posicaoInicial = posicaoInicial;
+    }
+    
+    
 
     public int getPosicao() {
         return posicao;
