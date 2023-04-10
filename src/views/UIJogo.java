@@ -173,11 +173,11 @@ public class UIJogo extends javax.swing.JFrame {
             return;
         }
         Peao p = square.getPeao();
-        if(p.getPosicao() == 57) {
-            System.out.println("Peão ja chegou na zonal final");
-            return;
-        }
         if (p != null && jogo.jogadaPermitida(p.getCor())) {
+            if (p.getPosicao() == 57) {
+                System.out.println("Peão ja chegou na zonal final");
+                return;
+            }
             if (p.getPosicao() == 0) {
                 if (jogo.getDado() != 6) {
                     System.out.println("Só pode mover esse peão se tirar 6");
@@ -363,10 +363,11 @@ public class UIJogo extends javax.swing.JFrame {
 
         if (jogo.getJogadorAtual().isJogadorLiberado()) {
             buttonJogarDado.setEnabled(false);
+            if(jogo.getDado() == 6) this.jogarDeNovo = true;
         } else if (jogo.getDado() == 6) {
             jogo.getJogadorAtual().setJogadorLiberado(true);
             buttonJogarDado.setEnabled(false);
-            jogarDeNovo = true;
+            this.jogarDeNovo = true;
         }
     }//GEN-LAST:event_buttonJogarDadoActionPerformed
 
