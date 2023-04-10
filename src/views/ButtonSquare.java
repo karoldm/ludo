@@ -3,6 +3,7 @@ package views;
 import classes.Peao;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.util.ArrayList;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.border.Border;
@@ -11,13 +12,13 @@ import javax.swing.border.Border;
  *
  * @author Karol
  */
-public class Square extends JButton {
+public class ButtonSquare extends JButton {
 
-    private Peao peao = null;
-    private int quantidade = 0;
+    private final ArrayList<Peao> peoes;
 
-    public Square() {
+    public ButtonSquare() {
         super();
+        this.peoes = new ArrayList<>();
        
         Border lineBorder = BorderFactory.createLineBorder(Color.black);
         this.setPreferredSize(new Dimension(40, 40));
@@ -26,20 +27,19 @@ public class Square extends JButton {
     }
 
     public Peao getPeao() {
-        return peao;
+        return !peoes.isEmpty() ? peoes.get(0) : null;
     }
 
-    public void setPeao(Peao peao) {
-        this.peao = peao;
-        this.quantidade++;
-        if (quantidade == 1) {
+    public void addPeao(Peao peao) {
+        this.peoes.add(peao);
+        if (peoes.size() == 1) {
             this.setIcon(peao.icon);
         }
     }
 
     public void removePeao() {
-        quantidade--;
-        if (quantidade == 0) {
+        peoes.remove(0);
+        if (peoes.isEmpty()) {
             this.setIcon(null);
         }
     }

@@ -1,10 +1,14 @@
 package controllers;
 
+import classes.Jogador;
 import classes.Peao;
 import classes.Square;
 import java.util.ArrayList;
 import java.util.Random;
 import java.util.random.RandomGenerator;
+import utils.PosicoesPeaoAzul;
+import utils.PosicoesPeaoVerde;
+import views.ButtonSquare;
 
 /**
  *
@@ -12,8 +16,12 @@ import java.util.random.RandomGenerator;
  */
 public class ControladorJogo {
 
-    private ArrayList<Peao> peoes = new ArrayList<>();
-    private ArrayList<Square> tabuleiro = new ArrayList<>();
+    private final ArrayList<Peao> peoes = new ArrayList<>();
+    private final ArrayList<Square> tabuleiro = new ArrayList<>();
+    private Jogador jogadorAtual = null;
+    private int dado = 0;
+    private final Jogador jogador1 = new Jogador( 10, 13, new PosicoesPeaoVerde(), "Jogador 1");
+    private final Jogador jogador2 = new Jogador( 1, 4, new PosicoesPeaoAzul(), "Jogador 2");
 
     public ControladorJogo() {
         //iniciando arrays de peoes 
@@ -30,7 +38,7 @@ public class ControladorJogo {
         this.peoes.add(new Peao((byte) 1));
 
         //Iniciando tabuleiro com 51 casas
-        for (int i = 0; i < 51; i++) {
+        for (int i = 0; i < 58; i++) {
             tabuleiro.add(new Square());
         }
 
@@ -45,16 +53,68 @@ public class ControladorJogo {
         tabuleiro.get(14).addPeao(peoes.get(6));
         tabuleiro.get(14).addPeao(peoes.get(7));
 
+        jogadorAtual = jogador1;
+    }
+
+    public int[] getPosicaoInicialDisp(ButtonSquare[][] tabuleiro) {
+        int i = jogadorAtual.getiInicial();
+        int j = jogadorAtual.getjInicial();
+
+        if (tabuleiro[i][i].getPeao() == null) {
+            return new int[]{i, i};
+        } else if (tabuleiro[j][j].getPeao() == null) {
+            return new int[]{j, j};
+        } else if (tabuleiro[i][j].getPeao() == null) {
+            return new int[]{i, j};
+        } else if (tabuleiro[j][i].getPeao() == null) {
+            return new int[]{j, i};
+        }
+
+        return null;
+    }
+
+    public boolean jogadaPermitida(int cor) {
+        if (this.jogadorAtual == jogador1 && cor == 1) {
+            return true;
+        }
+        if (this.jogadorAtual == jogador2 && cor == 0) {
+            return true;
+        }
+        return false;
+    }
+
+    public Jogador getJogadorAtual() {
+        return jogadorAtual;
+    }
+
+    public int getDado() {
+        return dado;
+    }
+
+    public void setDado(int dado) {
+        this.dado = dado;
     }
 
     public Peao getPeao(int i) {
         return peoes.get(i);
     }
 
+    public void proximoJogador() {
+        this.jogadorAtual = this.jogadorAtual == jogador1 ? jogador2 : jogador1;
+    }
+    
+    public boolean jogoIniciado(){
+        return this.jogador1.isJogadorLiberado() || this.jogador2.isJogadorLiberado();
+    }
+
     //retorna um numero aleatório entre 1 e 6 para simular o dado D6
-    public int jogarDado() {
+    public void jogarDado() {
         RandomGenerator randomGenerator = new Random();
-        return randomGenerator.nextInt(6) + 1;
+        this.dado = randomGenerator.nextInt(6) + 1;
+    }
+
+    public int[] getPosicaoMap(int posicao) {
+        return jogadorAtual.getPosicaoMap(posicao);
     }
 
     public void move(Peao p, int novaPosicao) {
@@ -64,8 +124,8 @@ public class ControladorJogo {
     }
 
     //Checa se um peao pode ser movido para a nova posição
-    public void checarPosicao(Peao p, int dado) {
-        int novaPosicao = p.getPosicao() + dado;
+    public void checarPosicao(Peao p) {
+        int novaPosicao = p.getPosicao() + this.dado;
         ArrayList<Peao> peoesNovaPosicao = tabuleiro.get(novaPosicao).getPeoes();
         //Já existe um peão nesse quadrado do tabuleiro, e ele tem a cor diferente
         //ou seja, é do inimigo, logo o peao p deve retornar a casa incial

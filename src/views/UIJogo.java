@@ -6,13 +6,10 @@ import java.awt.Color;
 import java.awt.GridLayout;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.io.IOException;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
-import utils.PosicoesPeaoAzul;
-import utils.PosicoesPeaoVerde;
 
 /**
  *
@@ -21,14 +18,8 @@ import utils.PosicoesPeaoVerde;
 public class UIJogo extends javax.swing.JFrame {
 
     private final ControladorJogo jogo = new ControladorJogo();
-    private int jogador = 0;
-    private final Square[][] tabuleiro = new Square[15][15];
-    private int dado = 0;
-    //peões
-
-    //mapeamento das posicoes
-    private final PosicoesPeaoAzul posicoesPeaoAzul = new PosicoesPeaoAzul();
-    private final PosicoesPeaoVerde posicoesPeaoVerde = new PosicoesPeaoVerde();
+    private final ButtonSquare[][] tabuleiro = new ButtonSquare[15][15];
+    private boolean jogarDeNovo = false;
 
     /**
      * Creates new form NewJFrame
@@ -43,29 +34,29 @@ public class UIJogo extends javax.swing.JFrame {
     private void initPawns() {
         // Iniciando peões azul
         tabuleiro[1][1].setBackground(Color.WHITE);
-        tabuleiro[1][1].setPeao(jogo.getPeao(0));
+        tabuleiro[1][1].addPeao(jogo.getPeao(0));
 
         tabuleiro[4][4].setBackground(Color.WHITE);
-        tabuleiro[4][4].setPeao(jogo.getPeao(1));
+        tabuleiro[4][4].addPeao(jogo.getPeao(1));
 
         tabuleiro[4][1].setBackground(Color.WHITE);
-        tabuleiro[4][1].setPeao(jogo.getPeao(2));
+        tabuleiro[4][1].addPeao(jogo.getPeao(2));
 
         tabuleiro[1][4].setBackground(Color.WHITE);
-        tabuleiro[1][4].setPeao(jogo.getPeao(3));
+        tabuleiro[1][4].addPeao(jogo.getPeao(3));
 
         // Iniciando peões verde
         tabuleiro[10][10].setBackground(Color.WHITE);
-        tabuleiro[10][10].setPeao(jogo.getPeao(4));
+        tabuleiro[10][10].addPeao(jogo.getPeao(4));
 
         tabuleiro[13][13].setBackground(Color.WHITE);
-        tabuleiro[13][13].setPeao(jogo.getPeao(5));
+        tabuleiro[13][13].addPeao(jogo.getPeao(5));
 
         tabuleiro[13][10].setBackground(Color.WHITE);
-        tabuleiro[13][10].setPeao(jogo.getPeao(6));
+        tabuleiro[13][10].addPeao(jogo.getPeao(6));
 
         tabuleiro[10][13].setBackground(Color.WHITE);
-        tabuleiro[10][13].setPeao(jogo.getPeao(7));
+        tabuleiro[10][13].addPeao(jogo.getPeao(7));
 
         // Iniciando peões vermelho
         tabuleiro[1][13].setBackground(Color.WHITE);
@@ -97,7 +88,7 @@ public class UIJogo extends javax.swing.JFrame {
         // |0,0  0,1  0,2|
         for (int i = 0; i < 15; i++) {
             for (int j = 0; j < 15; j++) {
-                Square squareButton = new Square();
+                ButtonSquare squareButton = new ButtonSquare();
                 squareButton.addActionListener((ActionEvent e) -> {
                     moverPeao(squareButton);
                 });
@@ -177,38 +168,44 @@ public class UIJogo extends javax.swing.JFrame {
 
     }
 
-    private void moverPeao(Square square) {
-        if (dado == 0) {
+    private void moverPeao(ButtonSquare square) {
+        if (jogo.getDado() == 0 || !jogo.jogoIniciado()) {
             return;
         }
         Peao p = square.getPeao();
-        if (p != null && (jogador == 1 && p.getCor() == 0
-                || jogador == 0 && p.getCor() == 1)) {
-            int[] posicoes = new int[2];
-            jogo.checarPosicao(p, this.dado);
+        if(p.getPosicao() == 57) {
+            System.out.println("Peão ja chegou na zonal final");
+            return;
+        }
+        if (p != null && jogo.jogadaPermitida(p.getCor())) {
             if (p.getPosicao() == 0) {
-                if(this.jogador == 0){
-                    if(tabuleiro[10][10].getPeao() == null) posicoes = new int[]{10, 10};
-                    else if(tabuleiro[13][13].getPeao() == null) posicoes = new int[]{13, 13};                    
-                    else if(tabuleiro[10][13].getPeao() == null) posicoes = new int[]{10, 13};                    
-                    else if(tabuleiro[13][10].getPeao() == null) posicoes = new int[]{13, 10};
-                }
-                else {
-                    if(tabuleiro[1][1].getPeao() == null) posicoes = new int[]{1, 1};
-                    else if(tabuleiro[1][4].getPeao() == null) posicoes = new int[]{1, 4};                    
-                    else if(tabuleiro[4][1].getPeao() == null) posicoes = new int[]{4, 1};                    
-                    else if(tabuleiro[4][4].getPeao() == null) posicoes = new int[]{4, 4};
-                }
-            } else {
-                if (this.jogador == 0) {
-                    posicoes = posicoesPeaoVerde.posicao.get(p.getPosicao());
+                if (jogo.getDado() != 6) {
+                    System.out.println("Só pode mover esse peão se tirar 6");
+                    return;
                 } else {
-                    posicoes = posicoesPeaoAzul.posicao.get(p.getPosicao());
+                    jogo.setDado(1);
                 }
             }
-                tabuleiro[posicoes[0]][posicoes[1]].setPeao(p);
+            int[] posicoes;
+            jogo.checarPosicao(p);
+            if (p.getPosicao() == 0) {
+                System.out.println("Voltou a posicao inicial");
+                posicoes = jogo.getPosicaoInicialDisp(this.tabuleiro);
+            } else {
+                posicoes = jogo.getPosicaoMap(p.getPosicao());
+                System.out.println("Nova posicao: " + p.getPosicao());
+            }
+            tabuleiro[posicoes[0]][posicoes[1]].addPeao(p);
             square.removePeao();
-            this.dado = 0;
+            jogo.setDado(0);
+            buttonJogarDado.setEnabled(true);
+
+            if (jogarDeNovo) {
+                jogo.proximoJogador();
+                jogarDeNovo = false;
+            }
+        } else {
+            System.out.println("Jogada nao permitida");
         }
     }
 
@@ -360,9 +357,17 @@ public class UIJogo extends javax.swing.JFrame {
     }//GEN-LAST:event_menuVerRegrasActionPerformed
 
     private void buttonJogarDadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonJogarDadoActionPerformed
-        this.dado = jogo.jogarDado();
-        jogador = jogador == 0 ? 1 : 0;
-        textJogadas.setText(textJogadas.getText() + "\nJogador " + jogador + ": " + this.dado);
+        jogo.jogarDado();
+        textJogadas.setText(textJogadas.getText() + "\nJogador " + jogo.getJogadorAtual().toString() + ": " + jogo.getDado());
+        jogo.proximoJogador();
+
+        if (jogo.getJogadorAtual().isJogadorLiberado()) {
+            buttonJogarDado.setEnabled(false);
+        } else if (jogo.getDado() == 6) {
+            jogo.getJogadorAtual().setJogadorLiberado(true);
+            buttonJogarDado.setEnabled(false);
+            jogarDeNovo = true;
+        }
     }//GEN-LAST:event_buttonJogarDadoActionPerformed
 
     /**
