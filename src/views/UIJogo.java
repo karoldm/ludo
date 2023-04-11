@@ -193,8 +193,8 @@ public class UIJogo extends javax.swing.JFrame {
                 jogo.proximoJogador();
                 posicoes = jogo.getPosicaoInicialDisp(this.tabuleiro);
                 tabuleiro[posicoes[0]][posicoes[1]].addPeao(pInimigo);
-                jogo.proximoJogador();
                 square.removePeao(pInimigo);
+                jogo.proximoJogador();
             }
 
             posicoes = jogo.getPosicaoMap(p.getPosicao());

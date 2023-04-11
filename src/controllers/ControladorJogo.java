@@ -27,15 +27,15 @@ public class ControladorJogo {
         //iniciando arrays de peoes
         //4 peoes para cada jogador
 
-        this.peoes.add(new Peao((byte) 0));
-        this.peoes.add(new Peao((byte) 0));
-        this.peoes.add(new Peao((byte) 0));
-        this.peoes.add(new Peao((byte) 0));
+        this.peoes.add(new Peao((byte) 0, 0));
+        this.peoes.add(new Peao((byte) 0, 0));
+        this.peoes.add(new Peao((byte) 0, 0));
+        this.peoes.add(new Peao((byte) 0, 0));
 
-        this.peoes.add(new Peao((byte) 1));
-        this.peoes.add(new Peao((byte) 1));
-        this.peoes.add(new Peao((byte) 1));
-        this.peoes.add(new Peao((byte) 1));
+        this.peoes.add(new Peao((byte) 1, 14));
+        this.peoes.add(new Peao((byte) 1, 14));
+        this.peoes.add(new Peao((byte) 1, 14));
+        this.peoes.add(new Peao((byte) 1, 14));
 
         //Iniciando tabuleiro com 51 casas
         for (int i = 0; i < 58; i++) {
@@ -153,7 +153,8 @@ public class ControladorJogo {
                     break;
                 }
             }
-        } //Se o movimento é válido o peao é movido para a nova casa
+        }
+        //Se o movimento é válido o peao é movido para a nova casa
         this.move(p, novaPosicao);
         return pInimigo;
     }
