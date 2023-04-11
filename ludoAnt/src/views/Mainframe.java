@@ -236,6 +236,7 @@ public class Mainframe extends javax.swing.JFrame {
         menuVerRegras = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Ludo");
         setBackground(new java.awt.Color(255, 255, 255));
         setMinimumSize(new java.awt.Dimension(900, 600));
         setName("frameGame"); // NOI18N
@@ -274,9 +275,14 @@ public class Mainframe extends javax.swing.JFrame {
         scrollPaneJogadas.setMinimumSize(new java.awt.Dimension(300, 540));
         scrollPaneJogadas.setPreferredSize(new java.awt.Dimension(300, 540));
 
+        textJogadas.setEditable(false);
+        textJogadas.setBackground(new java.awt.Color(255, 255, 255));
         textJogadas.setColumns(20);
+        textJogadas.setForeground(new java.awt.Color(255, 255, 255));
         textJogadas.setRows(5);
-        textJogadas.setEnabled(false);
+        textJogadas.setDisabledTextColor(new java.awt.Color(0, 0, 0));
+        textJogadas.setSelectedTextColor(new java.awt.Color(0, 0, 0));
+        textJogadas.setSelectionColor(new java.awt.Color(0, 0, 0));
         scrollPaneJogadas.setViewportView(textJogadas);
 
         jogarSelecionado.setText("Jogar número selecionado");
