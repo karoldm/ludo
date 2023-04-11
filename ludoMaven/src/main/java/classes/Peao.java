@@ -1,5 +1,6 @@
 package classes;
 
+import java.io.FileInputStream;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 
@@ -9,7 +10,7 @@ import javax.swing.ImageIcon;
  */
 public class Peao {
 
-    private int posicao; //posicao atual do peao no tabuleiro, considerando 
+    private int posicao; //posicao atual do peao no tabuleiro, considerando
     //o tabuleiro como um array
     private byte cor; //0 = vermelho, 1 = azul, 2 = verde, 3 = amarelo
     public ImageIcon icon;
@@ -21,10 +22,14 @@ public class Peao {
         this.posicao = 0;
         try {
             switch (cor) {
-                case 0 -> this.icon = new ImageIcon(ImageIO.read(getClass().getResource("/assets/peao-azul.png")));
-                case 1 -> this.icon = new ImageIcon(ImageIO.read(getClass().getResource("/assets/peao-verde.png")));
-                case 2 -> this.icon = new ImageIcon(ImageIO.read(getClass().getResource("/assets/peao-vermelho.png")));
-                case 3 -> this.icon = new ImageIcon(ImageIO.read(getClass().getResource("/assets/peao-amarelo.png")));
+                case 0 ->
+                    this.icon = new ImageIcon(ImageIO.read(new FileInputStream("src\\main\\java\\assets\\peao-azul.png")));
+                case 1 ->
+                    this.icon = new ImageIcon(ImageIO.read(new FileInputStream("src\\main\\java\\assets\\peao-verde.png")));
+                case 2 ->
+                    this.icon = new ImageIcon(ImageIO.read(new FileInputStream("src\\main\\java\\assets\\peao-vermelho.png")));
+                case 3 ->
+                    this.icon = new ImageIcon(ImageIO.read(new FileInputStream("src\\main\\java\\assets\\peao-amarelo.png")));
             }
         } catch (Exception ex) {
             System.out.println(ex);
@@ -39,8 +44,6 @@ public class Peao {
     public void setPosicaoInicial(int posicaoInicial) {
         this.posicaoInicial = posicaoInicial;
     }
-    
-    
 
     public int getPosicao() {
         return posicao;

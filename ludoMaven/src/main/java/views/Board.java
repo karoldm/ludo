@@ -6,16 +6,16 @@ import java.awt.Color;
 import java.awt.GridLayout;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
+import java.io.FileInputStream;
 import java.io.IOException;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
-import javax.swing.JOptionPane;
 
 /**
  *
  * @author Karol
  */
-public class Main extends javax.swing.JFrame {
+public class Board extends javax.swing.JFrame {
 
     private final ControladorJogo jogo = new ControladorJogo();
     private final ButtonSquare[][] tabuleiro = new ButtonSquare[15][15];
@@ -24,7 +24,7 @@ public class Main extends javax.swing.JFrame {
     /**
      * Creates new form NewJFrame
      */
-    public Main() {
+    public Board() {
         initComponents();
         generateLudoBoard();
         initPawns();
@@ -155,16 +155,15 @@ public class Main extends javax.swing.JFrame {
         }
 
         try {
-            Image img = ImageIO.read(getClass().getResource("/assets/goal.png"));
+            Image img = ImageIO.read(new FileInputStream("src\\main\\java\\assets\\goal.png"));
             Image newImage = img.getScaledInstance(30, 25, Image.SCALE_DEFAULT);
             tabuleiro[7][7].setIcon(new ImageIcon(newImage));
             tabuleiro[7][7].setDisabledIcon(new ImageIcon(newImage));
         } catch (IOException ex) {
             System.out.println(ex);
-            JOptionPane.showMessageDialog(this, "Erro ao criar tabuleiro!", "Erro", JOptionPane.ERROR_MESSAGE);
+//            JOptionPane.showMessageDialog(this, "Erro ao criar tabuleiro!", "Erro", JOptionPane.ERROR_MESSAGE);
 //            this.dispose();
         }
-
     }
 
     private void moverPeao(ButtonSquare square) {
@@ -273,9 +272,9 @@ public class Main extends javax.swing.JFrame {
         scrollPaneJogadas.setMinimumSize(new java.awt.Dimension(300, 540));
         scrollPaneJogadas.setPreferredSize(new java.awt.Dimension(300, 540));
 
+        textJogadas.setEditable(false);
         textJogadas.setColumns(20);
         textJogadas.setRows(5);
-        textJogadas.setEnabled(false);
         scrollPaneJogadas.setViewportView(textJogadas);
 
         jogarSelecionado.setText("Jogar número selecionado");
@@ -423,17 +422,29 @@ public class Main extends javax.swing.JFrame {
                 if ("Nimbus".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
+
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Main.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Board.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
+
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Main.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Board.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
+
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Main.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Board.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
+
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Main.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Board.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
         //</editor-fold>
@@ -442,7 +453,7 @@ public class Main extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Main().setVisible(true);
+                new Board().setVisible(true);
             }
         });
     }
