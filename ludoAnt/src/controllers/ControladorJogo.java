@@ -144,9 +144,8 @@ public class ControladorJogo {
         return this.jogador1.isJogadorLiberado() || this.jogador2.isJogadorLiberado();
     }
 
-    //retorna um numero aleatório entre 1 e 6 para simular o dado D6
     /**
-     *
+     * Retorna um numero aleatório entre 1 e 6 para simular o dado D6
      */
     public void jogarDado() {
         RandomGenerator randomGenerator = new Random();
@@ -154,8 +153,9 @@ public class ControladorJogo {
     }
 
     /**
+     * Retorna o número especificado
      *
-     * @param numero
+     * @param numero número especificado
      */
     public void jogarDado(int numero) {
         this.dado = numero;
