@@ -26,7 +26,6 @@ public class Main extends javax.swing.JFrame {
      */
     public Main() {
         initComponents();
-
         generateLudoBoard();
         initPawns();
     }
@@ -156,14 +155,14 @@ public class Main extends javax.swing.JFrame {
         }
 
         try {
-            Image img = ImageIO.read(getClass().getResource("/assets/goal.bmp"));
+            Image img = ImageIO.read(getClass().getResource("/assets/goal.png"));
             Image newImage = img.getScaledInstance(30, 25, Image.SCALE_DEFAULT);
             tabuleiro[7][7].setIcon(new ImageIcon(newImage));
             tabuleiro[7][7].setDisabledIcon(new ImageIcon(newImage));
         } catch (IOException ex) {
             System.out.println(ex);
             JOptionPane.showMessageDialog(this, "Erro ao criar tabuleiro!", "Erro", JOptionPane.ERROR_MESSAGE);
-            this.dispose();
+//            this.dispose();
         }
 
     }
@@ -279,7 +278,7 @@ public class Main extends javax.swing.JFrame {
         textJogadas.setEnabled(false);
         scrollPaneJogadas.setViewportView(textJogadas);
 
-        jogarSelecionado.setText("Jogar");
+        jogarSelecionado.setText("Jogar número selecionado");
         jogarSelecionado.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jogarSelecionadoActionPerformed(evt);
@@ -332,11 +331,8 @@ public class Main extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(scrollPaneJogadas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(buttonJogarDado, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jogarSelecionado, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(selecaoNumero))
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                    .addComponent(selecaoNumero)
+                    .addComponent(jogarSelecionado, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -347,11 +343,10 @@ public class Main extends javax.swing.JFrame {
                         .addComponent(scrollPaneJogadas, javax.swing.GroupLayout.PREFERRED_SIZE, 426, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(buttonJogarDado, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 46, Short.MAX_VALUE)
                         .addComponent(selecaoNumero, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jogarSelecionado)
-                        .addGap(0, 57, Short.MAX_VALUE))
+                        .addComponent(jogarSelecionado, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(boardGame, javax.swing.GroupLayout.DEFAULT_SIZE, 586, Short.MAX_VALUE))
                 .addContainerGap())
         );
@@ -360,14 +355,14 @@ public class Main extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void menuSerHostActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuSerHostActionPerformed
-        IP hostIP = new IP();
+        Host hostIP = new Host();
         hostIP.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         hostIP.setVisible(true);
     }//GEN-LAST:event_menuSerHostActionPerformed
 
     private void menuConectarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuConectarActionPerformed
         // TODO add your handling code here:
-        ConnectIP connect = new ConnectIP();
+        Connect connect = new Connect();
         connect.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         connect.setVisible(true);
     }//GEN-LAST:event_menuConectarActionPerformed
