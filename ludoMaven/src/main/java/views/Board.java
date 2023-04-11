@@ -10,6 +10,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -161,8 +162,8 @@ public class Board extends javax.swing.JFrame {
             tabuleiro[7][7].setDisabledIcon(new ImageIcon(newImage));
         } catch (IOException ex) {
             System.out.println(ex);
-//            JOptionPane.showMessageDialog(this, "Erro ao criar tabuleiro!", "Erro", JOptionPane.ERROR_MESSAGE);
-//            this.dispose();
+            JOptionPane.showMessageDialog(this, "Erro ao criar tabuleiro!", "Erro", JOptionPane.ERROR_MESSAGE);
+            this.dispose();
         }
     }
 
@@ -173,12 +174,12 @@ public class Board extends javax.swing.JFrame {
         Peao p = square.getPeao();
         if (p != null && jogo.jogadaPermitida(p.getCor())) {
             if (p.getPosicao() == 57) {
-                System.out.println("Peão ja chegou na zonal final");
+                System.out.println("Peao ja chegou na zona final");
                 return;
             }
             if (p.getPosicao() == 0) {
                 if (jogo.getDado() != 6) {
-                    System.out.println("Só pode mover esse peão se tirar 6");
+                    System.out.println("So pode mover esse peão se tirar 6");
                     return;
                 } else {
                     jogo.setDado(1);
@@ -187,7 +188,7 @@ public class Board extends javax.swing.JFrame {
             int[] posicoes;
             Peao pInimigo = jogo.checarPosicao(p);
             if (pInimigo != null) {
-                System.out.println("peao inimigo voltou a posicao inicial");
+                System.out.println("Peao inimigo voltou a posicao inicial");
                 jogo.proximoJogador();
                 posicoes = jogo.getPosicaoInicialDisp(this.tabuleiro);
                 tabuleiro[posicoes[0]][posicoes[1]].addPeao(pInimigo);
@@ -201,7 +202,7 @@ public class Board extends javax.swing.JFrame {
             square.removePeao(p);
             jogo.setDado(0);
             buttonJogarDado.setEnabled(true);
-
+            jogarSelecionado.setEnabled(true);
             if (jogarDeNovo) {
                 jogo.proximoJogador();
                 jogarDeNovo = false;
@@ -230,10 +231,12 @@ public class Board extends javax.swing.JFrame {
         menuJogar = new javax.swing.JMenu();
         menuSerHost = new javax.swing.JMenuItem();
         menuConectar = new javax.swing.JMenuItem();
+        debug = new javax.swing.JCheckBoxMenuItem();
         menuRegras = new javax.swing.JMenu();
         menuVerRegras = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Ludo");
         setBackground(new java.awt.Color(255, 255, 255));
         setMinimumSize(new java.awt.Dimension(900, 600));
         setName("frameGame"); // NOI18N
@@ -304,6 +307,15 @@ public class Board extends javax.swing.JFrame {
         });
         menuJogar.add(menuConectar);
 
+        debug.setSelected(true);
+        debug.setText("Debug");
+        debug.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                debugActionPerformed(evt);
+            }
+        });
+        menuJogar.add(debug);
+
         menuBar.add(menuJogar);
 
         menuRegras.setText("Regras");
@@ -342,10 +354,11 @@ public class Board extends javax.swing.JFrame {
                         .addComponent(scrollPaneJogadas, javax.swing.GroupLayout.PREFERRED_SIZE, 426, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(buttonJogarDado, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 46, Short.MAX_VALUE)
-                        .addComponent(selecaoNumero, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jogarSelecionado, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(selecaoNumero, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jogarSelecionado, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 32, Short.MAX_VALUE))
                     .addComponent(boardGame, javax.swing.GroupLayout.DEFAULT_SIZE, 586, Short.MAX_VALUE))
                 .addContainerGap())
         );
@@ -379,12 +392,14 @@ public class Board extends javax.swing.JFrame {
 
         if (jogo.getJogadorAtual().isJogadorLiberado()) {
             buttonJogarDado.setEnabled(false);
+            jogarSelecionado.setEnabled(false);
             if (jogo.getDado() == 6) {
                 this.jogarDeNovo = true;
             }
         } else if (jogo.getDado() == 6) {
             jogo.getJogadorAtual().setJogadorLiberado(true);
             buttonJogarDado.setEnabled(false);
+            jogarSelecionado.setEnabled(false);
             this.jogarDeNovo = true;
         }
     }//GEN-LAST:event_buttonJogarDadoActionPerformed
@@ -397,6 +412,7 @@ public class Board extends javax.swing.JFrame {
 
         if (jogo.getJogadorAtual().isJogadorLiberado()) {
             buttonJogarDado.setEnabled(false);
+            jogarSelecionado.setEnabled(false);
             if (jogo.getDado() == 6) {
                 this.jogarDeNovo = true;
             }
@@ -407,6 +423,17 @@ public class Board extends javax.swing.JFrame {
             this.jogarDeNovo = true;
         }
     }//GEN-LAST:event_jogarSelecionadoActionPerformed
+
+    private void debugActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_debugActionPerformed
+        // TODO add your handling code here:
+        if (debug.isSelected()) {
+            jogarSelecionado.setVisible(true);
+            selecaoNumero.setVisible(true);
+        } else {
+            jogarSelecionado.setVisible(false);
+            selecaoNumero.setVisible(false);
+        }
+    }//GEN-LAST:event_debugActionPerformed
 
     /**
      * @param args the command line arguments
@@ -461,6 +488,7 @@ public class Board extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel boardGame;
     private javax.swing.JButton buttonJogarDado;
+    private javax.swing.JCheckBoxMenuItem debug;
     private javax.swing.JButton jogarSelecionado;
     private javax.swing.JMenuBar menuBar;
     private javax.swing.JMenuItem menuConectar;
