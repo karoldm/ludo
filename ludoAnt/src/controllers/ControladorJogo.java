@@ -23,6 +23,9 @@ public class ControladorJogo {
     private final Jogador jogador1 = new Jogador(10, 13, new PosicoesPeaoVerde(), "Jogador 1");
     private final Jogador jogador2 = new Jogador(1, 4, new PosicoesPeaoAzul(), "Jogador 2");
 
+    /**
+     *
+     */
     public ControladorJogo() {
         //iniciando arrays de peoes
         //4 peoes para cada jogador
@@ -56,6 +59,11 @@ public class ControladorJogo {
         jogadorAtual = jogador1;
     }
 
+    /**
+     *
+     * @param tabuleiro
+     * @return
+     */
     public int[] getPosicaoInicialDisp(ButtonSquare[][] tabuleiro) {
         int i = jogadorAtual.getiInicial();
         int j = jogadorAtual.getjInicial();
@@ -73,6 +81,11 @@ public class ControladorJogo {
         return null;
     }
 
+    /**
+     *
+     * @param cor
+     * @return
+     */
     public boolean jogadaPermitida(int cor) {
         if (this.jogadorAtual == jogador1 && cor == 1) {
             return true;
@@ -83,44 +96,85 @@ public class ControladorJogo {
         return false;
     }
 
+    /**
+     *
+     * @return
+     */
     public Jogador getJogadorAtual() {
         return jogadorAtual;
     }
 
+    /**
+     *
+     * @return
+     */
     public int getDado() {
         return dado;
     }
 
+    /**
+     *
+     * @param dado
+     */
     public void setDado(int dado) {
         this.dado = dado;
     }
 
+    /**
+     *
+     * @param i
+     * @return
+     */
     public Peao getPeao(int i) {
         return peoes.get(i);
     }
 
+    /**
+     *
+     */
     public void proximoJogador() {
         this.jogadorAtual = this.jogadorAtual == jogador1 ? jogador2 : jogador1;
     }
 
+    /**
+     *
+     * @return
+     */
     public boolean jogoIniciado() {
         return this.jogador1.isJogadorLiberado() || this.jogador2.isJogadorLiberado();
     }
 
     //retorna um numero aleatório entre 1 e 6 para simular o dado D6
+    /**
+     *
+     */
     public void jogarDado() {
         RandomGenerator randomGenerator = new Random();
         this.dado = randomGenerator.nextInt(6) + 1;
     }
 
+    /**
+     *
+     * @param numero
+     */
     public void jogarDado(int numero) {
         this.dado = numero;
     }
 
+    /**
+     *
+     * @param posicao
+     * @return
+     */
     public int[] getPosicaoMap(int posicao) {
         return jogadorAtual.getPosicaoMap(posicao);
     }
 
+    /**
+     *
+     * @param p
+     * @param novaPosicao
+     */
     public void move(Peao p, int novaPosicao) {
         tabuleiro.get(p.getPosicao()).remove(p); //remove o peao da casa atual
         tabuleiro.get(novaPosicao).addPeao(p); //adiciona o peao a nova casa
@@ -128,6 +182,11 @@ public class ControladorJogo {
     }
 
     //Checa se um peao pode ser movido para a nova posição
+    /**
+     *
+     * @param p
+     * @return
+     */
     public Peao checarPosicao(Peao p) {
         Peao pInimigo = null;
         int novaPosicao = p.getPosicao() + this.dado;

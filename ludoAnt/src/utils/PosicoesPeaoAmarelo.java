@@ -7,6 +7,9 @@ package utils;
  */
 public class PosicoesPeaoAmarelo extends PosicaoPeaoMap {
 
+    /**
+     *
+     */
     public PosicoesPeaoAmarelo() {
         super();
         int[] values = new int[]{8, 1};

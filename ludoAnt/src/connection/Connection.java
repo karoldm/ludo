@@ -22,6 +22,10 @@ import javax.swing.JOptionPane;
 public class Connection implements Runnable {
 //Runnable implementa as threads, que sao necessarias para execucao do jogo
 
+    /**
+     *
+     */
+
     public void run() {
 
     }
