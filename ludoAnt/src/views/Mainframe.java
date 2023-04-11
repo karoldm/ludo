@@ -15,7 +15,7 @@ import javax.swing.JOptionPane;
  *
  * @author Karol
  */
-public class UIJogo extends javax.swing.JFrame {
+public class Mainframe extends javax.swing.JFrame {
 
     private final ControladorJogo jogo = new ControladorJogo();
     private final ButtonSquare[][] tabuleiro = new ButtonSquare[15][15];
@@ -24,7 +24,7 @@ public class UIJogo extends javax.swing.JFrame {
     /**
      * Creates new form NewJFrame
      */
-    public UIJogo() {
+    public Mainframe() {
         initComponents();
 
         generateLudoBoard();
@@ -360,14 +360,14 @@ public class UIJogo extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void menuSerHostActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuSerHostActionPerformed
-        IP hostIP = new IP();
+        Host hostIP = new Host();
         hostIP.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         hostIP.setVisible(true);
     }//GEN-LAST:event_menuSerHostActionPerformed
 
     private void menuConectarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuConectarActionPerformed
         // TODO add your handling code here:
-        ConnectIP connect = new ConnectIP();
+        Connect connect = new Connect();
         connect.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         connect.setVisible(true);
     }//GEN-LAST:event_menuConectarActionPerformed
@@ -431,21 +431,23 @@ public class UIJogo extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(UIJogo.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Mainframe.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(UIJogo.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Mainframe.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(UIJogo.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Mainframe.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(UIJogo.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Mainframe.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new UIJogo().setVisible(true);
+                new Mainframe().setVisible(true);
             }
         });
     }
