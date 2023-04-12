@@ -64,7 +64,7 @@ public class ControladorJogo {
      * @param tabuleiro
      * @return
      */
-    public int[] getPosicaoInicialDisp(ButtonSquare[][] tabuleiro) {
+    public int[] getPosicaoInicialDisponivel(ButtonSquare[][] tabuleiro) {
         int i = jogadorAtual.getiInicial();
         int j = jogadorAtual.getjInicial();
 

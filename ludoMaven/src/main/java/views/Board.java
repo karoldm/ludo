@@ -18,7 +18,7 @@ import javax.swing.JOptionPane;
  */
 public class Board extends javax.swing.JFrame {
 
-    private final ControladorJogo jogo = new ControladorJogo();
+    private final ControladorJogo controlador = new ControladorJogo();
     private final ButtonSquare[][] tabuleiro = new ButtonSquare[15][15];
     private boolean jogarDeNovo = false;
 
@@ -34,29 +34,29 @@ public class Board extends javax.swing.JFrame {
     private void initPawns() {
         // Iniciando peões azul
         tabuleiro[1][1].setBackground(Color.WHITE);
-        tabuleiro[1][1].addPeao(jogo.getPeao(0));
+        tabuleiro[1][1].addPeao(controlador.getPeao(0));
 
         tabuleiro[4][4].setBackground(Color.WHITE);
-        tabuleiro[4][4].addPeao(jogo.getPeao(1));
+        tabuleiro[4][4].addPeao(controlador.getPeao(1));
 
         tabuleiro[4][1].setBackground(Color.WHITE);
-        tabuleiro[4][1].addPeao(jogo.getPeao(2));
+        tabuleiro[4][1].addPeao(controlador.getPeao(2));
 
         tabuleiro[1][4].setBackground(Color.WHITE);
-        tabuleiro[1][4].addPeao(jogo.getPeao(3));
+        tabuleiro[1][4].addPeao(controlador.getPeao(3));
 
         // Iniciando peões verde
         tabuleiro[10][10].setBackground(Color.WHITE);
-        tabuleiro[10][10].addPeao(jogo.getPeao(4));
+        tabuleiro[10][10].addPeao(controlador.getPeao(4));
 
         tabuleiro[13][13].setBackground(Color.WHITE);
-        tabuleiro[13][13].addPeao(jogo.getPeao(5));
+        tabuleiro[13][13].addPeao(controlador.getPeao(5));
 
         tabuleiro[13][10].setBackground(Color.WHITE);
-        tabuleiro[13][10].addPeao(jogo.getPeao(6));
+        tabuleiro[13][10].addPeao(controlador.getPeao(6));
 
         tabuleiro[10][13].setBackground(Color.WHITE);
-        tabuleiro[10][13].addPeao(jogo.getPeao(7));
+        tabuleiro[10][13].addPeao(controlador.getPeao(7));
 
         // Iniciando peões vermelho
         tabuleiro[1][13].setBackground(Color.WHITE);
@@ -168,43 +168,43 @@ public class Board extends javax.swing.JFrame {
     }
 
     private void moverPeao(ButtonSquare square) {
-        if (jogo.getDado() == 0 || !jogo.jogoIniciado()) {
+        if (controlador.getDado() == 0 || !controlador.jogoIniciado()) {
             return;
         }
-        Peao p = square.getPeao();
-        if (p != null && jogo.jogadaPermitida(p.getCor())) {
-            if (p.getPosicao() == 57) {
+        Peao peao = square.getPeao();
+        if (peao != null && controlador.jogadaPermitida(peao.getCor())) {
+            if (peao.getPosicao() == 57) {
                 System.out.println("Peao ja chegou na zona final");
                 return;
             }
-            if (p.getPosicao() == 0) {
-                if (jogo.getDado() != 6) {
+            if (peao.getPosicao() == 0) {
+                if (controlador.getDado() != 6) {
                     System.out.println("So pode mover esse peão se tirar 6");
                     return;
                 } else {
-                    jogo.setDado(1);
+                    controlador.setDado(1);
                 }
             }
             int[] posicoes;
-            Peao pInimigo = jogo.checarPosicao(p);
+            Peao pInimigo = controlador.checarPosicao(peao);
             if (pInimigo != null) {
                 System.out.println("Peao inimigo voltou a posicao inicial");
-                jogo.proximoJogador();
-                posicoes = jogo.getPosicaoInicialDisp(this.tabuleiro);
+                controlador.proximoJogador();
+                posicoes = controlador.getPosicaoInicialDisponivel(this.tabuleiro);
                 tabuleiro[posicoes[0]][posicoes[1]].addPeao(pInimigo);
                 square.removePeao(pInimigo);
-                jogo.proximoJogador();
+                controlador.proximoJogador();
             }
 
-            posicoes = jogo.getPosicaoMap(p.getPosicao());
-            System.out.println("Nova posicao: " + p.getPosicao());
-            tabuleiro[posicoes[0]][posicoes[1]].addPeao(p);
-            square.removePeao(p);
-            jogo.setDado(0);
+            posicoes = controlador.getPosicaoMap(peao.getPosicao());
+            System.out.println("Nova posicao: " + peao.getPosicao());
+            tabuleiro[posicoes[0]][posicoes[1]].addPeao(peao);
+            square.removePeao(peao);
+            controlador.setDado(0);
             buttonJogarDado.setEnabled(true);
             jogarSelecionado.setEnabled(true);
             if (jogarDeNovo) {
-                jogo.proximoJogador();
+                controlador.proximoJogador();
                 jogarDeNovo = false;
             }
         } else {
@@ -386,18 +386,18 @@ public class Board extends javax.swing.JFrame {
     }//GEN-LAST:event_menuVerRegrasActionPerformed
 
     private void buttonJogarDadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonJogarDadoActionPerformed
-        jogo.jogarDado();
-        textJogadas.setText(textJogadas.getText() + "\nJogador " + jogo.getJogadorAtual().toString() + ": " + jogo.getDado());
-        jogo.proximoJogador();
+        controlador.jogarDado();
+        textJogadas.setText(textJogadas.getText() + "\nJogador " + controlador.getJogadorAtual().toString() + ": " + controlador.getDado());
+        controlador.proximoJogador();
 
-        if (jogo.getJogadorAtual().isJogadorLiberado()) {
+        if (controlador.getJogadorAtual().isJogadorLiberado()) {
             buttonJogarDado.setEnabled(false);
             jogarSelecionado.setEnabled(false);
-            if (jogo.getDado() == 6) {
+            if (controlador.getDado() == 6) {
                 this.jogarDeNovo = true;
             }
-        } else if (jogo.getDado() == 6) {
-            jogo.getJogadorAtual().setJogadorLiberado(true);
+        } else if (controlador.getDado() == 6) {
+            controlador.getJogadorAtual().setJogadorLiberado(true);
             buttonJogarDado.setEnabled(false);
             jogarSelecionado.setEnabled(false);
             this.jogarDeNovo = true;
@@ -406,18 +406,18 @@ public class Board extends javax.swing.JFrame {
 
     private void jogarSelecionadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jogarSelecionadoActionPerformed
         // TODO add your handling code here:
-        jogo.jogarDado((int) selecaoNumero.getValue());
-        textJogadas.setText(textJogadas.getText() + "\nJogador " + jogo.getJogadorAtual().toString() + ": " + jogo.getDado());
-        jogo.proximoJogador();
+        controlador.jogarDado((int) selecaoNumero.getValue());
+        textJogadas.setText(textJogadas.getText() + "\nJogador " + controlador.getJogadorAtual().toString() + ": " + controlador.getDado());
+        controlador.proximoJogador();
 
-        if (jogo.getJogadorAtual().isJogadorLiberado()) {
+        if (controlador.getJogadorAtual().isJogadorLiberado()) {
             buttonJogarDado.setEnabled(false);
             jogarSelecionado.setEnabled(false);
-            if (jogo.getDado() == 6) {
+            if (controlador.getDado() == 6) {
                 this.jogarDeNovo = true;
             }
-        } else if (jogo.getDado() == 6) {
-            jogo.getJogadorAtual().setJogadorLiberado(true);
+        } else if (controlador.getDado() == 6) {
+            controlador.getJogadorAtual().setJogadorLiberado(true);
             buttonJogarDado.setEnabled(false);
             jogarSelecionado.setEnabled(false);
             this.jogarDeNovo = true;
