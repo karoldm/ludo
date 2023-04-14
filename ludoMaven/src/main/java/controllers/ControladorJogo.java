@@ -3,6 +3,8 @@ package controllers;
 import classes.Jogador;
 import classes.Peao;
 import classes.Square;
+import connection.Client;
+import connection.Server;
 import java.util.ArrayList;
 import java.util.Random;
 import java.util.random.RandomGenerator;
@@ -18,14 +20,13 @@ public class ControladorJogo {
 
     private final ArrayList<Peao> peoes = new ArrayList<>();
     private final ArrayList<Square> tabuleiro = new ArrayList<>();
-    private Jogador jogadorAtual = null;
-    private int dado = 0;
     private final Jogador jogador1 = new Jogador(10, 13, new PosicoesPeaoVerde(), "Jogador 1");
     private final Jogador jogador2 = new Jogador(1, 4, new PosicoesPeaoAzul(), "Jogador 2");
+    private Jogador jogadorAtual = null;
+    private int dado = 0;
+    private Client client = new Client("localhost", 1234, this);
+    private Server server = new Server(1234, this);
 
-    /**
-     *
-     */
     public ControladorJogo() {
         //iniciando arrays de peoes
         //4 peoes para cada jogador
