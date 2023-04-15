@@ -8,6 +8,6 @@ package model;
  *
  * @author Willian
  */
-public class Board {
+public class Information {
 
 }
