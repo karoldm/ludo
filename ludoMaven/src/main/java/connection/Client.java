@@ -1,47 +1,93 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package connection;
 
-import controllers.ControladorJogo;
 import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.io.OutputStream;
 import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.net.SocketException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.JOptionPane;
+import controllers.ControladorJogo;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.net.SocketException;
 
 /**
  *
  * @author Willian
  */
-public class Client {
+public class Client implements Runnable {
 
-    private String hostname;
+    private Socket socket;
+    private Thread thread;
+    private ServerSocket serverSocket;
+    private InetAddress ip;
     private int port;
-    private ControladorJogo controler;
+    private boolean turn;
+    private ControladorJogo controller;
 
-    public Client(String hostname, int port, ControladorJogo controler) {
-        this.hostname = hostname;
-        this.port = port;
-        this.controler = controler;
+    /**
+     *
+     * @param controller
+     */
+    public Client(ControladorJogo controller) {
+        this.controller = controller;
     }
 
-    public void sendMessage(String message) {
-        try {
-            Socket socket = new Socket(hostname, port);
-            OutputStream out = socket.getOutputStream();
-            out.write(message.getBytes());
-            socket.close();
-        } catch (IOException i) {
-            System.out.println(i);
+//Sempre está escutando o recebimento de informações
+    /**
+     *
+     */
+    public void run() {
+        while (true) {
+            receiveMove();
+            turn = true;
         }
+    }
 
+    /**
+     *
+     */
+    public void initializeConnection() {
+        try {
+            this.turn = true;
+            this.ip = InetAddress.getLocalHost();
+            this.serverSocket = new ServerSocket(5000);
+            this.port = this.serverSocket.getLocalPort();
+            this.socket = this.serverSocket.accept();
+            this.serverSocket.close();
+        } catch (IOException ex) {
+            System.out.println(ex);
+        }
+    }
+
+    public void sendBord() {
+        try {
+            this.myTurn = false;
+            ObjectOutputStream out = new ObjectOutputStream(this.soc.getOutputStream());
+            out.writeObject(move);
+        } catch (IOException ex) {
+            Logger.getLogger(Connection.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    private void receiveMove() {
+        try {
+            ObjectInputStream in = new ObjectInputStream(this.socket.getInputStream());
+//            Move move = (Move) in.readObject();
+//            this.controller.setMove(move);
+        } catch (IOException ex) {
+            if (ex instanceof SocketException) {
+//                this.controller.interrupt();
+            }
+//        } catch (ClassNotFoundException ex) {
+//            Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
+//        }
+        }
+    }
+
+    public void server() {
+        Server server = new Server(this);
+        this.thread = new Thread(server);
+        this.thread.start();
     }
 }
