@@ -1,6 +1,6 @@
 package views;
 
-import classes.Peao;
+import model.Peao;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.util.ArrayList;

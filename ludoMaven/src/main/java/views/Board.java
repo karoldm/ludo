@@ -1,7 +1,7 @@
 package views;
 
 import controllers.ControladorJogo;
-import classes.Peao;
+import model.Peao;
 import java.awt.Color;
 import java.awt.GridLayout;
 import java.awt.Image;

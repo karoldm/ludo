@@ -1,8 +1,8 @@
 package controllers;
 
-import classes.Jogador;
-import classes.Peao;
-import classes.Square;
+import model.Jogador;
+import model.Peao;
+import model.Square;
 import connection.Client;
 import connection.Server;
 import java.util.ArrayList;
@@ -24,13 +24,14 @@ public class ControladorJogo {
     private final Jogador jogador2 = new Jogador(1, 4, new PosicoesPeaoAzul(), "Jogador 2");
     private Jogador jogadorAtual = null;
     private int dado = 0;
-    private Client client = new Client("localhost", 1234, this);
-    private Server server = new Server(1234, this);
+    private Client client;
+    private Thread thread;
 
     public ControladorJogo() {
+        this.client = new Client(this);
+
         //iniciando arrays de peoes
         //4 peoes para cada jogador
-
         this.peoes.add(new Peao((byte) 0, 0));
         this.peoes.add(new Peao((byte) 0, 0));
         this.peoes.add(new Peao((byte) 0, 0));
@@ -58,6 +59,10 @@ public class ControladorJogo {
         tabuleiro.get(14).addPeao(peoes.get(7));
 
         jogadorAtual = jogador1;
+    }
+
+    public void server() {
+        this.client.
     }
 
     /**
@@ -152,6 +157,7 @@ public class ControladorJogo {
     public void jogarDado() {
         RandomGenerator randomGenerator = new Random();
         this.dado = randomGenerator.nextInt(6) + 1;
+//        client.sendMessage(String.valueOf(this.dado));
     }
 
     /**
