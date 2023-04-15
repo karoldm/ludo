@@ -10,6 +10,8 @@ import controllers.ControladorJogo;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.SocketException;
+import javax.swing.JOptionPane;
+import model.Information;
 
 /**
  *
@@ -44,6 +46,16 @@ public class Client implements Runnable {
         }
     }
 
+    public void connect() {
+        try {
+            this.turn = false;
+            this.socket = new Socket(ip, port);
+            System.out.println("conectado");
+        } catch (IOException ex) {
+            JOptionPane.showMessageDialog(null, "Falha na conexão!");
+        }
+    }
+
     /**
      *
      */
@@ -60,13 +72,13 @@ public class Client implements Runnable {
         }
     }
 
-    public void sendBord() {
+    public void sendBord(Information information) {
         try {
-            this.myTurn = false;
-            ObjectOutputStream out = new ObjectOutputStream(this.soc.getOutputStream());
-            out.writeObject(move);
+            this.turn = false;
+            ObjectOutputStream out = new ObjectOutputStream(this.socket.getOutputStream());
+            out.writeObject(information);
         } catch (IOException ex) {
-            Logger.getLogger(Connection.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -85,9 +97,66 @@ public class Client implements Runnable {
         }
     }
 
-    public void server() {
+    public void hostServer() {
         Server server = new Server(this);
         this.thread = new Thread(server);
         this.thread.start();
     }
+
+    public Socket getSocket() {
+        return socket;
+    }
+
+    public void setSocket(Socket socket) {
+        this.socket = socket;
+    }
+
+    public Thread getThread() {
+        return thread;
+    }
+
+    public void setThread(Thread thread) {
+        this.thread = thread;
+    }
+
+    public ServerSocket getServerSocket() {
+        return serverSocket;
+    }
+
+    public void setServerSocket(ServerSocket serverSocket) {
+        this.serverSocket = serverSocket;
+    }
+
+    public InetAddress getIp() {
+        return ip;
+    }
+
+    public void setIp(InetAddress ip) {
+        this.ip = ip;
+    }
+
+    public int getPort() {
+        return port;
+    }
+
+    public void setPort(int port) {
+        this.port = port;
+    }
+
+    public boolean isTurn() {
+        return turn;
+    }
+
+    public void setTurn(boolean turn) {
+        this.turn = turn;
+    }
+
+    public ControladorJogo getController() {
+        return controller;
+    }
+
+    public void setController(ControladorJogo controller) {
+        this.controller = controller;
+    }
+
 }
