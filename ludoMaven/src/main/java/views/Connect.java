@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import javax.swing.JOptionPane;
+import controllers.ControladorJogo;
 
 /**
  *
@@ -18,6 +19,8 @@ public class Connect extends javax.swing.JFrame {
     /**
      * Creates new form ConnectIP
      */
+    private ControladorJogo controller = new ControladorJogo();
+
     public Connect() {
         initComponents();
     }
@@ -78,11 +81,11 @@ public class Connect extends javax.swing.JFrame {
         InetAddress ip = null;
         try {
             String inputIP = jTextField1.getText();
-            if(inputIP.isEmpty()) {
+            if (inputIP.isEmpty()) {
                 JOptionPane.showMessageDialog(null, "O campo IP não pode ser vazio!", "Erro de conexão", JOptionPane.ERROR_MESSAGE);
                 return;
             }
-            
+            controller.connect(inputIP, Integer.parseInt(controller.getPort()));
             ip = InetAddress.getByName(inputIP);
 
         } catch (UnknownHostException e) {

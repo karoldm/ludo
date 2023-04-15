@@ -4,6 +4,7 @@
  */
 package views;
 
+import controllers.ControladorJogo;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import javax.swing.JOptionPane;
@@ -14,6 +15,8 @@ import javax.swing.JOptionPane;
  */
 public class Host extends javax.swing.JFrame {
 
+    private ControladorJogo controller = new ControladorJogo();
+
     /**
      * Creates new form IP
      */
@@ -21,6 +24,7 @@ public class Host extends javax.swing.JFrame {
         initComponents();
         try {
             ipAddress.setText(InetAddress.getLocalHost().getHostAddress());
+            controller.host();
         } catch (UnknownHostException e) {
             System.out.println(e);
             JOptionPane.showMessageDialog(null, "Não foi possivel obter o IP!", "Erro", JOptionPane.ERROR_MESSAGE);
