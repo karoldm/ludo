@@ -5,9 +5,14 @@ import model.Peao;
 import model.Square;
 import connection.Client;
 import connection.Server;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.Random;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.random.RandomGenerator;
+import model.Information;
 import utils.PosicoesPeaoAzul;
 import utils.PosicoesPeaoVerde;
 import views.ButtonSquare;
@@ -18,12 +23,10 @@ import views.ButtonSquare;
  */
 public class ControladorJogo {
 
-    private final ArrayList<Peao> peoes = new ArrayList<>();
-    private final ArrayList<Square> tabuleiro = new ArrayList<>();
     private final Jogador jogador1 = new Jogador(10, 13, new PosicoesPeaoVerde(), "Jogador 1");
     private final Jogador jogador2 = new Jogador(1, 4, new PosicoesPeaoAzul(), "Jogador 2");
+    private Information information = new Information();
     private Jogador jogadorAtual = null;
-    private int dado = 0;
     private Client client;
     private Thread thread;
 
@@ -32,37 +35,50 @@ public class ControladorJogo {
 
         //iniciando arrays de peoes
         //4 peoes para cada jogador
-        this.peoes.add(new Peao((byte) 0, 0));
-        this.peoes.add(new Peao((byte) 0, 0));
-        this.peoes.add(new Peao((byte) 0, 0));
-        this.peoes.add(new Peao((byte) 0, 0));
+        for (int i = 0; i < 4; i++) {
+            information.getPeoes().add(new Peao((byte) 0, 0));
 
-        this.peoes.add(new Peao((byte) 1, 14));
-        this.peoes.add(new Peao((byte) 1, 14));
-        this.peoes.add(new Peao((byte) 1, 14));
-        this.peoes.add(new Peao((byte) 1, 14));
+        }
+        for (int i = 0; i < 4; i++) {
+            information.getPeoes().add(new Peao((byte) 1, 14));
 
+        }
         //Iniciando tabuleiro com 51 casas
         for (int i = 0; i < 58; i++) {
-            tabuleiro.add(new Square());
+            information.getTabuleiro().add(new Square());
         }
 
         //Alocando peões nas suas posições iniciais do tabuleiro
-        tabuleiro.get(0).addPeao(peoes.get(0));
-        tabuleiro.get(0).addPeao(peoes.get(1));
-        tabuleiro.get(0).addPeao(peoes.get(2));
-        tabuleiro.get(0).addPeao(peoes.get(3));
-
-        tabuleiro.get(14).addPeao(peoes.get(4));
-        tabuleiro.get(14).addPeao(peoes.get(5));
-        tabuleiro.get(14).addPeao(peoes.get(6));
-        tabuleiro.get(14).addPeao(peoes.get(7));
+        for (int i = 0; i < 4; i++) {
+            information.getTabuleiro().get(0).addPeao(information.getPeoes().get(i));
+        }
+        for (int i = 0; i < 4; i++) {
+            information.getTabuleiro().get(14).addPeao(information.getPeoes().get(4 + i));
+        }
 
         jogadorAtual = jogador1;
     }
 
-    public void server() {
-        this.client.
+    public void connect(String ip, int port) {
+        try {
+            this.client.setPort(port);
+            this.client.setIp(InetAddress.getByName(ip));
+            this.client.connect();
+        } catch (UnknownHostException ex) {
+            Logger.getLogger(ControladorJogo.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    public void host() {
+        this.client.hostServer();
+    }
+
+    public String getIP() {
+        return this.client.getIp().getHostAddress();
+    }
+
+    public String getPort() {
+        return Integer.toString(this.client.getPort());
     }
 
     /**
@@ -115,7 +131,7 @@ public class ControladorJogo {
      * @return
      */
     public int getDado() {
-        return dado;
+        return information.getDado();
     }
 
     /**
@@ -123,7 +139,7 @@ public class ControladorJogo {
      * @param dado
      */
     public void setDado(int dado) {
-        this.dado = dado;
+        information.setDado(dado);
     }
 
     /**
@@ -132,7 +148,8 @@ public class ControladorJogo {
      * @return
      */
     public Peao getPeao(int i) {
-        return peoes.get(i);
+        return information.getPeoes().get(i);
+//         peoes.get(i);
     }
 
     /**
@@ -156,7 +173,8 @@ public class ControladorJogo {
      */
     public void jogarDado() {
         RandomGenerator randomGenerator = new Random();
-        this.dado = randomGenerator.nextInt(6) + 1;
+        information.setDado(randomGenerator.nextInt(6) + 1);
+//         = randomGenerator.nextInt(6) + 1;
 //        client.sendMessage(String.valueOf(this.dado));
     }
 
@@ -165,7 +183,8 @@ public class ControladorJogo {
      * @param numero
      */
     public void jogarDado(int numero) {
-        this.dado = numero;
+
+        information.setDado(numero);
     }
 
     /**
@@ -183,8 +202,8 @@ public class ControladorJogo {
      * @param novaPosicao
      */
     public void move(Peao p, int novaPosicao) {
-        tabuleiro.get(p.getPosicao()).remove(p); //remove o peao da casa atual
-        tabuleiro.get(novaPosicao).addPeao(p); //adiciona o peao a nova casa
+        information.getTabuleiro().get(p.getPosicao()).remove(p); //remove o peao da casa atua
+        information.getTabuleiro().get(novaPosicao).addPeao(p); //adiciona o peao a nova casa
         p.setPosicao(novaPosicao); //atualiza a posicao do peao
     }
 
@@ -196,19 +215,19 @@ public class ControladorJogo {
      */
     public Peao checarPosicao(Peao p) {
         Peao pInimigo = null;
-        int novaPosicao = p.getPosicao() + this.dado;
+        int novaPosicao = p.getPosicao() + information.getDado();
         //Se o jogador passou da casa final, ele deve voltar
         //Só pode chegar na casa final se tirar o número exato no dado para parar nela
         if (novaPosicao > 57) {
             int dif = novaPosicao - 57;
             novaPosicao = novaPosicao - 2 * dif;
         }
-        ArrayList<Peao> peoesNovaPosicao = tabuleiro.get(novaPosicao).getPeoes();
+        ArrayList<Peao> peoesNovaPosicao = information.getTabuleiro().get(novaPosicao).getPeoes();
         System.out.println("NOVA POSICAO: " + novaPosicao);
         //Já existe um peão nesse quadrado do tabuleiro, e ele tem a cor diferente
         //ou seja, é do inimigo, logo o peao p deve retornar a casa incial
         System.out.println("Peao parametro: " + p.toString());
-        for (Peao pTeste : this.peoes) {
+        for (Peao pTeste : information.getPeoes()) {
             System.out.println("Peao: " + pTeste.toString() + "Posicao: " + pTeste.getPosicao());
         }
         if (!peoesNovaPosicao.isEmpty()) {
