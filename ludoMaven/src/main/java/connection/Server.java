@@ -13,7 +13,7 @@ public class Server implements Runnable {
     }
 
     public void run() {
-
+        client.initializeConnection();
     }
 
 }
