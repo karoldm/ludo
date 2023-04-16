@@ -2,3 +2,6 @@
 nbproject/private/private.properties
 /build/
 /dist/
+/ludoMaven/target/
+/ludoAnt/build/
+/ludoAnt/dist/
