@@ -11,7 +11,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.SocketException;
 import javax.swing.JOptionPane;
-import model.Information;
+import model.Dado;
 
 /**
  *
@@ -72,7 +72,7 @@ public class Client implements Runnable {
         }
     }
 
-    public void sendBord(Information information) {
+    public void sendBord(Dado information) {
         try {
             this.turn = false;
             ObjectOutputStream out = new ObjectOutputStream(this.socket.getOutputStream());

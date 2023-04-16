@@ -8,6 +8,8 @@ import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
@@ -34,29 +36,29 @@ public class Board extends javax.swing.JFrame {
     private void initPawns() {
         // Iniciando peões azul
         tabuleiro[1][1].setBackground(Color.WHITE);
-        tabuleiro[1][1].addPeao(controlador.getPeao(0));
+        tabuleiro[1][1].addPeao(controlador.getJogador1().getPeao(0));
 
         tabuleiro[4][4].setBackground(Color.WHITE);
-        tabuleiro[4][4].addPeao(controlador.getPeao(1));
+        tabuleiro[4][4].addPeao(controlador.getJogador1().getPeao(1));
 
         tabuleiro[4][1].setBackground(Color.WHITE);
-        tabuleiro[4][1].addPeao(controlador.getPeao(2));
+        tabuleiro[4][1].addPeao(controlador.getJogador1().getPeao(2));
 
         tabuleiro[1][4].setBackground(Color.WHITE);
-        tabuleiro[1][4].addPeao(controlador.getPeao(3));
+        tabuleiro[1][4].addPeao(controlador.getJogador1().getPeao(3));
 
         // Iniciando peões verde
         tabuleiro[10][10].setBackground(Color.WHITE);
-        tabuleiro[10][10].addPeao(controlador.getPeao(4));
+        tabuleiro[10][10].addPeao(controlador.getJogador2().getPeao(0));
 
         tabuleiro[13][13].setBackground(Color.WHITE);
-        tabuleiro[13][13].addPeao(controlador.getPeao(5));
+        tabuleiro[13][13].addPeao(controlador.getJogador2().getPeao(1));
 
         tabuleiro[13][10].setBackground(Color.WHITE);
-        tabuleiro[13][10].addPeao(controlador.getPeao(6));
+        tabuleiro[13][10].addPeao(controlador.getJogador2().getPeao(2));
 
         tabuleiro[10][13].setBackground(Color.WHITE);
-        tabuleiro[10][13].addPeao(controlador.getPeao(7));
+        tabuleiro[10][13].addPeao(controlador.getJogador2().getPeao(3));
 
         // Iniciando peões vermelho
         tabuleiro[1][13].setBackground(Color.WHITE);
@@ -168,11 +170,17 @@ public class Board extends javax.swing.JFrame {
     }
 
     private void moverPeao(ButtonSquare square) {
-        if (controlador.getDado() == 0 || !controlador.jogoIniciado()) {
+        if (controlador.getDado() == 0) {
             return;
         }
+
+        //recuperando o peão do quadrado clicado
         Peao peao = square.getPeao();
+
+        //peao != null verifica se o jogador não clicou numa casa vazia 
+        //controlador.jogadaPermitida verifica se o jogador não tentou mover um peão inimigo
         if (peao != null && controlador.jogadaPermitida(peao.getCor())) {
+
             if (peao.getPosicao() == 57) {
                 System.out.println("Peao ja chegou na zona final");
                 return;
@@ -185,28 +193,44 @@ public class Board extends javax.swing.JFrame {
                     controlador.setDado(1);
                 }
             }
-            int[] posicoes;
-            Peao pInimigo = controlador.checarPosicao(peao);
-            if (pInimigo != null) {
-                System.out.println("Peao inimigo voltou a posicao inicial");
-                controlador.proximoJogador();
-                posicoes = controlador.getPosicaoInicialDisponivel(this.tabuleiro);
-                tabuleiro[posicoes[0]][posicoes[1]].addPeao(pInimigo);
-                square.removePeao(pInimigo);
-                controlador.proximoJogador();
+
+            //recuperando posição do peao no tabuleiro
+            controlador.checarPosicao(peao);
+            int[] posicoes = controlador.getPosicaoMap(peao.getPosicao());
+            int i = posicoes[0];
+            int j = posicoes[1];
+            //recuperando possíveis peões na nova posição
+            ArrayList<Peao> currPeoes = tabuleiro[i][j].getPeoes();
+
+            for (Peao p : currPeoes) {
+                //Se existe um peão na nova posição e ele é do inimigo, movemos ele para a casa inicial
+                if (p.getCor() != peao.getCor()) {
+                    controlador.move(p, 0);
+                    controlador.proximoJogador();
+                    int[] posicoesInciais = controlador.getPosicaoInicialDisponivel(this.tabuleiro);
+                    int m = posicoesInciais[0];
+                    int n = posicoesInciais[1];
+                    tabuleiro[m][n].addPeao(p);
+                    tabuleiro[i][j].removePeao(p);
+                    controlador.proximoJogador();
+                    break;
+                }
             }
 
-            posicoes = controlador.getPosicaoMap(peao.getPosicao());
-            System.out.println("Nova posicao: " + peao.getPosicao());
-            tabuleiro[posicoes[0]][posicoes[1]].addPeao(peao);
+            tabuleiro[i][j].addPeao(peao);
             square.removePeao(peao);
+
             controlador.setDado(0);
             buttonJogarDado.setEnabled(true);
             jogarSelecionado.setEnabled(true);
+            System.out.println(peao.toString() + " - " + peao.getPosicao());
+
             if (jogarDeNovo) {
-                controlador.proximoJogador();
                 jogarDeNovo = false;
+            } else {
+                controlador.proximoJogador();
             }
+
         } else {
             System.out.println("Jogada nao permitida");
         }
@@ -388,19 +412,20 @@ public class Board extends javax.swing.JFrame {
     private void buttonJogarDadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonJogarDadoActionPerformed
         controlador.jogarDado();
         textJogadas.setText(textJogadas.getText() + "\nJogador " + controlador.getJogadorAtual().toString() + ": " + controlador.getDado());
-        controlador.proximoJogador();
 
-        if (controlador.getJogadorAtual().isJogadorLiberado()) {
-            buttonJogarDado.setEnabled(false);
-            jogarSelecionado.setEnabled(false);
+        if (controlador.getJogadorAtual().todosOsPeoesNoInicioOuFim()) {
             if (controlador.getDado() == 6) {
                 this.jogarDeNovo = true;
+                buttonJogarDado.setEnabled(false);
+            } else {
+                controlador.setDado(0);
+                controlador.proximoJogador();
             }
-        } else if (controlador.getDado() == 6) {
-            controlador.getJogadorAtual().setJogadorLiberado(true);
+        } else {
+            if (controlador.getDado() == 6) {
+                jogarDeNovo = true;
+            }
             buttonJogarDado.setEnabled(false);
-            jogarSelecionado.setEnabled(false);
-            this.jogarDeNovo = true;
         }
     }//GEN-LAST:event_buttonJogarDadoActionPerformed
 
@@ -410,18 +435,23 @@ public class Board extends javax.swing.JFrame {
         textJogadas.setText(textJogadas.getText() + "\nJogador " + controlador.getJogadorAtual().toString() + ": " + controlador.getDado());
         controlador.proximoJogador();
 
-        if (controlador.getJogadorAtual().isJogadorLiberado()) {
-            buttonJogarDado.setEnabled(false);
-            jogarSelecionado.setEnabled(false);
+        if (controlador.getJogadorAtual().todosOsPeoesNoInicioOuFim()) {
             if (controlador.getDado() == 6) {
                 this.jogarDeNovo = true;
+                buttonJogarDado.setEnabled(false);
+            } else {
+                controlador.setDado(0);
+                controlador.proximoJogador();
             }
-        } else if (controlador.getDado() == 6) {
-            controlador.getJogadorAtual().setJogadorLiberado(true);
+        } else {
+            if (controlador.getDado() == 6) {
+                jogarDeNovo = true;
+            }
+            buttonJogarDado.setEnabled(false);
             buttonJogarDado.setEnabled(false);
             jogarSelecionado.setEnabled(false);
-            this.jogarDeNovo = true;
         }
+
     }//GEN-LAST:event_jogarSelecionadoActionPerformed
 
     private void debugActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_debugActionPerformed

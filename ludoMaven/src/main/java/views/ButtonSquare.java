@@ -36,6 +36,14 @@ public class ButtonSquare extends JButton {
     public Peao getPeao() {
         return !peoes.isEmpty() ? peoes.get(0) : null;
     }
+    
+    /**
+     *
+     * @return
+     */
+    public ArrayList<Peao> getPeoes() {
+        return this.peoes;
+    }
 
     /**
      *

@@ -1,6 +1,5 @@
 package ludo;
 
-import static javax.swing.WindowConstants.EXIT_ON_CLOSE;
 import views.Board;
 
 /**

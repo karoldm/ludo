@@ -1,5 +1,6 @@
 package model;
 
+import java.util.ArrayList;
 import utils.PosicaoPeaoMap;
 
 /**
@@ -12,7 +13,8 @@ public class Jogador {
     private int jInicial;
     private final PosicaoPeaoMap posicoesPeao;
     private final String nome;
-    private boolean jogadorLiberado = false;
+    private ArrayList<Square> tabuleiro = new ArrayList<>();
+    private ArrayList<Peao> peoes = new ArrayList<>();
 
     /**
      *
@@ -20,20 +22,30 @@ public class Jogador {
      * @param jInicial
      * @param posicoesPeao
      * @param nome
+     * @param cor
      */
-    public Jogador(int iInicial, int jInicial, PosicaoPeaoMap posicoesPeao, String nome) {
+    public Jogador(int iInicial, int jInicial, PosicaoPeaoMap posicoesPeao, String nome, byte cor) {
         this.iInicial = iInicial;
         this.jInicial = jInicial;
         this.posicoesPeao = posicoesPeao;
         this.nome = nome;
+
+        for (int i = 0; i < 4; i++) {
+            this.peoes.add(new Peao(cor, 0));
+        }
+
+        //Iniciando tabuleiro com 58 casas
+        for (int i = 0; i < 58; i++) {
+            this.tabuleiro.add(new Square());
+        }
     }
-    
+
     /**
      *
      * @param posicao
      * @return
      */
-    public int[] getPosicaoMap(int posicao){
+    public int[] getPosicaoMap(int posicao) {
         return posicoesPeao.posicao.get(posicao);
     }
 
@@ -41,16 +53,12 @@ public class Jogador {
      *
      * @return
      */
-    public boolean isJogadorLiberado() {
-        return jogadorLiberado;
-    }
-
-    /**
-     *
-     * @param jogadorLiberado
-     */
-    public void setJogadorLiberado(boolean jogadorLiberado) {
-        this.jogadorLiberado = jogadorLiberado;
+    public boolean todosOsPeoesNoInicioOuFim() {
+        for(Peao p: this.peoes){
+            if(p.getPosicao() != 0 && p.getPosicao() != 57) 
+                return false;
+        }
+        return true;
     }
 
     /**
@@ -84,13 +92,38 @@ public class Jogador {
     public void setjInicial(int jInicial) {
         this.jInicial = jInicial;
     }
-    
+
+    public ArrayList<Square> getTabuleiro() {
+        return tabuleiro;
+    }
+
+    public void setTabuleiro(ArrayList<Square> tabuleiro) {
+        this.tabuleiro = tabuleiro;
+    }
+
+    public ArrayList<Peao> getPeoes() {
+        return peoes;
+    }
+
+    public void setPeoes(ArrayList<Peao> peoes) {
+        this.peoes = peoes;
+    }
+
+    /**
+     *
+     * @param i
+     * @return
+     */
+    public Peao getPeao(int i) {
+        return this.peoes.get(i);
+    }
+
     /**
      *
      * @return
      */
     @Override
-    public String toString(){
+    public String toString() {
         return this.nome;
     }
 
