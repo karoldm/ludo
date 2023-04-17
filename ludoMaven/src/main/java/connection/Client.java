@@ -50,7 +50,7 @@ public class Client implements Runnable {
         try {
             this.turn = false;
             this.socket = new Socket(ip, port);
-            System.out.println("conectado");
+            System.out.println("Conectado");
         } catch (IOException ex) {
             JOptionPane.showMessageDialog(null, "Falha na conexão!");
         }
