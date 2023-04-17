@@ -47,7 +47,6 @@ public class ControladorJogo {
             this.client.setPort(port);
             this.client.setIp(InetAddress.getByName(ip));
             this.client.connect();
-            System.out.println("Conectado com sucesso!");
         } catch (UnknownHostException ex) {
             Logger.getLogger(ControladorJogo.class.getName()).log(Level.SEVERE, null, ex);
         }
