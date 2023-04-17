@@ -49,7 +49,7 @@ public class Client implements Runnable {
         try {
             this.turn = false;
             this.socket = new Socket(ip, port);
-            this.socket.JOptionPane.showMessageDialog(null, "Conectado com sucesso!");
+            JOptionPane.showMessageDialog(null, "Conectado com sucesso!");
         } catch (IOException ex) {
             JOptionPane.showMessageDialog(null, "Falha na conexão!");
         }
