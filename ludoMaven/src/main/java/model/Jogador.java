@@ -60,7 +60,14 @@ public class Jogador {
         }
         return true;
     }
-
+    
+    public boolean todosOsPeoesNoFim(){
+        for(Peao p: this.peoes){
+            if(p.getPosicao() != 57) 
+                return false;
+        }
+        return true;
+    }
     /**
      *
      * @return
@@ -68,7 +75,7 @@ public class Jogador {
     public int getiInicial() {
         return iInicial;
     }
-
+    
     /**
      *
      * @param iInicial

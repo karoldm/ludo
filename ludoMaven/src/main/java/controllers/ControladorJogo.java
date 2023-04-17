@@ -13,6 +13,8 @@ import model.Dado;
 import utils.PosicoesPeaoAzul;
 import utils.PosicoesPeaoVerde;
 import views.ButtonSquare;
+import javax.swing.JOptionPane;
+
 
 /**
  *
@@ -178,6 +180,7 @@ public class ControladorJogo {
         jogadorAtual.getTabuleiro().get(p.getPosicao()).remove(p); //remove o peao da casa atua
         jogadorAtual.getTabuleiro().get(novaPosicao).addPeao(p); //adiciona o peao a nova casa
         p.setPosicao(novaPosicao); //atualiza a posicao do peao
+        this.checkVictory(jogadorAtual);
     }
 
     //Checa se um peao pode ser movido para a nova posição
@@ -195,5 +198,14 @@ public class ControladorJogo {
         }
 
         this.move(p, novaPosicao);
+    }
+    
+    public void checkVictory(Jogador jogadorAtual){
+        if (jogadorAtual.todosOsPeoesNoFim()){
+            String message = "Vencedor: " + jogadorAtual.toString();
+            JOptionPane.showMessageDialog(null, message);
+            System.out.println("Vencedor = Jogador " + jogadorAtual.toString());
+        }
+        
     }
 }
