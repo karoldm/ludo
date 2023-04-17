@@ -15,12 +15,13 @@ import javax.swing.JOptionPane;
  */
 public class Host extends javax.swing.JFrame {
 
-    private ControladorJogo controller = new ControladorJogo();
+    private static ControladorJogo controller;
 
     /**
      * Creates new form IP
      */
-    public Host() {
+    public Host(ControladorJogo controller) {
+        this.controller = controller;
         initComponents();
         try {
             ipAddress.setText(InetAddress.getLocalHost().getHostAddress());
@@ -119,7 +120,7 @@ public class Host extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Host().setVisible(true);
+                new Host(controller).setVisible(true);
             }
         });
     }

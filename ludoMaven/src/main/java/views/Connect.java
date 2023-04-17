@@ -19,9 +19,11 @@ public class Connect extends javax.swing.JFrame {
     /**
      * Creates new form ConnectIP
      */
-    private ControladorJogo controller = new ControladorJogo();
+//    Isso vai dar problema
+    private static ControladorJogo controller;
 
-    public Connect() {
+    public Connect(ControladorJogo controller) {
+        this.controller = controller;
         initComponents();
     }
 
@@ -79,32 +81,33 @@ public class Connect extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
         InetAddress ip = null;
-        try {
-            String inputIP = jTextField1.getText();
-            if (inputIP.isEmpty()) {
-                JOptionPane.showMessageDialog(null, "O campo IP não pode ser vazio!", "Erro de conexão", JOptionPane.ERROR_MESSAGE);
-                return;
-            }
+//        try {
+        String inputIP = jTextField1.getText();
+        if (inputIP.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "O campo IP não pode ser vazio!", "Erro de conexão", JOptionPane.ERROR_MESSAGE);
+            return;
+        } else {
             controller.connect(inputIP, Integer.parseInt(controller.getPort()));
-            ip = InetAddress.getByName(inputIP);
-
-        } catch (UnknownHostException e) {
-            System.out.println(e);
-            JOptionPane.showMessageDialog(null, "Não foi possível conectar!\nMotivo: " + e, "Erro de conexão", JOptionPane.ERROR_MESSAGE);
         }
-        try {
-            if (ip.isReachable(10)) {
-                System.out.println("O ip existe");
-                JOptionPane.showMessageDialog(null, "Conectado com sucesso!");
-                this.dispose();
-            } else {
-                System.out.println("não existe");
-                JOptionPane.showMessageDialog(null, "Não foi possível conectar!", "Erro de conexão", JOptionPane.ERROR_MESSAGE);
-            }
-        } catch (IOException i) {
+//            ip = InetAddress.getByName(inputIP);
 
-            System.out.println(i);
-        }
+//        } catch (UnknownHostException e) {
+//            System.out.println(e);
+//            JOptionPane.showMessageDialog(null, "Não foi possível conectar!\nMotivo: " + e, "Erro de conexão", JOptionPane.ERROR_MESSAGE);
+//        }
+//        try {
+//            if (ip.isReachable(10)) {
+//                System.out.println("O ip existe");
+//                JOptionPane.showMessageDialog(null, "Conectado com sucesso!");
+//                this.dispose();
+//            } else {
+//                System.out.println("não existe");
+//                JOptionPane.showMessageDialog(null, "Não foi possível conectar!", "Erro de conexão", JOptionPane.ERROR_MESSAGE);
+//            }
+//        } catch (IOException i) {
+//
+//            System.out.println(i);
+//        }
     }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
@@ -138,7 +141,7 @@ public class Connect extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Connect().setVisible(true);
+                new Connect(controller).setVisible(true);
             }
         });
     }

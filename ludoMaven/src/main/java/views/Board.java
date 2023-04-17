@@ -177,7 +177,7 @@ public class Board extends javax.swing.JFrame {
         //recuperando o peão do quadrado clicado
         Peao peao = square.getPeao();
 
-        //peao != null verifica se o jogador não clicou numa casa vazia 
+        //peao != null verifica se o jogador não clicou numa casa vazia
         //controlador.jogadaPermitida verifica se o jogador não tentou mover um peão inimigo
         if (peao != null && controlador.jogadaPermitida(peao.getCor())) {
 
@@ -391,14 +391,14 @@ public class Board extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void menuSerHostActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuSerHostActionPerformed
-        Host hostIP = new Host();
+        Host hostIP = new Host(controlador);
         hostIP.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         hostIP.setVisible(true);
     }//GEN-LAST:event_menuSerHostActionPerformed
 
     private void menuConectarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuConectarActionPerformed
         // TODO add your handling code here:
-        Connect connect = new Connect();
+        Connect connect = new Connect(controlador);
         connect.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         connect.setVisible(true);
     }//GEN-LAST:event_menuConectarActionPerformed
