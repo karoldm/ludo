@@ -149,7 +149,6 @@ public class ControladorJogo {
      * @param numero
      */
     public void jogarDado(int numero) {
-
         information.setDado(numero);
     }
 

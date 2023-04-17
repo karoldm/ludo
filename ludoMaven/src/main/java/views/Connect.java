@@ -87,7 +87,7 @@ public class Connect extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "O campo IP não pode ser vazio!", "Erro de conexão", JOptionPane.ERROR_MESSAGE);
             return;
         } else {
-            controller.connect(inputIP, Integer.parseInt(controller.getPort()));
+            controller.connect(inputIP, 5000);
         }
 //            ip = InetAddress.getByName(inputIP);
 
