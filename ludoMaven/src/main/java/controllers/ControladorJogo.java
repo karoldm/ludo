@@ -140,6 +140,7 @@ public class ControladorJogo {
     public void jogarDado() {
         RandomGenerator randomGenerator = new Random();
         information.setDado(randomGenerator.nextInt(6) + 1);
+        client.sendDado(String.valueOf(information.getDado()));
 //         = randomGenerator.nextInt(6) + 1;
 //        client.sendMessage(String.valueOf(this.dado));
     }

@@ -11,7 +11,6 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.SocketException;
 import javax.swing.JOptionPane;
-import model.Dado;
 
 /**
  *
@@ -41,7 +40,7 @@ public class Client implements Runnable {
      */
     public void run() {
         while (true) {
-            receiveMove();
+            receiveDado();
             turn = true;
         }
     }
@@ -50,7 +49,7 @@ public class Client implements Runnable {
         try {
             this.turn = false;
             this.socket = new Socket(ip, port);
-            System.out.println("Conectado");
+            this.socket.JOptionPane.showMessageDialog(null, "Conectado com sucesso!");
         } catch (IOException ex) {
             JOptionPane.showMessageDialog(null, "Falha na conexão!");
         }
@@ -72,7 +71,7 @@ public class Client implements Runnable {
         }
     }
 
-    public void sendBord(Dado information) {
+    public void sendDado(String information) {
         try {
             this.turn = false;
             ObjectOutputStream out = new ObjectOutputStream(this.socket.getOutputStream());
@@ -82,18 +81,17 @@ public class Client implements Runnable {
         }
     }
 
-    private void receiveMove() {
+    private void receiveDado() {
         try {
-            ObjectInputStream in = new ObjectInputStream(this.socket.getInputStream());
-//            Move move = (Move) in.readObject();
+            ObjectInputStream input = new ObjectInputStream(this.socket.getInputStream());
+            System.out.println((String) input.readObject());
 //            this.controller.setMove(move);
         } catch (IOException ex) {
             if (ex instanceof SocketException) {
 //                this.controller.interrupt();
             }
-//        } catch (ClassNotFoundException ex) {
-//            Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
-//        }
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
