@@ -22,6 +22,9 @@ public class Board extends javax.swing.JFrame {
     private final ControladorJogo controlador = new ControladorJogo();
     private final ButtonSquare[][] tabuleiro = new ButtonSquare[15][15];
     private boolean jogarDeNovo = false;
+    
+    private final ImageIcon []dadoImages = new ImageIcon[6];
+
 
     /**
      * Creates new form NewJFrame
@@ -30,6 +33,42 @@ public class Board extends javax.swing.JFrame {
         initComponents();
         generateLudoBoard();
         initPawns();
+        initDado();
+    }
+    
+    private void initDado(){
+        try{
+            Image img = ImageIO.read(new FileInputStream("src\\main\\java\\assets\\dado-2.png"));
+            Image newImage = img.getScaledInstance(40, 40, Image.SCALE_DEFAULT);
+            dadoImages[0] = new ImageIcon(newImage);
+            
+            img = ImageIO.read(new FileInputStream("src\\main\\java\\assets\\dado-2.png"));
+            newImage = img.getScaledInstance(40, 40, Image.SCALE_DEFAULT);
+            dadoImages[1] = new ImageIcon(newImage);
+            
+            img = ImageIO.read(new FileInputStream("src\\main\\java\\assets\\dado-3.png"));
+            newImage = img.getScaledInstance(40, 40, Image.SCALE_DEFAULT);
+            dadoImages[2] = new ImageIcon(newImage);
+            
+            img = ImageIO.read(new FileInputStream("src\\main\\java\\assets\\dado-4.png"));
+            newImage = img.getScaledInstance(40, 40, Image.SCALE_DEFAULT);
+            dadoImages[3] = new ImageIcon(newImage);
+            
+            img = ImageIO.read(new FileInputStream("src\\main\\java\\assets\\dado-5.png"));
+            newImage = img.getScaledInstance(40, 40, Image.SCALE_DEFAULT);
+            dadoImages[4] = new ImageIcon(newImage);
+            
+            img = ImageIO.read(new FileInputStream("src\\main\\java\\assets\\dado-6.png"));
+            newImage = img.getScaledInstance(40, 40, Image.SCALE_DEFAULT);
+            dadoImages[5] = new ImageIcon(newImage);
+            
+            dadoImage.setIcon(dadoImages[0]);
+            
+        }catch(IOException ex){
+            System.out.println(ex);
+            JOptionPane.showMessageDialog(this, "Erro ao criar tabuleiro!", "Erro", JOptionPane.ERROR_MESSAGE);
+            this.dispose();
+        }
     }
 
     private void initPawns() {
@@ -48,6 +87,7 @@ public class Board extends javax.swing.JFrame {
     }
 
     private void generateLudoBoard() {
+        
         boardGame.setSize(600, 600);
         boardGame.setLayout(new GridLayout(15, 15));
 
@@ -260,6 +300,7 @@ public class Board extends javax.swing.JFrame {
         textJogadas = new javax.swing.JTextArea();
         selecaoNumero = new javax.swing.JSpinner();
         jogarSelecionado = new javax.swing.JButton();
+        dadoImage = new javax.swing.JButton();
         menuBar = new javax.swing.JMenuBar();
         menuJogar = new javax.swing.JMenu();
         menuSerHost = new javax.swing.JMenuItem();
@@ -320,6 +361,13 @@ public class Board extends javax.swing.JFrame {
             }
         });
 
+        dadoImage.setBackground(new java.awt.Color(0, 0, 0));
+        dadoImage.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        dadoImage.setFocusCycleRoot(true);
+        dadoImage.setMaximumSize(new java.awt.Dimension(40, 40));
+        dadoImage.setMinimumSize(new java.awt.Dimension(40, 40));
+        dadoImage.setPreferredSize(new java.awt.Dimension(40, 40));
+
         menuBar.setPreferredSize(new java.awt.Dimension(95, 20));
 
         menuJogar.setText("Jogar");
@@ -374,9 +422,12 @@ public class Board extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(scrollPaneJogadas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(buttonJogarDado, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(selecaoNumero)
-                    .addComponent(jogarSelecionado, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jogarSelecionado, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(buttonJogarDado, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(dadoImage, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -386,7 +437,9 @@ public class Board extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(scrollPaneJogadas, javax.swing.GroupLayout.PREFERRED_SIZE, 426, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(buttonJogarDado, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(dadoImage, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(buttonJogarDado, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(selecaoNumero, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -421,6 +474,7 @@ public class Board extends javax.swing.JFrame {
     private void buttonJogarDadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonJogarDadoActionPerformed
         controlador.jogarDado();
         textJogadas.setText(textJogadas.getText() + "\nJogador " + controlador.getJogadorAtual().toString() + ": " + controlador.getDado());
+        dadoImage.setIcon(dadoImages[controlador.getDado()-1]);
 
         if (controlador.getJogadorAtual().todosOsPeoesNoInicioOuFim()) {
             if (controlador.getDado() == 6) {
@@ -443,6 +497,7 @@ public class Board extends javax.swing.JFrame {
         controlador.jogarDado((int) selecaoNumero.getValue());
         textJogadas.setText(textJogadas.getText() + "\nJogador " + controlador.getJogadorAtual().toString() + ": " + controlador.getDado());
         controlador.proximoJogador();
+        dadoImage.setIcon(dadoImages[controlador.getDado()-1]);
 
         if (controlador.getJogadorAtual().todosOsPeoesNoInicioOuFim()) {
             if (controlador.getDado() == 6) {
@@ -527,6 +582,7 @@ public class Board extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel boardGame;
     private javax.swing.JButton buttonJogarDado;
+    private javax.swing.JButton dadoImage;
     private javax.swing.JCheckBoxMenuItem debug;
     private javax.swing.JButton jogarSelecionado;
     private javax.swing.JMenuBar menuBar;
