@@ -9,7 +9,6 @@ import java.awt.event.ActionEvent;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
@@ -35,48 +34,17 @@ public class Board extends javax.swing.JFrame {
 
     private void initPawns() {
         // Iniciando peões azul
-        tabuleiro[1][1].setBackground(Color.WHITE);
         tabuleiro[1][1].addPeao(controlador.getJogador1().getPeao(0));
-
-        tabuleiro[4][4].setBackground(Color.WHITE);
         tabuleiro[4][4].addPeao(controlador.getJogador1().getPeao(1));
-
-        tabuleiro[4][1].setBackground(Color.WHITE);
         tabuleiro[4][1].addPeao(controlador.getJogador1().getPeao(2));
-
-        tabuleiro[1][4].setBackground(Color.WHITE);
         tabuleiro[1][4].addPeao(controlador.getJogador1().getPeao(3));
 
         // Iniciando peões verde
-        tabuleiro[10][10].setBackground(Color.WHITE);
         tabuleiro[10][10].addPeao(controlador.getJogador2().getPeao(0));
-
-        tabuleiro[13][13].setBackground(Color.WHITE);
         tabuleiro[13][13].addPeao(controlador.getJogador2().getPeao(1));
-
-        tabuleiro[13][10].setBackground(Color.WHITE);
         tabuleiro[13][10].addPeao(controlador.getJogador2().getPeao(2));
-
-        tabuleiro[10][13].setBackground(Color.WHITE);
         tabuleiro[10][13].addPeao(controlador.getJogador2().getPeao(3));
 
-        // Iniciando peões vermelho
-        tabuleiro[1][13].setBackground(Color.WHITE);
-
-        tabuleiro[4][13].setBackground(Color.WHITE);
-
-        tabuleiro[4][10].setBackground(Color.WHITE);
-
-        tabuleiro[1][10].setBackground(Color.WHITE);
-
-        // Iniciando peões amarelo
-        tabuleiro[13][1].setBackground(Color.WHITE);
-
-        tabuleiro[13][4].setBackground(Color.WHITE);
-
-        tabuleiro[10][1].setBackground(Color.WHITE);
-
-        tabuleiro[10][4].setBackground(Color.WHITE);
     }
 
     private void generateLudoBoard() {
@@ -102,66 +70,107 @@ public class Board extends javax.swing.JFrame {
         // Criando os quatro quadrados coloridos dos cantos
         for (int i = 0; i < 6; i++) {
             for (int j = 0; j < 6; j++) {
-                tabuleiro[i][j].setBackground(Color.BLUE);
+                if(i > 0 && j > 0 && i < 5 && j < 5){
+                    tabuleiro[i][j].setBackground(Color.WHITE);
+                }
+                else {
+                    tabuleiro[i][j].setBackground(Color.RED);
+                }
+                tabuleiro[i][j].setBorder(null);
             }
         }
         for (int i = 9; i < 15; i++) {
             for (int j = 0; j < 6; j++) {
-                tabuleiro[i][j].setBackground(Color.YELLOW);
+                if(i > 9 && j > 0 && i < 14 && j < 5){
+                    tabuleiro[i][j].setBackground(Color.WHITE);
+                }
+                else {
+                    tabuleiro[i][j].setBackground(Color.GREEN);
+                }
+                tabuleiro[i][j].setBorder(null);
             }
         }
         for (int i = 0; i < 6; i++) {
             for (int j = 9; j < 15; j++) {
-                tabuleiro[i][j].setBackground(Color.RED);
+                if(i > 0 && j > 9 && i < 5 && j < 14){
+                    tabuleiro[i][j].setBackground(Color.WHITE);
+                }
+                else {
+                    tabuleiro[i][j].setBackground(Color.BLUE);
+                }
+                tabuleiro[i][j].setBorder(null);
             }
         }
         for (int i = 9; i < 15; i++) {
             for (int j = 9; j < 15; j++) {
-                tabuleiro[i][j].setBackground(Color.GREEN);
+                if(i > 9 && j > 9 && i < 14 && j < 14){
+                    tabuleiro[i][j].setBackground(Color.WHITE);
+                }
+                else {
+                    tabuleiro[i][j].setBackground(Color.YELLOW);
+                }
+                tabuleiro[i][j].setBorder(null);
             }
         }
 
         // Desenhando trilhas
-        tabuleiro[8][1].setBackground(Color.YELLOW);
-        tabuleiro[7][1].setBackground(Color.YELLOW);
+        tabuleiro[8][1].setBackground(Color.GREEN);
+        tabuleiro[7][1].setBackground(Color.GREEN);
 
-        for (int i = 1; i < 6; i++) {
-            tabuleiro[7][i].setBackground(Color.YELLOW);
+        for (int i = 1; i < 7; i++) {
+            tabuleiro[7][i].setBackground(Color.GREEN);
         }
 
-        tabuleiro[6][13].setBackground(Color.RED);
-        tabuleiro[7][13].setBackground(Color.RED);
+        tabuleiro[6][13].setBackground(Color.BLUE);
+        tabuleiro[7][13].setBackground(Color.BLUE);
 
-        for (int i = 9; i < 13; i++) {
-            tabuleiro[7][i].setBackground(Color.RED);
+        for (int i = 8; i < 13; i++) {
+            tabuleiro[7][i].setBackground(Color.BLUE);
         }
 
-        tabuleiro[1][6].setBackground(Color.BLUE);
-        tabuleiro[1][7].setBackground(Color.BLUE);
+        tabuleiro[1][6].setBackground(Color.RED);
+        tabuleiro[1][7].setBackground(Color.RED);
 
-        for (int i = 2; i < 6; i++) {
-            tabuleiro[i][7].setBackground(Color.BLUE);
+        for (int i = 2; i < 7; i++) {
+            tabuleiro[i][7].setBackground(Color.RED);
         }
 
-        tabuleiro[13][8].setBackground(Color.GREEN);
-        tabuleiro[13][7].setBackground(Color.GREEN);
+        tabuleiro[13][8].setBackground(Color.YELLOW);
+        tabuleiro[13][7].setBackground(Color.YELLOW);
 
-        for (int i = 9; i < 13; i++) {
-            tabuleiro[i][7].setBackground(Color.GREEN);
-        }
-
-        // Desenhando quadrado central (chegada)
-        for (int i = 6; i < 9; i++) {
-            for (int j = 6; j < 9; j++) {
-                tabuleiro[i][j].setBackground(Color.BLACK);
-            }
+        for (int i = 8; i < 13; i++) {
+            tabuleiro[i][7].setBackground(Color.YELLOW);
         }
 
         try {
-            Image img = ImageIO.read(new FileInputStream("src\\main\\java\\assets\\goal.png"));
-            Image newImage = img.getScaledInstance(30, 25, Image.SCALE_DEFAULT);
+            Image img = ImageIO.read(new FileInputStream("src\\main\\java\\assets\\center.png"));
+            Image newImage = img.getScaledInstance(40, 40, Image.SCALE_DEFAULT);
             tabuleiro[7][7].setIcon(new ImageIcon(newImage));
-            tabuleiro[7][7].setDisabledIcon(new ImageIcon(newImage));
+            tabuleiro[7][7].setBorder(null);
+
+            img = ImageIO.read(new FileInputStream("src\\main\\java\\assets\\arrow-red.png"));
+            newImage = img.getScaledInstance(45, 40, Image.SCALE_DEFAULT);
+            tabuleiro[0][7].setIcon(new ImageIcon(newImage));
+
+            img = ImageIO.read(new FileInputStream("src\\main\\java\\assets\\arrow-blue.png"));
+            newImage = img.getScaledInstance(45, 40, Image.SCALE_DEFAULT);
+            tabuleiro[7][14].setIcon(new ImageIcon(newImage));
+
+            img = ImageIO.read(new FileInputStream("src\\main\\java\\assets\\arrow-green.png"));
+            newImage = img.getScaledInstance(45, 40, Image.SCALE_DEFAULT);
+            tabuleiro[7][0].setIcon(new ImageIcon(newImage));
+
+            img = ImageIO.read(new FileInputStream("src\\main\\java\\assets\\arrow-yellow.png"));
+            newImage = img.getScaledInstance(45, 40, Image.SCALE_DEFAULT);
+            tabuleiro[14][7].setIcon(new ImageIcon(newImage));
+
+            img = ImageIO.read(new FileInputStream("src\\main\\java\\assets\\star.png"));
+            newImage = img.getScaledInstance(30, 30, Image.SCALE_DEFAULT);
+            tabuleiro[6][2].setIcon(new ImageIcon(newImage));
+            tabuleiro[2][8].setIcon(new ImageIcon(newImage));
+            tabuleiro[12][6].setIcon(new ImageIcon(newImage));
+            tabuleiro[8][12].setIcon(new ImageIcon(newImage));
+
         } catch (IOException ex) {
             System.out.println(ex);
             JOptionPane.showMessageDialog(this, "Erro ao criar tabuleiro!", "Erro", JOptionPane.ERROR_MESSAGE);

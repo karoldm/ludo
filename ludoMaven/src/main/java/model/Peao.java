@@ -32,13 +32,13 @@ public class Peao {
         try {
             switch (cor) {
                 case 0 ->
-                    this.icon = new ImageIcon(ImageIO.read(new FileInputStream("src\\main\\java\\assets\\peao-azul.png")));
-                case 1 ->
-                    this.icon = new ImageIcon(ImageIO.read(new FileInputStream("src\\main\\java\\assets\\peao-verde.png")));
-                case 2 ->
                     this.icon = new ImageIcon(ImageIO.read(new FileInputStream("src\\main\\java\\assets\\peao-vermelho.png")));
-                case 3 ->
+                case 1 ->
                     this.icon = new ImageIcon(ImageIO.read(new FileInputStream("src\\main\\java\\assets\\peao-amarelo.png")));
+                case 2 ->
+                    this.icon = new ImageIcon(ImageIO.read(new FileInputStream("src\\main\\java\\assets\\peao-azul.png")));
+                case 3 ->
+                    this.icon = new ImageIcon(ImageIO.read(new FileInputStream("src\\main\\java\\assets\\peao-verde.png")));
             }
         } catch (Exception ex) {
             System.out.println(ex);
