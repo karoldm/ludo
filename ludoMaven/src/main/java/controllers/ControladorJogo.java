@@ -2,13 +2,14 @@ package controllers;
 
 import model.Jogador;
 import model.Peao;
-import connection.Client;
+import connection.Connection;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.random.RandomGenerator;
+import javax.swing.JOptionPane;
 import model.Dado;
 import utils.PosicoesPeaoAzul;
 import utils.PosicoesPeaoVerde;
@@ -34,34 +35,35 @@ public class ControladorJogo {
             (byte) 1);
     private Dado information = new Dado();
     private Jogador jogadorAtual = null;
-    private Client client;
+    private Connection connection;
     private Thread thread;
 
     public ControladorJogo() {
-        this.client = new Client(this);
+        this.connection = new Connection(this);
         jogadorAtual = jogador1;
     }
 
     public void connect(String ip, int port) {
         try {
-            this.client.setPort(port);
-            this.client.setIp(InetAddress.getByName(ip));
-            this.client.connect();
+            this.connection.setPort(port);
+            this.connection.setIp(InetAddress.getByName(ip));
+            this.connection.connect();
+
         } catch (UnknownHostException ex) {
             Logger.getLogger(ControladorJogo.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
     public void host() {
-        this.client.hostServer();
+        this.connection.host();
     }
 
     public String getIP() {
-        return this.client.getIp().getHostAddress();
+        return this.connection.getIp().getHostAddress();
     }
 
     public String getPort() {
-        return Integer.toString(this.client.getPort());
+        return Integer.toString(this.connection.getPort());
     }
 
     /**
@@ -132,6 +134,12 @@ public class ControladorJogo {
         this.jogadorAtual = this.jogadorAtual == jogador1 ? jogador2 : jogador1;
     }
 
+    public void playerFound() {
+        this.thread = new Thread(this.connection);
+        this.thread.start();
+        JOptionPane.showMessageDialog(null, "Oponente conectado!");
+    }
+
     //retorna um numero aleatório entre 1 e 6 para simular o dado D6
     /**
      *
@@ -139,9 +147,9 @@ public class ControladorJogo {
     public void jogarDado() {
         RandomGenerator randomGenerator = new Random();
         information.setDado(randomGenerator.nextInt(6) + 1);
-        client.sendDado(String.valueOf(information.getDado()));
+        connection.sendDado(String.valueOf(information.getDado()));
 //         = randomGenerator.nextInt(6) + 1;
-//        client.sendMessage(String.valueOf(this.dado));
+//        connection.sendMessage(String.valueOf(this.dado));
     }
 
     /**

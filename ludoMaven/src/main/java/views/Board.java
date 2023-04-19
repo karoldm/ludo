@@ -217,14 +217,11 @@ public class Board extends javax.swing.JFrame {
         if (controlador.getDado() == 0) {
             return;
         }
-
         //recuperando o peão do quadrado clicado
         Peao peao = square.getPeao();
-
         //peao != null verifica se o jogador não clicou numa casa vazia
         //controlador.jogadaPermitida verifica se o jogador não tentou mover um peão inimigo
         if (peao != null && controlador.jogadaPermitida(peao.getCor())) {
-
             if (peao.getPosicao() == 57) {
                 System.out.println("Peao ja chegou na zona final");
                 return;
@@ -237,7 +234,6 @@ public class Board extends javax.swing.JFrame {
                     controlador.setDado(1);
                 }
             }
-
             //recuperando posição do peao no tabuleiro
             controlador.checarPosicao(peao);
             int[] posicoes = controlador.getPosicaoMap(peao.getPosicao());
@@ -245,7 +241,6 @@ public class Board extends javax.swing.JFrame {
             int j = posicoes[1];
             //recuperando possíveis peões na nova posição
             ArrayList<Peao> currPeoes = tabuleiro[i][j].getPeoes();
-
             for (Peao p : currPeoes) {
                 //Se existe um peão na nova posição e ele é do inimigo, movemos ele para a casa inicial
                 if (p.getCor() != peao.getCor()) {
@@ -260,21 +255,17 @@ public class Board extends javax.swing.JFrame {
                     break;
                 }
             }
-
             tabuleiro[i][j].addPeao(peao);
             square.removePeao(peao);
-
             controlador.setDado(0);
             buttonJogarDado.setEnabled(true);
             jogarSelecionado.setEnabled(true);
             System.out.println(peao.toString() + " - " + peao.getPosicao());
-
             if (jogarDeNovo) {
                 jogarDeNovo = false;
             } else {
                 controlador.proximoJogador();
             }
-
         } else {
             System.out.println("Jogada nao permitida");
         }
