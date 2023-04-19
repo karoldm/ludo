@@ -22,9 +22,8 @@ public class Board extends javax.swing.JFrame {
     private final ControladorJogo controlador = new ControladorJogo();
     private final ButtonSquare[][] tabuleiro = new ButtonSquare[15][15];
     private boolean jogarDeNovo = false;
-    
-    private final ImageIcon []dadoImages = new ImageIcon[6];
 
+    private final ImageIcon[] dadoImages = new ImageIcon[6];
 
     /**
      * Creates new form NewJFrame
@@ -35,36 +34,36 @@ public class Board extends javax.swing.JFrame {
         initPawns();
         initDado();
     }
-    
-    private void initDado(){
-        try{
+
+    private void initDado() {
+        try {
             Image img = ImageIO.read(new FileInputStream("src\\main\\java\\assets\\dado-2.png"));
             Image newImage = img.getScaledInstance(40, 40, Image.SCALE_DEFAULT);
             dadoImages[0] = new ImageIcon(newImage);
-            
+
             img = ImageIO.read(new FileInputStream("src\\main\\java\\assets\\dado-2.png"));
             newImage = img.getScaledInstance(40, 40, Image.SCALE_DEFAULT);
             dadoImages[1] = new ImageIcon(newImage);
-            
+
             img = ImageIO.read(new FileInputStream("src\\main\\java\\assets\\dado-3.png"));
             newImage = img.getScaledInstance(40, 40, Image.SCALE_DEFAULT);
             dadoImages[2] = new ImageIcon(newImage);
-            
+
             img = ImageIO.read(new FileInputStream("src\\main\\java\\assets\\dado-4.png"));
             newImage = img.getScaledInstance(40, 40, Image.SCALE_DEFAULT);
             dadoImages[3] = new ImageIcon(newImage);
-            
+
             img = ImageIO.read(new FileInputStream("src\\main\\java\\assets\\dado-5.png"));
             newImage = img.getScaledInstance(40, 40, Image.SCALE_DEFAULT);
             dadoImages[4] = new ImageIcon(newImage);
-            
+
             img = ImageIO.read(new FileInputStream("src\\main\\java\\assets\\dado-6.png"));
             newImage = img.getScaledInstance(40, 40, Image.SCALE_DEFAULT);
             dadoImages[5] = new ImageIcon(newImage);
-            
+
             dadoImage.setIcon(dadoImages[0]);
-            
-        }catch(IOException ex){
+
+        } catch (IOException ex) {
             System.out.println(ex);
             JOptionPane.showMessageDialog(this, "Erro ao criar tabuleiro!", "Erro", JOptionPane.ERROR_MESSAGE);
             this.dispose();
@@ -87,7 +86,7 @@ public class Board extends javax.swing.JFrame {
     }
 
     private void generateLudoBoard() {
-        
+
         boardGame.setSize(600, 600);
         boardGame.setLayout(new GridLayout(15, 15));
 
@@ -110,10 +109,9 @@ public class Board extends javax.swing.JFrame {
         // Criando os quatro quadrados coloridos dos cantos
         for (int i = 0; i < 6; i++) {
             for (int j = 0; j < 6; j++) {
-                if(i > 0 && j > 0 && i < 5 && j < 5){
+                if (i > 0 && j > 0 && i < 5 && j < 5) {
                     tabuleiro[i][j].setBackground(Color.WHITE);
-                }
-                else {
+                } else {
                     tabuleiro[i][j].setBackground(Color.RED);
                 }
                 tabuleiro[i][j].setBorder(null);
@@ -121,10 +119,9 @@ public class Board extends javax.swing.JFrame {
         }
         for (int i = 9; i < 15; i++) {
             for (int j = 0; j < 6; j++) {
-                if(i > 9 && j > 0 && i < 14 && j < 5){
+                if (i > 9 && j > 0 && i < 14 && j < 5) {
                     tabuleiro[i][j].setBackground(Color.WHITE);
-                }
-                else {
+                } else {
                     tabuleiro[i][j].setBackground(Color.GREEN);
                 }
                 tabuleiro[i][j].setBorder(null);
@@ -132,10 +129,9 @@ public class Board extends javax.swing.JFrame {
         }
         for (int i = 0; i < 6; i++) {
             for (int j = 9; j < 15; j++) {
-                if(i > 0 && j > 9 && i < 5 && j < 14){
+                if (i > 0 && j > 9 && i < 5 && j < 14) {
                     tabuleiro[i][j].setBackground(Color.WHITE);
-                }
-                else {
+                } else {
                     tabuleiro[i][j].setBackground(Color.BLUE);
                 }
                 tabuleiro[i][j].setBorder(null);
@@ -143,10 +139,9 @@ public class Board extends javax.swing.JFrame {
         }
         for (int i = 9; i < 15; i++) {
             for (int j = 9; j < 15; j++) {
-                if(i > 9 && j > 9 && i < 14 && j < 14){
+                if (i > 9 && j > 9 && i < 14 && j < 14) {
                     tabuleiro[i][j].setBackground(Color.WHITE);
-                }
-                else {
+                } else {
                     tabuleiro[i][j].setBackground(Color.YELLOW);
                 }
                 tabuleiro[i][j].setBorder(null);
@@ -474,7 +469,7 @@ public class Board extends javax.swing.JFrame {
     private void buttonJogarDadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonJogarDadoActionPerformed
         controlador.jogarDado();
         textJogadas.setText(textJogadas.getText() + "\nJogador " + controlador.getJogadorAtual().toString() + ": " + controlador.getDado());
-        dadoImage.setIcon(dadoImages[controlador.getDado()-1]);
+        dadoImage.setIcon(dadoImages[controlador.getDado() - 1]);
 
         if (controlador.getJogadorAtual().todosOsPeoesNoInicioOuFim()) {
             if (controlador.getDado() == 6) {
@@ -497,7 +492,7 @@ public class Board extends javax.swing.JFrame {
         controlador.jogarDado((int) selecaoNumero.getValue());
         textJogadas.setText(textJogadas.getText() + "\nJogador " + controlador.getJogadorAtual().toString() + ": " + controlador.getDado());
         controlador.proximoJogador();
-        dadoImage.setIcon(dadoImages[controlador.getDado()-1]);
+        dadoImage.setIcon(dadoImages[controlador.getDado() - 1]);
 
         if (controlador.getJogadorAtual().todosOsPeoesNoInicioOuFim()) {
             if (controlador.getDado() == 6) {
