@@ -3,7 +3,7 @@
  */
 package connection;
 
-import controllers.ControladorJogo;
+import controllers.Controller;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -14,6 +14,7 @@ import java.net.SocketException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import views.ButtonSquare;
 
 /**
  *
@@ -49,7 +50,7 @@ public class Connection implements Runnable {
     /**
      * Objeto da classe ControladorJogo
      */
-    public ControladorJogo controller;
+    public Controller controller;
 
     /**
      * Informa se o turno é do jogador ou do oponente
@@ -61,7 +62,7 @@ public class Connection implements Runnable {
      *
      * @param controller ControladorJogo
      */
-    public Connection(ControladorJogo controller) {
+    public Connection(Controller controller) {
         this.controller = controller;
     }
 
@@ -116,11 +117,11 @@ public class Connection implements Runnable {
      *
      * @param move Move
      */
-    public void sendDado(String dado) {
+    public void sendDado(ButtonSquare square) {
         try {
             this.myTurn = false;
             ObjectOutputStream out = new ObjectOutputStream(this.socket.getOutputStream());
-            out.writeObject(dado);
+            out.writeObject(square);
         } catch (IOException ex) {
             Logger.getLogger(Connection.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -133,9 +134,7 @@ public class Connection implements Runnable {
         try {
             ObjectInputStream in = new ObjectInputStream(this.socket.getInputStream());
 //            Move move = (Move) in.readObject();
-            int dado = Integer.parseInt((String) in.readObject());
-            System.out.println(dado);
-            this.controller.setDado(dado);
+            ButtonSquare dado = (ButtonSquare) in.readObject();
 //            this.controller.setMove(move);
         } catch (IOException ex) {
             if (ex instanceof SocketException) {

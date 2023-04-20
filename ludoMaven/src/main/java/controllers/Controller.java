@@ -19,7 +19,7 @@ import views.ButtonSquare;
  *
  * @author Karol
  */
-public class ControladorJogo {
+public class Controller {
 
     private final Jogador jogador1 = new Jogador(
             1,
@@ -37,10 +37,22 @@ public class ControladorJogo {
     private Jogador jogadorAtual = null;
     private Connection connection;
     private Thread thread;
+    private static Controller controller;
 
-    public ControladorJogo() {
+    public boolean ismyTurn() {
+        return connection.isMyTurn();
+    }
+
+    private Controller() {
         this.connection = new Connection(this);
         jogadorAtual = jogador1;
+    }
+
+    public static Controller getInstance() {
+        if (controller == null) {
+            controller = new Controller();
+        }
+        return controller;
     }
 
     public void connect(String ip, int port) {
@@ -48,9 +60,8 @@ public class ControladorJogo {
             this.connection.setPort(port);
             this.connection.setIp(InetAddress.getByName(ip));
             this.connection.connect();
-
         } catch (UnknownHostException ex) {
-            Logger.getLogger(ControladorJogo.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -147,7 +158,7 @@ public class ControladorJogo {
     public void jogarDado() {
         RandomGenerator randomGenerator = new Random();
         information.setDado(randomGenerator.nextInt(6) + 1);
-        connection.sendDado(String.valueOf(information.getDado()));
+//        connection.sendDado();
 //         = randomGenerator.nextInt(6) + 1;
 //        connection.sendMessage(String.valueOf(this.dado));
     }

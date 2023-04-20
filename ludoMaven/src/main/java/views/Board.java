@@ -1,6 +1,6 @@
 package views;
 
-import controllers.ControladorJogo;
+import controllers.Controller;
 import model.Peao;
 import java.awt.Color;
 import java.awt.GridLayout;
@@ -19,10 +19,9 @@ import javax.swing.JOptionPane;
  */
 public class Board extends javax.swing.JFrame {
 
-    private final ControladorJogo controlador = new ControladorJogo();
+    private final Controller controlador = Controller.getInstance();
     private final ButtonSquare[][] tabuleiro = new ButtonSquare[15][15];
     private boolean jogarDeNovo = false;
-
     private final ImageIcon[] dadoImages = new ImageIcon[6];
 
     /**
@@ -461,10 +460,10 @@ public class Board extends javax.swing.JFrame {
         controlador.jogarDado();
         textJogadas.setText(textJogadas.getText() + "\nJogador " + controlador.getJogadorAtual().toString() + ": " + controlador.getDado());
         dadoImage.setIcon(dadoImages[controlador.getDado() - 1]);
-
+//        if (controlador.ismyTurn()) {
         if (controlador.getJogadorAtual().todosOsPeoesNoInicioOuFim()) {
             if (controlador.getDado() == 6) {
-                this.jogarDeNovo = true;
+                jogarDeNovo = true;
                 buttonJogarDado.setEnabled(false);
             } else {
                 controlador.setDado(0);
@@ -475,6 +474,7 @@ public class Board extends javax.swing.JFrame {
                 jogarDeNovo = true;
             }
             buttonJogarDado.setEnabled(false);
+//            }
         }
     }//GEN-LAST:event_buttonJogarDadoActionPerformed
 

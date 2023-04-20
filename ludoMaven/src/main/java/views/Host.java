@@ -4,7 +4,7 @@
  */
 package views;
 
-import controllers.ControladorJogo;
+import controllers.Controller;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import javax.swing.JOptionPane;
@@ -15,12 +15,12 @@ import javax.swing.JOptionPane;
  */
 public class Host extends javax.swing.JFrame {
 
-    private ControladorJogo controller;
+    private Controller controller;
 
     /**
      * Creates new form IP
      */
-    public Host(ControladorJogo controller) {
+    public Host(Controller controller) {
         this.controller = controller;
         initComponents();
         try {
@@ -92,7 +92,7 @@ public class Host extends javax.swing.JFrame {
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[], ControladorJogo controller) {
+    public static void main(String args[], Controller controller) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
