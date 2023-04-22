@@ -23,6 +23,9 @@ public class Host implements Runnable {
         this.connection = connection;
     }
 
+    /**
+     *
+     */
     @Override
     public void run() {
         connection.initializeConnection();

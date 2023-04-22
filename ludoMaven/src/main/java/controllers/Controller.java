@@ -39,6 +39,10 @@ public class Controller {
     private Thread thread;
     private static Controller controller;
 
+    /**
+     *
+     * @return
+     */
     public boolean ismyTurn() {
         return connection.isMyTurn();
     }
@@ -48,6 +52,12 @@ public class Controller {
         jogadorAtual = jogador1;
     }
 
+    /**
+     * Implementação do padrão Singleton, apenas uma instância da classe é
+     * criado durante a execução
+     *
+     * @return
+     */
     public static Controller getInstance() {
         if (controller == null) {
             controller = new Controller();
@@ -55,6 +65,11 @@ public class Controller {
         return controller;
     }
 
+    /**
+     *
+     * @param ip
+     * @param port
+     */
     public void connect(String ip, int port) {
         try {
             this.connection.setPort(port);
@@ -65,14 +80,25 @@ public class Controller {
         }
     }
 
+    /**
+     *
+     */
     public void host() {
         this.connection.host();
     }
 
+    /**
+     *
+     * @return
+     */
     public String getIP() {
         return this.connection.getIp().getHostAddress();
     }
 
+    /**
+     *
+     * @return
+     */
     public String getPort() {
         return Integer.toString(this.connection.getPort());
     }
@@ -145,6 +171,9 @@ public class Controller {
         this.jogadorAtual = this.jogadorAtual == jogador1 ? jogador2 : jogador1;
     }
 
+    /**
+     *
+     */
     public void playerFound() {
         this.thread = new Thread(this.connection);
         this.thread.start();
@@ -180,10 +209,18 @@ public class Controller {
         return jogadorAtual.getPosicaoMap(posicao);
     }
 
+    /**
+     *
+     * @return
+     */
     public Jogador getJogador1() {
         return jogador1;
     }
 
+    /**
+     *
+     * @return
+     */
     public Jogador getJogador2() {
         return jogador2;
     }

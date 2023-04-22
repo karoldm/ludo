@@ -16,10 +16,6 @@ import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import views.ButtonSquare;
 
-/**
- *
- * @author fabio
- */
 public class Connection implements Runnable {
 
     /**
@@ -66,26 +62,49 @@ public class Connection implements Runnable {
         this.controller = controller;
     }
 
+    /**
+     *
+     * @return
+     */
     public InetAddress getIp() {
         return ip;
     }
 
+    /**
+     *
+     * @return
+     */
     public int getPort() {
         return port;
     }
 
+    /**
+     *
+     * @param ip
+     */
     public void setIp(InetAddress ip) {
         this.ip = ip;
     }
 
+    /**
+     *
+     * @param port
+     */
     public void setPort(int port) {
         this.port = port;
     }
 
+    /**
+     *
+     * @return
+     */
     public boolean isMyTurn() {
         return myTurn;
     }
 
+    /**
+     *
+     */
     @Override
     public void run() {
         while (true) {
@@ -115,6 +134,7 @@ public class Connection implements Runnable {
     /**
      * Envia o tabuleiro com a jogada do jogador
      *
+     * @param square
      * @param move Move
      */
     public void sendDado(ButtonSquare square) {
@@ -153,7 +173,7 @@ public class Connection implements Runnable {
             this.myTurn = false;
             this.socket = new Socket(ip, port);
             System.out.println("Conectado");
-//            this.controller.playerFound();
+            this.controller.playerFound();
         } catch (IOException ex) {
             JOptionPane.showMessageDialog(null, "Falha na conexão!");
         }
@@ -165,7 +185,6 @@ public class Connection implements Runnable {
     public void disconnect() {
         try {
             this.socket.close();
-
         } catch (IOException ex) {
             Logger.getLogger(Connection.class
                     .getName()).log(Level.SEVERE, null, ex);
@@ -188,6 +207,10 @@ public class Connection implements Runnable {
         this.hostThread.interrupt();
     }
 
+    /**
+     *
+     * @param myTurn
+     */
     public void setMyTurn(boolean myTurn) {
         this.myTurn = myTurn;
     }

@@ -54,9 +54,10 @@ public class Jogador {
      * @return
      */
     public boolean todosOsPeoesNoInicioOuFim() {
-        for(Peao p: this.peoes){
-            if(p.getPosicao() != 0 && p.getPosicao() != 57) 
+        for (Peao p : this.peoes) {
+            if (p.getPosicao() != 0 && p.getPosicao() != 57) {
                 return false;
+            }
         }
         return true;
     }
@@ -93,18 +94,34 @@ public class Jogador {
         this.jInicial = jInicial;
     }
 
+    /**
+     *
+     * @return
+     */
     public ArrayList<Square> getTabuleiro() {
         return tabuleiro;
     }
 
+    /**
+     *
+     * @param tabuleiro
+     */
     public void setTabuleiro(ArrayList<Square> tabuleiro) {
         this.tabuleiro = tabuleiro;
     }
 
+    /**
+     *
+     * @return
+     */
     public ArrayList<Peao> getPeoes() {
         return peoes;
     }
 
+    /**
+     *
+     * @param peoes
+     */
     public void setPeoes(ArrayList<Peao> peoes) {
         this.peoes = peoes;
     }
