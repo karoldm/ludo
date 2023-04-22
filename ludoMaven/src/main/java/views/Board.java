@@ -373,7 +373,6 @@ public class Board extends javax.swing.JFrame {
         });
         menuJogar.add(menuConectar);
 
-        debug.setSelected(true);
         debug.setText("Debug");
         debug.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -438,14 +437,14 @@ public class Board extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void menuSerHostActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuSerHostActionPerformed
-        Host hostIP = new Host(controlador);
+        Host hostIP = new Host();
         hostIP.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         hostIP.setVisible(true);
     }//GEN-LAST:event_menuSerHostActionPerformed
 
     private void menuConectarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuConectarActionPerformed
         // TODO add your handling code here:
-        Connect connect = new Connect(controlador);
+        Connect connect = new Connect();
         connect.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         connect.setVisible(true);
     }//GEN-LAST:event_menuConectarActionPerformed

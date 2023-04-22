@@ -4,9 +4,7 @@
  */
 package views;
 
-import java.io.IOException;
 import java.net.InetAddress;
-import java.net.UnknownHostException;
 import javax.swing.JOptionPane;
 import controllers.Controller;
 
@@ -19,11 +17,11 @@ public class Connect extends javax.swing.JFrame {
     /**
      * Creates new form ConnectIP
      */
-//    Isso vai dar problema
-    private Controller controller;
-
-    public Connect(Controller controller) {
-        this.controller = controller;
+    /**
+     *
+     * @param controller
+     */
+    public Connect() {
         initComponents();
     }
 
@@ -36,16 +34,16 @@ public class Connect extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jTextField1 = new javax.swing.JTextField();
-        jButton1 = new javax.swing.JButton();
+        ipField = new javax.swing.JTextField();
+        conectar = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
-        jButton1.setText("Conectar");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        conectar.setText("Conectar");
+        conectar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                conectarActionPerformed(evt);
             }
         });
 
@@ -58,8 +56,8 @@ public class Connect extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButton1)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 242, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(conectar)
+                    .addComponent(ipField, javax.swing.GroupLayout.PREFERRED_SIZE, 242, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel1))
                 .addGap(8, 8, 8))
         );
@@ -69,51 +67,34 @@ public class Connect extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(ipField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton1)
+                .addComponent(conectar)
                 .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void conectarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_conectarActionPerformed
         // TODO add your handling code here:
         InetAddress ip = null;
-//        try {
-        String inputIP = jTextField1.getText();
+        Controller controller = Controller.getInstance();
+        String inputIP = ipField.getText();
         if (inputIP.isEmpty()) {
             JOptionPane.showMessageDialog(null, "O campo IP não pode ser vazio!", "Erro de conexão", JOptionPane.ERROR_MESSAGE);
             return;
         } else {
+//            Deixar a porta padrão em 5000
             controller.connect(inputIP, 5000);
         }
-//            ip = InetAddress.getByName(inputIP);
-
-//        } catch (UnknownHostException e) {
-//            System.out.println(e);
-//            JOptionPane.showMessageDialog(null, "Não foi possível conectar!\nMotivo: " + e, "Erro de conexão", JOptionPane.ERROR_MESSAGE);
-//        }
-//        try {
-//            if (ip.isReachable(10)) {
-//                System.out.println("O ip existe");
-//                JOptionPane.showMessageDialog(null, "Conectado com sucesso!");
-//                this.dispose();
-//            } else {
-//                System.out.println("não existe");
-//                JOptionPane.showMessageDialog(null, "Não foi possível conectar!", "Erro de conexão", JOptionPane.ERROR_MESSAGE);
-//            }
-//        } catch (IOException i) {
-//
-//            System.out.println(i);
-//        }
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_conectarActionPerformed
 
     /**
      * @param args the command line arguments
+     * @param controller
      */
-    public static void main(String args[], Controller controller) {
+    public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
@@ -141,14 +122,14 @@ public class Connect extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Connect(controller).setVisible(true);
+                new Connect().setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
+    private javax.swing.JButton conectar;
+    private javax.swing.JTextField ipField;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JTextField jTextField1;
     // End of variables declaration//GEN-END:variables
 }
