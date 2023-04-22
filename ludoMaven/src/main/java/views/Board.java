@@ -32,6 +32,8 @@ public class Board extends javax.swing.JFrame {
         generateLudoBoard();
         initPawns();
         initDado();
+        selecaoNumero.setVisible(false);
+        jogarSelecionado.setVisible(false);
     }
 
     private void initDado() {
