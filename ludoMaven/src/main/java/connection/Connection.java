@@ -14,8 +14,13 @@ import java.net.SocketException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
-import views.ButtonSquare;
+import model.Peao;
+import views.Board;
 
+/**
+ *
+ * @author Willian
+ */
 public class Connection implements Runnable {
 
     /**
@@ -108,7 +113,7 @@ public class Connection implements Runnable {
     @Override
     public void run() {
         while (true) {
-            receiveDado();
+            receivePeao();
             myTurn = true;
         }
     }
@@ -134,13 +139,13 @@ public class Connection implements Runnable {
      * Envia o tabuleiro com a jogada do jogador
      *
      * @param square
-     * @param move Move
      */
-    public void sendDado(ButtonSquare square) {
+    public void sendPeao(Peao peao) {
         try {
             this.myTurn = false;
             ObjectOutputStream out = new ObjectOutputStream(this.socket.getOutputStream());
-            out.writeObject(square);
+            out.writeObject(peao);
+            System.out.println("Tabuleiro enviado");
         } catch (IOException ex) {
             Logger.getLogger(Connection.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -149,15 +154,15 @@ public class Connection implements Runnable {
     /**
      * Recebe o tabuleiro com a jogada do oponente
      */
-    private void receiveDado() {
+    private void receivePeao() {
         try {
             ObjectInputStream in = new ObjectInputStream(this.socket.getInputStream());
-//            Move move = (Move) in.readObject();
-            ButtonSquare dado = (ButtonSquare) in.readObject();
-//            this.controller.setMove(move);
+            Peao peao = (Peao) in.readObject();
+            this.controller.updateBoard(peao);
+            System.out.println("Tabuleiro recebido");
         } catch (IOException ex) {
             if (ex instanceof SocketException) {
-//                this.controller.interrupt();
+                this.controller.interrupt();
             }
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(Connection.class.getName()).log(Level.SEVERE, null, ex);

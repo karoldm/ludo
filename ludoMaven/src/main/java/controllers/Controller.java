@@ -13,6 +13,7 @@ import javax.swing.JOptionPane;
 import model.Dado;
 import utils.PosicoesPeaoAzul;
 import utils.PosicoesPeaoVerde;
+import views.Board;
 import views.ButtonSquare;
 
 /**
@@ -38,15 +39,12 @@ public class Controller {
     private Connection connection;
     private Thread thread;
     private static Controller controller;
+    private Board board;
 
     /**
      *
      * @return
      */
-    public boolean ismyTurn() {
-        return connection.isMyTurn();
-    }
-
     private Controller() {
         this.connection = new Connection(this);
         jogadorAtual = jogador1;
@@ -65,7 +63,17 @@ public class Controller {
         return controller;
     }
 
+    public void updateBoard(Peao peao) {
+        board.updateBoard(peao);
+    }
+
+    public void sendPeao(Peao peao) {
+        System.out.println("enviado controlador");
+        connection.sendPeao(peao);
+    }
+
     /**
+     * Conexão do jogo
      *
      * @param ip
      * @param port
@@ -80,6 +88,9 @@ public class Controller {
         }
     }
 
+    /**
+     *
+     */
     public void cancel() {
         connection.cancelHost();
         connection.disconnect();
@@ -92,20 +103,8 @@ public class Controller {
         this.connection.host();
     }
 
-    /**
-     *
-     * @return
-     */
-    public String getIP() {
-        return this.connection.getIp().getHostAddress();
-    }
-
-    /**
-     *
-     * @return
-     */
-    public String getPort() {
-        return Integer.toString(this.connection.getPort());
+    public void interrupt() {
+        thread.interrupt();
     }
 
     /**
@@ -147,30 +146,6 @@ public class Controller {
 
     /**
      *
-     * @return
-     */
-    public Jogador getJogadorAtual() {
-        return jogadorAtual;
-    }
-
-    /**
-     *
-     * @return
-     */
-    public int getDado() {
-        return information.getDado();
-    }
-
-    /**
-     *
-     * @param dado
-     */
-    public void setDado(int dado) {
-        information.setDado(dado);
-    }
-
-    /**
-     *
      */
     public void proximoJogador() {
         this.jogadorAtual = this.jogadorAtual == jogador1 ? jogador2 : jogador1;
@@ -192,9 +167,6 @@ public class Controller {
     public void jogarDado() {
         RandomGenerator randomGenerator = new Random();
         information.setDado(randomGenerator.nextInt(6) + 1);
-//        connection.sendDado();
-//         = randomGenerator.nextInt(6) + 1;
-//        connection.sendMessage(String.valueOf(this.dado));
     }
 
     /**
@@ -256,5 +228,89 @@ public class Controller {
         }
 
         this.move(p, novaPosicao);
+    }
+
+    public boolean ismyTurn() {
+        return connection.isMyTurn();
+    }
+
+    public Dado getInformation() {
+        return information;
+    }
+
+    public void setInformation(Dado information) {
+        this.information = information;
+    }
+
+    public Connection getConnection() {
+        return connection;
+    }
+
+    public void setConnection(Connection connection) {
+        this.connection = connection;
+    }
+
+    public Thread getThread() {
+        return thread;
+    }
+
+    public void setThread(Thread thread) {
+        this.thread = thread;
+    }
+
+    public static Controller getController() {
+        return controller;
+    }
+
+    public static void setController(Controller controller) {
+        Controller.controller = controller;
+    }
+
+    public Board getBoard() {
+        return board;
+    }
+
+    public void setBoard(Board board) {
+        this.board = board;
+    }
+
+    /**
+     *
+     * @return
+     */
+    public String getIP() {
+        return this.connection.getIp().getHostAddress();
+    }
+
+    /**
+     *
+     * @return
+     */
+    public String getPort() {
+        return Integer.toString(this.connection.getPort());
+    }
+
+    /**
+     *
+     * @return
+     */
+    public Jogador getJogadorAtual() {
+        return jogadorAtual;
+    }
+
+    /**
+     *
+     * @return
+     */
+    public int getDado() {
+        return information.getDado();
+    }
+
+    /**
+     *
+     * @param dado
+     */
+    public void setDado(int dado) {
+        information.setDado(dado);
     }
 }
