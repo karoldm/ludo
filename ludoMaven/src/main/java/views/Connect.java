@@ -19,7 +19,6 @@ public class Connect extends javax.swing.JFrame {
      */
     /**
      *
-     * @param controller
      */
     public Connect() {
         initComponents();
@@ -59,7 +58,7 @@ public class Connect extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel1)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(153, 197, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(ipField)
@@ -98,7 +97,6 @@ public class Connect extends javax.swing.JFrame {
 
     /**
      * @param args the command line arguments
-     * @param controller
      */
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
