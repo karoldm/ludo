@@ -80,6 +80,11 @@ public class Controller {
         }
     }
 
+    public void cancel() {
+        connection.cancelHost();
+        connection.disconnect();
+    }
+
     /**
      *
      */
@@ -174,7 +179,7 @@ public class Controller {
     /**
      *
      */
-    public void playerFound() {
+    public void jogadorConectado() {
         this.thread = new Thread(this.connection);
         this.thread.start();
         JOptionPane.showMessageDialog(null, "Oponente conectado!");
