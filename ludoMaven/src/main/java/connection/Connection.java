@@ -31,7 +31,7 @@ public class Connection implements Runnable {
     /**
      * Socket que aguarda um novo oponente
      */
-    private ServerSocket servSoc;
+    private ServerSocket socketServidor;
 
     /**
      * Objeto que guarda o IP
@@ -120,12 +120,11 @@ public class Connection implements Runnable {
         try {
             this.myTurn = true;
             this.ip = InetAddress.getLocalHost();
-            this.servSoc = new ServerSocket(5000);
-            this.port = this.servSoc.getLocalPort();
-            this.socket = this.servSoc.accept();
-            this.servSoc.close();
-            this.controller.playerFound();
-//            this.controller.playerFound();
+            this.socketServidor = new ServerSocket(5000);
+            this.port = this.socketServidor.getLocalPort();
+            this.socket = this.socketServidor.accept();
+            this.socketServidor.close();
+            this.controller.jogadorConectado();
         } catch (IOException ex) {
             Logger.getLogger(Connection.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -173,7 +172,7 @@ public class Connection implements Runnable {
             this.myTurn = false;
             this.socket = new Socket(ip, port);
             System.out.println("Conectado");
-            this.controller.playerFound();
+            this.controller.jogadorConectado();
         } catch (IOException ex) {
             JOptionPane.showMessageDialog(null, "Falha na conexão!");
         }
