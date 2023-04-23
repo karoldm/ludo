@@ -19,7 +19,7 @@ import javax.swing.JOptionPane;
  */
 public class Board extends javax.swing.JFrame {
 
-    private final Controller controlador = Controller.getInstance();
+    private final Controller controller = Controller.getInstance();
     private final ButtonSquare[][] tabuleiro = new ButtonSquare[15][15];
     private boolean jogarDeNovo = false;
     private final ImageIcon[] dadoImages = new ImageIcon[6];
@@ -73,16 +73,16 @@ public class Board extends javax.swing.JFrame {
 
     private void initPawns() {
         // Iniciando peões azul
-        tabuleiro[1][1].addPeao(controlador.getJogador1().getPeao(0));
-        tabuleiro[4][4].addPeao(controlador.getJogador1().getPeao(1));
-        tabuleiro[4][1].addPeao(controlador.getJogador1().getPeao(2));
-        tabuleiro[1][4].addPeao(controlador.getJogador1().getPeao(3));
+        tabuleiro[1][1].addPeao(controller.getJogador1().getPeao(0));
+        tabuleiro[4][4].addPeao(controller.getJogador1().getPeao(1));
+        tabuleiro[4][1].addPeao(controller.getJogador1().getPeao(2));
+        tabuleiro[1][4].addPeao(controller.getJogador1().getPeao(3));
 
         // Iniciando peões verde
-        tabuleiro[10][10].addPeao(controlador.getJogador2().getPeao(0));
-        tabuleiro[13][13].addPeao(controlador.getJogador2().getPeao(1));
-        tabuleiro[13][10].addPeao(controlador.getJogador2().getPeao(2));
-        tabuleiro[10][13].addPeao(controlador.getJogador2().getPeao(3));
+        tabuleiro[10][10].addPeao(controller.getJogador2().getPeao(0));
+        tabuleiro[13][13].addPeao(controller.getJogador2().getPeao(1));
+        tabuleiro[13][10].addPeao(controller.getJogador2().getPeao(2));
+        tabuleiro[10][13].addPeao(controller.getJogador2().getPeao(3));
 
     }
 
@@ -215,29 +215,29 @@ public class Board extends javax.swing.JFrame {
     }
 
     private void moverPeao(ButtonSquare square) {
-        if (controlador.getDado() == 0) {
+        if (controller.getDado() == 0) {
             return;
         }
         //recuperando o peão do quadrado clicado
         Peao peao = square.getPeao();
         //peao != null verifica se o jogador não clicou numa casa vazia
         //controlador.jogadaPermitida verifica se o jogador não tentou mover um peão inimigo
-        if (peao != null && controlador.jogadaPermitida(peao.getCor())) {
+        if (peao != null && controller.jogadaPermitida(peao.getCor())) {
             if (peao.getPosicao() == 57) {
                 System.out.println("Peao ja chegou na zona final");
                 return;
             }
             if (peao.getPosicao() == 0) {
-                if (controlador.getDado() != 6) {
+                if (controller.getDado() != 6) {
                     System.out.println("So pode mover esse peão se tirar 6");
                     return;
                 } else {
-                    controlador.setDado(1);
+                    controller.setDado(1);
                 }
             }
             //recuperando posição do peao no tabuleiro
-            controlador.checarPosicao(peao);
-            int[] posicoes = controlador.getPosicaoMap(peao.getPosicao());
+            controller.checarPosicao(peao);
+            int[] posicoes = controller.getPosicaoMap(peao.getPosicao());
             int i = posicoes[0];
             int j = posicoes[1];
             //recuperando possíveis peões na nova posição
@@ -245,27 +245,27 @@ public class Board extends javax.swing.JFrame {
             for (Peao p : currPeoes) {
                 //Se existe um peão na nova posição e ele é do inimigo, movemos ele para a casa inicial
                 if (p.getCor() != peao.getCor()) {
-                    controlador.move(p, 0);
-                    controlador.proximoJogador();
-                    int[] posicoesInciais = controlador.getPosicaoInicialDisponivel(this.tabuleiro);
+                    controller.move(p, 0);
+                    controller.proximoJogador();
+                    int[] posicoesInciais = controller.getPosicaoInicialDisponivel(this.tabuleiro);
                     int m = posicoesInciais[0];
                     int n = posicoesInciais[1];
                     tabuleiro[m][n].addPeao(p);
                     tabuleiro[i][j].removePeao(p);
-                    controlador.proximoJogador();
+                    controller.proximoJogador();
                     break;
                 }
             }
             tabuleiro[i][j].addPeao(peao);
             square.removePeao(peao);
-            controlador.setDado(0);
+            controller.setDado(0);
             buttonJogarDado.setEnabled(true);
             jogarSelecionado.setEnabled(true);
             System.out.println(peao.toString() + " - " + peao.getPosicao());
             if (jogarDeNovo) {
                 jogarDeNovo = false;
             } else {
-                controlador.proximoJogador();
+                controller.proximoJogador();
             }
         } else {
             System.out.println("Jogada nao permitida");
@@ -292,7 +292,8 @@ public class Board extends javax.swing.JFrame {
         menuJogar = new javax.swing.JMenu();
         menuSerHost = new javax.swing.JMenuItem();
         menuConectar = new javax.swing.JMenuItem();
-        debug = new javax.swing.JCheckBoxMenuItem();
+        menuDesconectar = new javax.swing.JMenuItem();
+        menuDebug = new javax.swing.JCheckBoxMenuItem();
         menuRegras = new javax.swing.JMenu();
         menuVerRegras = new javax.swing.JMenuItem();
 
@@ -375,13 +376,21 @@ public class Board extends javax.swing.JFrame {
         });
         menuJogar.add(menuConectar);
 
-        debug.setText("Debug");
-        debug.addActionListener(new java.awt.event.ActionListener() {
+        menuDesconectar.setText("Desconectar");
+        menuDesconectar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                debugActionPerformed(evt);
+                menuDesconectarActionPerformed(evt);
             }
         });
-        menuJogar.add(debug);
+        menuJogar.add(menuDesconectar);
+
+        menuDebug.setText("Debug");
+        menuDebug.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuDebugActionPerformed(evt);
+            }
+        });
+        menuJogar.add(menuDebug);
 
         menuBar.add(menuJogar);
 
@@ -458,20 +467,20 @@ public class Board extends javax.swing.JFrame {
     }//GEN-LAST:event_menuVerRegrasActionPerformed
 
     private void buttonJogarDadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonJogarDadoActionPerformed
-        controlador.jogarDado();
-        textJogadas.setText(textJogadas.getText() + "\nJogador " + controlador.getJogadorAtual().toString() + ": " + controlador.getDado());
-        dadoImage.setIcon(dadoImages[controlador.getDado() - 1]);
+        controller.jogarDado();
+        textJogadas.setText(textJogadas.getText() + "\nJogador " + controller.getJogadorAtual().toString() + ": " + controller.getDado());
+        dadoImage.setIcon(dadoImages[controller.getDado() - 1]);
 //        if (controlador.ismyTurn()) {
-        if (controlador.getJogadorAtual().todosOsPeoesNoInicioOuFim()) {
-            if (controlador.getDado() == 6) {
+        if (controller.getJogadorAtual().todosOsPeoesNoInicioOuFim()) {
+            if (controller.getDado() == 6) {
                 jogarDeNovo = true;
                 buttonJogarDado.setEnabled(false);
             } else {
-                controlador.setDado(0);
-                controlador.proximoJogador();
+                controller.setDado(0);
+                controller.proximoJogador();
             }
         } else {
-            if (controlador.getDado() == 6) {
+            if (controller.getDado() == 6) {
                 jogarDeNovo = true;
             }
             buttonJogarDado.setEnabled(false);
@@ -481,21 +490,21 @@ public class Board extends javax.swing.JFrame {
 
     private void jogarSelecionadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jogarSelecionadoActionPerformed
         // TODO add your handling code here:
-        controlador.jogarDado((int) selecaoNumero.getValue());
-        textJogadas.setText(textJogadas.getText() + "\nJogador " + controlador.getJogadorAtual().toString() + ": " + controlador.getDado());
-        controlador.proximoJogador();
-        dadoImage.setIcon(dadoImages[controlador.getDado() - 1]);
+        controller.jogarDado((int) selecaoNumero.getValue());
+        textJogadas.setText(textJogadas.getText() + "\nJogador " + controller.getJogadorAtual().toString() + ": " + controller.getDado());
+        controller.proximoJogador();
+        dadoImage.setIcon(dadoImages[controller.getDado() - 1]);
 
-        if (controlador.getJogadorAtual().todosOsPeoesNoInicioOuFim()) {
-            if (controlador.getDado() == 6) {
+        if (controller.getJogadorAtual().todosOsPeoesNoInicioOuFim()) {
+            if (controller.getDado() == 6) {
                 this.jogarDeNovo = true;
                 buttonJogarDado.setEnabled(false);
             } else {
-                controlador.setDado(0);
-                controlador.proximoJogador();
+                controller.setDado(0);
+                controller.proximoJogador();
             }
         } else {
-            if (controlador.getDado() == 6) {
+            if (controller.getDado() == 6) {
                 jogarDeNovo = true;
             }
             buttonJogarDado.setEnabled(false);
@@ -505,16 +514,21 @@ public class Board extends javax.swing.JFrame {
 
     }//GEN-LAST:event_jogarSelecionadoActionPerformed
 
-    private void debugActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_debugActionPerformed
+    private void menuDebugActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuDebugActionPerformed
         // TODO add your handling code here:
-        if (debug.isSelected()) {
+        if (menuDebug.isSelected()) {
             jogarSelecionado.setVisible(true);
             selecaoNumero.setVisible(true);
         } else {
             jogarSelecionado.setVisible(false);
             selecaoNumero.setVisible(false);
         }
-    }//GEN-LAST:event_debugActionPerformed
+    }//GEN-LAST:event_menuDebugActionPerformed
+
+    private void menuDesconectarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuDesconectarActionPerformed
+        // TODO add your handling code here:
+        controller.cancel();
+    }//GEN-LAST:event_menuDesconectarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -570,10 +584,11 @@ public class Board extends javax.swing.JFrame {
     private javax.swing.JPanel boardGame;
     private javax.swing.JButton buttonJogarDado;
     private javax.swing.JButton dadoImage;
-    private javax.swing.JCheckBoxMenuItem debug;
     private javax.swing.JButton jogarSelecionado;
     private javax.swing.JMenuBar menuBar;
     private javax.swing.JMenuItem menuConectar;
+    private javax.swing.JCheckBoxMenuItem menuDebug;
+    private javax.swing.JMenuItem menuDesconectar;
     private javax.swing.JMenu menuJogar;
     private javax.swing.JMenu menuRegras;
     private javax.swing.JMenuItem menuSerHost;

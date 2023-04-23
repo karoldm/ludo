@@ -30,12 +30,20 @@
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="menuConectarActionPerformed"/>
               </Events>
             </MenuItem>
-            <MenuItem class="javax.swing.JCheckBoxMenuItem" name="debug">
+            <MenuItem class="javax.swing.JMenuItem" name="menuDesconectar">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Desconectar"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="menuDesconectarActionPerformed"/>
+              </Events>
+            </MenuItem>
+            <MenuItem class="javax.swing.JCheckBoxMenuItem" name="menuDebug">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Debug"/>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="debugActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="menuDebugActionPerformed"/>
               </Events>
             </MenuItem>
           </SubComponents>
