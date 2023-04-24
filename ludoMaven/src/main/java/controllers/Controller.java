@@ -68,7 +68,6 @@ public class Controller {
     }
 
     public void sendPeao(Peao peao) {
-        System.out.println("enviado controlador");
         connection.sendPeao(peao);
     }
 
