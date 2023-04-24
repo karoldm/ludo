@@ -65,10 +65,12 @@ public class Controller {
 
     public void updateBoard(Peao peao) {
         board.updateBoard(peao);
+        board.enableButton();
     }
 
     public void sendPeao(Peao peao) {
         connection.sendPeao(peao);
+        board.disableButton();
     }
 
     /**

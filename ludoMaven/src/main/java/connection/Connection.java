@@ -128,7 +128,7 @@ public class Connection implements Runnable {
             this.socketServidor = new ServerSocket(5000);
             this.port = this.socketServidor.getLocalPort();
             this.socket = this.socketServidor.accept();
-            this.socketServidor.close();
+            //this.socketServidor.close();
             this.controller.jogadorConectado();
         } catch (IOException ex) {
             Logger.getLogger(Connection.class.getName()).log(Level.SEVERE, null, ex);
