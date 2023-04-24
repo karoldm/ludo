@@ -102,6 +102,7 @@ public class Controller {
      */
     public void host() {
         this.connection.host();
+        jogadorAtual = jogador2;
     }
 
     public void interrupt() {
@@ -148,10 +149,9 @@ public class Controller {
     /**
      *
      */
-    public void proximoJogador() {
-        this.jogadorAtual = this.jogadorAtual == jogador1 ? jogador2 : jogador1;
-    }
-
+//    public void proximoJogador() {
+//        this.jogadorAtual = this.jogadorAtual == jogador1 ? jogador2 : jogador1;
+//    }
     /**
      *
      */
