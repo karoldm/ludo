@@ -5,6 +5,7 @@
 package model;
 
 import java.io.Serializable;
+import views.ButtonSquare;
 
 /**
  *
@@ -14,12 +15,14 @@ public class Move implements Serializable {
 
     private Jogador jogador;
     private Dado dado;
-    private Peao peao;
+    private Peao peaoAtual;
+    private ButtonSquare oldSquare;
 
-    public Move(Jogador jogador, Dado dado, Peao peao) {
+    public Move(Jogador jogador, Dado dado, Peao peao, ButtonSquare oldSquare) {
         this.jogador = jogador;
         this.dado = dado;
-        this.peao = peao;
+        this.peaoAtual = peao;
+        this.oldSquare = oldSquare;
     }
 
     public Jogador getJogador() {
@@ -39,11 +42,27 @@ public class Move implements Serializable {
     }
 
     public Peao getPeao() {
-        return peao;
+        return peaoAtual;
     }
 
     public void setPeao(Peao peao) {
-        this.peao = peao;
+        this.peaoAtual = peao;
+    }
+
+    public Peao getPeaoAtual() {
+        return peaoAtual;
+    }
+
+    public void setPeaoAtual(Peao peaoAtual) {
+        this.peaoAtual = peaoAtual;
+    }
+
+    public ButtonSquare getOldSquare() {
+        return oldSquare;
+    }
+
+    public void setOldSquare(ButtonSquare oldSquare) {
+        this.oldSquare = oldSquare;
     }
 
 }

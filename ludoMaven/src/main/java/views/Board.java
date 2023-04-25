@@ -12,9 +12,8 @@ import java.util.ArrayList;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
+import model.Dado;
 import model.Move;
-import utils.PosicoesPeaoAmarelo;
-import utils.PosicoesPeaoVernelho;
 
 /**
  *
@@ -230,6 +229,10 @@ public class Board extends javax.swing.JFrame {
 
     }
 
+    public void updateChat(String texto) {
+        textJogadas.setText(textJogadas.getText() + "\nJogada do oponente: " + texto);
+    }
+
     private void moverPeao(ButtonSquare square) {
         if (controller.getDado() == 0) {
             return;
@@ -239,6 +242,8 @@ public class Board extends javax.swing.JFrame {
         //peao != null verifica se o jogador não clicou numa casa vazia
         //controlador.jogadaPermitida verifica se o jogador não tentou mover um peão inimigo
 //        if (peao != null && controller.jogadaPermitida(peao.getCor())) {
+        Dado dado = new Dado();
+        dado.setDado(controller.getDado());
         if (peao.getPosicao() == 57) {
             System.out.println("Peao ja chegou na zona final");
             return;
@@ -274,16 +279,18 @@ public class Board extends javax.swing.JFrame {
         }
         tabuleiro[i][j].addPeao(peao);
         square.removePeao(peao);
-        controller.setDado(0);
         enableButton();
         System.out.println(peao.toString() + " - " + peao.getPosicao());
+
+        controller.sendMove(new Move(controller.getJogadorAtual(), dado, peao, square));
+        controller.setBoard(this);
+        controller.setDado(0);
+
         if (jogarDeNovo) {
             jogarDeNovo = false;
         } else {
 //            controller.proximoJogador();
         }
-        controller.sendMove(new Move(controller.getJogadorAtual(), controller.getInformation(), peao));
-        controller.setBoard(this);
 //        } else {
 //            System.out.println("Jogada nao permitida");
 //        }
@@ -297,7 +304,8 @@ public class Board extends javax.swing.JFrame {
         int[] oldposicoes = move.getJogador().getPosicaoMap(move.getPeao().getPosicao());
         int oldi = oldposicoes[0];
         int oldj = oldposicoes[1];
-        ButtonSquare square = tabuleiro[oldi][oldj];
+//        ButtonSquare square = tabuleiro[oldi][oldj];
+
 //        int[] posicoes = null;
 //        if (controller.getJogador1().equals(controller.getJogadorAtual())) {
 //            posicoes = new PosicoesPeaoVernelho().posicao.get(peao.getPosicao());
@@ -306,6 +314,7 @@ public class Board extends javax.swing.JFrame {
 //        if (controller.getJogador2().equals(controller.getJogadorAtual())) {
 //            posicoes = new PosicoesPeaoAmarelo().posicao.get(peao.getPosicao());
 //        }
+        move.getOldSquare().removePeao(move.getPeao());
         int[] posicoes = move.getJogador().getPosicaoMap(move.getPeao().getPosicao());
         int i = posicoes[0];
         int j = posicoes[1];

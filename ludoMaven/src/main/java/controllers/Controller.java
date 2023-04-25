@@ -35,7 +35,7 @@ public class Controller {
             new PosicoesPeaoVerde(),
             "Jogador 2",
             (byte) 1);
-    private Dado information = new Dado();
+    private Dado dado = new Dado();
     private Jogador jogadorAtual = null;
     private Connection connection;
     private Thread thread;
@@ -64,8 +64,9 @@ public class Controller {
         return controller;
     }
 
-    public void updateBoard(Move move) {
+    public void updateMove(Move move) {
         board.moverPeao(move);
+        board.updateChat(String.valueOf(move.getDado().getDado()));
         board.enableButton();
     }
 
@@ -172,7 +173,7 @@ public class Controller {
      */
     public void jogarDado() {
         RandomGenerator randomGenerator = new Random();
-        information.setDado(randomGenerator.nextInt(6) + 1);
+        dado.setDado(randomGenerator.nextInt(6) + 1);
     }
 
     /**
@@ -180,7 +181,7 @@ public class Controller {
      * @param numero
      */
     public void jogarDado(int numero) {
-        information.setDado(numero);
+        dado.setDado(numero);
     }
 
     /**
@@ -225,7 +226,7 @@ public class Controller {
      * @param p
      */
     public void checarPosicao(Peao p) {
-        int novaPosicao = p.getPosicao() + information.getDado();
+        int novaPosicao = p.getPosicao() + dado.getDado();
         //Se o jogador passou da casa final, ele deve voltar
         //Só pode chegar na casa final se tirar o número exato no dado para parar nela
         if (novaPosicao > 57) {
@@ -241,11 +242,11 @@ public class Controller {
     }
 
     public Dado getInformation() {
-        return information;
+        return dado;
     }
 
     public void setInformation(Dado information) {
-        this.information = information;
+        this.dado = information;
     }
 
     public Connection getConnection() {
@@ -309,7 +310,7 @@ public class Controller {
      * @return
      */
     public int getDado() {
-        return information.getDado();
+        return dado.getDado();
     }
 
     /**
@@ -317,6 +318,6 @@ public class Controller {
      * @param dado
      */
     public void setDado(int dado) {
-        information.setDado(dado);
+        this.dado.setDado(dado);
     }
 }

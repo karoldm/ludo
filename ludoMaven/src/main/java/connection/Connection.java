@@ -157,7 +157,7 @@ public class Connection implements Runnable {
         try {
             ObjectInputStream in = new ObjectInputStream(this.socket.getInputStream());
             Move move = (Move) in.readObject();
-            this.controller.updateBoard(move);
+            this.controller.updateMove(move);
             System.out.println("Tabuleiro recebido");
         } catch (IOException ex) {
             if (ex instanceof SocketException) {
