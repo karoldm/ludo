@@ -11,6 +11,7 @@ import java.util.logging.Logger;
 import java.util.random.RandomGenerator;
 import javax.swing.JOptionPane;
 import model.Dado;
+import model.Move;
 import utils.PosicoesPeaoAzul;
 import utils.PosicoesPeaoVerde;
 import views.Board;
@@ -63,14 +64,18 @@ public class Controller {
         return controller;
     }
 
-    public void updateBoard(Peao peao) {
-        board.updateBoard(peao);
+    public void updateBoard(Move move) {
+        board.moverPeao(move);
         board.enableButton();
     }
 
-    public void sendPeao(Peao peao) {
-        connection.sendPeao(peao);
+    public void sendMove(Move move) {
+        connection.sendMove(move);
         board.disableButton();
+    }
+
+    public void updateChat() {
+
     }
 
     /**

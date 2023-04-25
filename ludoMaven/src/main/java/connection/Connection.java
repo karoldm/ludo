@@ -14,8 +14,7 @@ import java.net.SocketException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
-import model.Peao;
-import views.Board;
+import model.Move;
 
 /**
  *
@@ -140,12 +139,12 @@ public class Connection implements Runnable {
      *
      * @param square
      */
-    public void sendPeao(Peao peao) {
+    public void sendMove(Move move) {
         try {
-            this.myTurn = false;
+//            this.myTurn = false;
             ObjectOutputStream out = new ObjectOutputStream(this.socket.getOutputStream());
-            out.writeObject(peao);
-            System.out.println("Tabuleiro enviado");
+            out.writeObject(move);
+            System.out.println("Movimento enviado");
         } catch (IOException ex) {
             Logger.getLogger(Connection.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -157,8 +156,8 @@ public class Connection implements Runnable {
     private void receivePeao() {
         try {
             ObjectInputStream in = new ObjectInputStream(this.socket.getInputStream());
-            Peao peao = (Peao) in.readObject();
-            this.controller.updateBoard(peao);
+            Move move = (Move) in.readObject();
+            this.controller.updateBoard(move);
             System.out.println("Tabuleiro recebido");
         } catch (IOException ex) {
             if (ex instanceof SocketException) {
