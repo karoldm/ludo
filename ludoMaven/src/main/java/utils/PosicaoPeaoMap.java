@@ -1,12 +1,13 @@
 package utils;
 
+import java.io.Serializable;
 import java.util.HashMap;
 
 /**
  *
  * @author Karol
  */
-public abstract class PosicaoPeaoMap {
+public abstract class PosicaoPeaoMap implements Serializable {
 
     /**
      *

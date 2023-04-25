@@ -1,10 +1,12 @@
 package model;
 
+import java.io.Serializable;
+
 /**
  *
  * @author Willian
  */
-public class Dado {
+public class Dado implements Serializable {
 
     private int dado = 0;
 

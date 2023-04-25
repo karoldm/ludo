@@ -1,5 +1,6 @@
 package model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import utils.PosicaoPeaoMap;
 
@@ -7,7 +8,7 @@ import utils.PosicaoPeaoMap;
  *
  * @author Karol
  */
-public class Jogador {
+public class Jogador implements Serializable {
 
     private int iInicial;
     private int jInicial;
