@@ -82,7 +82,6 @@ public class Connect extends javax.swing.JFrame {
 
     private void conectarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_conectarActionPerformed
         // TODO add your handling code here:
-        InetAddress ip = null;
         Controller controller = Controller.getInstance();
         String inputIP = ipField.getText();
         if (inputIP.isEmpty()) {

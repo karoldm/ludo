@@ -25,7 +25,6 @@ public class Host extends javax.swing.JFrame {
         try {
             ipAddress.setText(InetAddress.getLocalHost().getHostAddress());
             controller.host();
-
         } catch (UnknownHostException e) {
             System.out.println(e);
             JOptionPane.showMessageDialog(null, "Não foi possivel obter o IP!", "Erro", JOptionPane.ERROR_MESSAGE);
