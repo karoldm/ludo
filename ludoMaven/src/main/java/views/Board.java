@@ -8,6 +8,8 @@ import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.util.ArrayList;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
@@ -217,18 +219,28 @@ public class Board extends javax.swing.JFrame {
         }
     }
 
+    /**
+     *
+     */
     public void enableButton() {
         buttonJogarDado.setEnabled(true);
         jogarSelecionado.setEnabled(true);
 
     }
 
+    /**
+     *
+     */
     public void disableButton() {
         buttonJogarDado.setEnabled(false);
         jogarSelecionado.setEnabled(true);
 
     }
 
+    /**
+     *
+     * @param texto
+     */
     public void updateChat(String texto) {
         textJogadas.setText(textJogadas.getText() + "\nJogada do oponente: " + texto);
     }
@@ -297,6 +309,10 @@ public class Board extends javax.swing.JFrame {
 //        controller.setBoard(this);
     }
 
+    /**
+     *
+     * @param move
+     */
     public void moverPeao(Move move) {
         //peao != null verifica se o jogador não clicou numa casa vazia
         //controlador.jogadaPermitida verifica se o jogador não tentou mover um peão inimigo
@@ -346,6 +362,8 @@ public class Board extends javax.swing.JFrame {
         menuJogar = new javax.swing.JMenu();
         menuSerHost = new javax.swing.JMenuItem();
         menuConectar = new javax.swing.JMenuItem();
+        menuClienteLocal = new javax.swing.JMenuItem();
+        menuConexaoLocal = new javax.swing.JMenuItem();
         menuDesconectar = new javax.swing.JMenuItem();
         menuDebug = new javax.swing.JCheckBoxMenuItem();
         menuRegras = new javax.swing.JMenu();
@@ -429,6 +447,22 @@ public class Board extends javax.swing.JFrame {
             }
         });
         menuJogar.add(menuConectar);
+
+        menuClienteLocal.setText("Host local");
+        menuClienteLocal.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuClienteLocalActionPerformed(evt);
+            }
+        });
+        menuJogar.add(menuClienteLocal);
+
+        menuConexaoLocal.setText("Conexão local");
+        menuConexaoLocal.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuConexaoLocalActionPerformed(evt);
+            }
+        });
+        menuJogar.add(menuConexaoLocal);
 
         menuDesconectar.setText("Desconectar");
         menuDesconectar.addActionListener(new java.awt.event.ActionListener() {
@@ -528,8 +562,8 @@ public class Board extends javax.swing.JFrame {
             jogarDeNovo = true;
             disableButton();
         } else {
-//            controller.sendMove(new Move(controller.getJogadorAtual(), controller.getInformation(), null));
-//            disableButton();
+            controller.sendMove(new Move(controller.getJogadorAtual(), controller.getInformation(), null, null));
+            disableButton();
         }
     }//GEN-LAST:event_buttonJogarDadoActionPerformed
 
@@ -569,6 +603,29 @@ public class Board extends javax.swing.JFrame {
         // TODO add your handling code here:
         controller.cancel();
     }//GEN-LAST:event_menuDesconectarActionPerformed
+
+    private void menuClienteLocalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuClienteLocalActionPerformed
+        // TODO add your handling code here:
+//            Deixar a porta padrão em 5000
+//        try {
+//            ipAddress.setText(InetAddress.getLocalHost().getHostAddress());
+        controller.host();
+//        } catch (UnknownHostException e) {
+//            System.out.println(e);
+//            JOptionPane.showMessageDialog(null, "Não foi possivel obter o IP!", "Erro", JOptionPane.ERROR_MESSAGE);
+//        }
+    }//GEN-LAST:event_menuClienteLocalActionPerformed
+
+    private void menuConexaoLocalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuConexaoLocalActionPerformed
+        // TODO add your handling code here:
+
+//            Deixar a porta padrão em 5000
+        try {
+            controller.connect(InetAddress.getLocalHost().getHostAddress(), 5000);
+        } catch (Exception ex) {
+            System.out.println(ex);
+        }
+    }//GEN-LAST:event_menuConexaoLocalActionPerformed
 
     /**
      * @param args the command line arguments
@@ -626,7 +683,9 @@ public class Board extends javax.swing.JFrame {
     private javax.swing.JButton dadoImage;
     private javax.swing.JButton jogarSelecionado;
     private javax.swing.JMenuBar menuBar;
+    private javax.swing.JMenuItem menuClienteLocal;
     private javax.swing.JMenuItem menuConectar;
+    private javax.swing.JMenuItem menuConexaoLocal;
     private javax.swing.JCheckBoxMenuItem menuDebug;
     private javax.swing.JMenuItem menuDesconectar;
     private javax.swing.JMenu menuJogar;
