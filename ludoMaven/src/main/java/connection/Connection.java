@@ -137,7 +137,7 @@ public class Connection implements Runnable {
     /**
      * Envia o tabuleiro com a jogada do jogador
      *
-     * @param square
+     * @param move
      */
     public void sendMove(Move move) {
         try {

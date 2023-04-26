@@ -64,17 +64,31 @@ public class Controller {
         return controller;
     }
 
+    /**
+     *
+     * @param move
+     */
     public void updateMove(Move move) {
-        board.moverPeao(move);
-        board.updateChat(String.valueOf(move.getDado().getDado()));
+        if (move.getPeao() != null) {
+            board.moverPeao(move);
+        }
         board.enableButton();
+
+        board.updateChat(String.valueOf(move.getDado().getDado()));
     }
 
+    /**
+     *
+     * @param move
+     */
     public void sendMove(Move move) {
         connection.sendMove(move);
         board.disableButton();
     }
 
+    /**
+     *
+     */
     public void updateChat() {
 
     }
@@ -111,6 +125,9 @@ public class Controller {
         jogadorAtual = jogador2;
     }
 
+    /**
+     *
+     */
     public void interrupt() {
         thread.interrupt();
     }
@@ -237,46 +254,90 @@ public class Controller {
         this.move(p, novaPosicao);
     }
 
+    /**
+     *
+     * @return
+     */
     public boolean ismyTurn() {
         return connection.isMyTurn();
     }
 
+    /**
+     *
+     * @return
+     */
     public Dado getInformation() {
         return dado;
     }
 
+    /**
+     *
+     * @param information
+     */
     public void setInformation(Dado information) {
         this.dado = information;
     }
 
+    /**
+     *
+     * @return
+     */
     public Connection getConnection() {
         return connection;
     }
 
+    /**
+     *
+     * @param connection
+     */
     public void setConnection(Connection connection) {
         this.connection = connection;
     }
 
+    /**
+     *
+     * @return
+     */
     public Thread getThread() {
         return thread;
     }
 
+    /**
+     *
+     * @param thread
+     */
     public void setThread(Thread thread) {
         this.thread = thread;
     }
 
+    /**
+     *
+     * @return
+     */
     public static Controller getController() {
         return controller;
     }
 
+    /**
+     *
+     * @param controller
+     */
     public static void setController(Controller controller) {
         Controller.controller = controller;
     }
 
+    /**
+     *
+     * @return
+     */
     public Board getBoard() {
         return board;
     }
 
+    /**
+     *
+     * @param board
+     */
     public void setBoard(Board board) {
         this.board = board;
     }
