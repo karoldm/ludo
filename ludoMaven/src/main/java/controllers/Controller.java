@@ -11,8 +11,10 @@ import java.util.logging.Logger;
 import java.util.random.RandomGenerator;
 import javax.swing.JOptionPane;
 import model.Dado;
+import model.Move;
 import utils.PosicoesPeaoAzul;
 import utils.PosicoesPeaoVerde;
+import views.Board;
 import views.ButtonSquare;
 
 /**
@@ -33,20 +35,17 @@ public class Controller {
             new PosicoesPeaoVerde(),
             "Jogador 2",
             (byte) 1);
-    private Dado information = new Dado();
+    private Dado dado = new Dado();
     private Jogador jogadorAtual = null;
     private Connection connection;
     private Thread thread;
     private static Controller controller;
+    private Board board;
 
     /**
      *
      * @return
      */
-    public boolean ismyTurn() {
-        return connection.isMyTurn();
-    }
-
     private Controller() {
         this.connection = new Connection(this);
         jogadorAtual = jogador1;
@@ -67,6 +66,36 @@ public class Controller {
 
     /**
      *
+     * @param move
+     */
+    public void updateMove(Move move) {
+        if (move.getPeao() != null) {
+            board.moverPeao(move);
+        }
+        board.enableButton();
+
+        board.updateChat(String.valueOf(move.getDado().getDado()));
+    }
+
+    /**
+     *
+     * @param move
+     */
+    public void sendMove(Move move) {
+        connection.sendMove(move);
+        board.disableButton();
+    }
+
+    /**
+     *
+     */
+    public void updateChat() {
+
+    }
+
+    /**
+     * Conexão do jogo
+     *
      * @param ip
      * @param port
      */
@@ -80,6 +109,9 @@ public class Controller {
         }
     }
 
+    /**
+     *
+     */
     public void cancel() {
         connection.cancelHost();
         connection.disconnect();
@@ -90,22 +122,14 @@ public class Controller {
      */
     public void host() {
         this.connection.host();
+        jogadorAtual = jogador2;
     }
 
     /**
      *
-     * @return
      */
-    public String getIP() {
-        return this.connection.getIp().getHostAddress();
-    }
-
-    /**
-     *
-     * @return
-     */
-    public String getPort() {
-        return Integer.toString(this.connection.getPort());
+    public void interrupt() {
+        thread.interrupt();
     }
 
     /**
@@ -147,35 +171,10 @@ public class Controller {
 
     /**
      *
-     * @return
      */
-    public Jogador getJogadorAtual() {
-        return jogadorAtual;
-    }
-
-    /**
-     *
-     * @return
-     */
-    public int getDado() {
-        return information.getDado();
-    }
-
-    /**
-     *
-     * @param dado
-     */
-    public void setDado(int dado) {
-        information.setDado(dado);
-    }
-
-    /**
-     *
-     */
-    public void proximoJogador() {
-        this.jogadorAtual = this.jogadorAtual == jogador1 ? jogador2 : jogador1;
-    }
-
+//    public void proximoJogador() {
+//        this.jogadorAtual = this.jogadorAtual == jogador1 ? jogador2 : jogador1;
+//    }
     /**
      *
      */
@@ -191,10 +190,7 @@ public class Controller {
      */
     public void jogarDado() {
         RandomGenerator randomGenerator = new Random();
-        information.setDado(randomGenerator.nextInt(6) + 1);
-//        connection.sendDado();
-//         = randomGenerator.nextInt(6) + 1;
-//        connection.sendMessage(String.valueOf(this.dado));
+        dado.setDado(randomGenerator.nextInt(6) + 1);
     }
 
     /**
@@ -202,7 +198,7 @@ public class Controller {
      * @param numero
      */
     public void jogarDado(int numero) {
-        information.setDado(numero);
+        dado.setDado(numero);
     }
 
     /**
@@ -247,7 +243,7 @@ public class Controller {
      * @param p
      */
     public void checarPosicao(Peao p) {
-        int novaPosicao = p.getPosicao() + information.getDado();
+        int novaPosicao = p.getPosicao() + dado.getDado();
         //Se o jogador passou da casa final, ele deve voltar
         //Só pode chegar na casa final se tirar o número exato no dado para parar nela
         if (novaPosicao > 57) {
@@ -256,5 +252,133 @@ public class Controller {
         }
 
         this.move(p, novaPosicao);
+    }
+
+    /**
+     *
+     * @return
+     */
+    public boolean ismyTurn() {
+        return connection.isMyTurn();
+    }
+
+    /**
+     *
+     * @return
+     */
+    public Dado getInformation() {
+        return dado;
+    }
+
+    /**
+     *
+     * @param information
+     */
+    public void setInformation(Dado information) {
+        this.dado = information;
+    }
+
+    /**
+     *
+     * @return
+     */
+    public Connection getConnection() {
+        return connection;
+    }
+
+    /**
+     *
+     * @param connection
+     */
+    public void setConnection(Connection connection) {
+        this.connection = connection;
+    }
+
+    /**
+     *
+     * @return
+     */
+    public Thread getThread() {
+        return thread;
+    }
+
+    /**
+     *
+     * @param thread
+     */
+    public void setThread(Thread thread) {
+        this.thread = thread;
+    }
+
+    /**
+     *
+     * @return
+     */
+    public static Controller getController() {
+        return controller;
+    }
+
+    /**
+     *
+     * @param controller
+     */
+    public static void setController(Controller controller) {
+        Controller.controller = controller;
+    }
+
+    /**
+     *
+     * @return
+     */
+    public Board getBoard() {
+        return board;
+    }
+
+    /**
+     *
+     * @param board
+     */
+    public void setBoard(Board board) {
+        this.board = board;
+    }
+
+    /**
+     *
+     * @return
+     */
+    public String getIP() {
+        return this.connection.getIp().getHostAddress();
+    }
+
+    /**
+     *
+     * @return
+     */
+    public String getPort() {
+        return Integer.toString(this.connection.getPort());
+    }
+
+    /**
+     *
+     * @return
+     */
+    public Jogador getJogadorAtual() {
+        return jogadorAtual;
+    }
+
+    /**
+     *
+     * @return
+     */
+    public int getDado() {
+        return dado.getDado();
+    }
+
+    /**
+     *
+     * @param dado
+     */
+    public void setDado(int dado) {
+        this.dado.setDado(dado);
     }
 }

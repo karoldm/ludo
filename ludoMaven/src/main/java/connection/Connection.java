@@ -14,8 +14,12 @@ import java.net.SocketException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
-import views.ButtonSquare;
+import model.Move;
 
+/**
+ *
+ * @author Willian
+ */
 public class Connection implements Runnable {
 
     /**
@@ -108,7 +112,7 @@ public class Connection implements Runnable {
     @Override
     public void run() {
         while (true) {
-            receiveDado();
+            receivePeao();
             myTurn = true;
         }
     }
@@ -123,7 +127,7 @@ public class Connection implements Runnable {
             this.socketServidor = new ServerSocket(5000);
             this.port = this.socketServidor.getLocalPort();
             this.socket = this.socketServidor.accept();
-            this.socketServidor.close();
+            //this.socketServidor.close();
             this.controller.jogadorConectado();
         } catch (IOException ex) {
             Logger.getLogger(Connection.class.getName()).log(Level.SEVERE, null, ex);
@@ -133,14 +137,14 @@ public class Connection implements Runnable {
     /**
      * Envia o tabuleiro com a jogada do jogador
      *
-     * @param square
-     * @param move Move
+     * @param move
      */
-    public void sendDado(ButtonSquare square) {
+    public void sendMove(Move move) {
         try {
-            this.myTurn = false;
+//            this.myTurn = false;
             ObjectOutputStream out = new ObjectOutputStream(this.socket.getOutputStream());
-            out.writeObject(square);
+            out.writeObject(move);
+            System.out.println("Movimento enviado");
         } catch (IOException ex) {
             Logger.getLogger(Connection.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -149,15 +153,15 @@ public class Connection implements Runnable {
     /**
      * Recebe o tabuleiro com a jogada do oponente
      */
-    private void receiveDado() {
+    private void receivePeao() {
         try {
             ObjectInputStream in = new ObjectInputStream(this.socket.getInputStream());
-//            Move move = (Move) in.readObject();
-            ButtonSquare dado = (ButtonSquare) in.readObject();
-//            this.controller.setMove(move);
+            Move move = (Move) in.readObject();
+            this.controller.updateMove(move);
+            System.out.println("Tabuleiro recebido");
         } catch (IOException ex) {
             if (ex instanceof SocketException) {
-//                this.controller.interrupt();
+                this.controller.interrupt();
             }
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(Connection.class.getName()).log(Level.SEVERE, null, ex);

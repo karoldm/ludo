@@ -3,6 +3,7 @@ package views;
 import model.Peao;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.io.Serializable;
 import java.util.ArrayList;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -12,7 +13,7 @@ import javax.swing.border.Border;
  *
  * @author Karol
  */
-public class ButtonSquare extends JButton {
+public class ButtonSquare extends JButton implements Serializable {
 
     private final ArrayList<Peao> peoes;
 
@@ -36,7 +37,7 @@ public class ButtonSquare extends JButton {
     public Peao getPeao() {
         return !peoes.isEmpty() ? peoes.get(0) : null;
     }
-    
+
     /**
      *
      * @return

@@ -8,10 +8,14 @@ import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.util.ArrayList;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
+import model.Dado;
+import model.Move;
 
 /**
  *
@@ -32,6 +36,7 @@ public class Board extends javax.swing.JFrame {
         generateLudoBoard();
         initPawns();
         initDado();
+        controller.setBoard(this);
         selecaoNumero.setVisible(false);
         jogarSelecionado.setVisible(false);
     }
@@ -214,6 +219,32 @@ public class Board extends javax.swing.JFrame {
         }
     }
 
+    /**
+     *
+     */
+    public void enableButton() {
+        buttonJogarDado.setEnabled(true);
+        jogarSelecionado.setEnabled(true);
+
+    }
+
+    /**
+     *
+     */
+    public void disableButton() {
+        buttonJogarDado.setEnabled(false);
+        jogarSelecionado.setEnabled(true);
+
+    }
+
+    /**
+     *
+     * @param texto
+     */
+    public void updateChat(String texto) {
+        textJogadas.setText(textJogadas.getText() + "\nJogada do oponente: " + texto);
+    }
+
     private void moverPeao(ButtonSquare square) {
         if (controller.getDado() == 0) {
             return;
@@ -222,54 +253,93 @@ public class Board extends javax.swing.JFrame {
         Peao peao = square.getPeao();
         //peao != null verifica se o jogador não clicou numa casa vazia
         //controlador.jogadaPermitida verifica se o jogador não tentou mover um peão inimigo
-        if (peao != null && controller.jogadaPermitida(peao.getCor())) {
-            if (peao.getPosicao() == 57) {
-                System.out.println("Peao ja chegou na zona final");
-                return;
-            }
-            if (peao.getPosicao() == 0) {
-                if (controller.getDado() != 6) {
-                    System.out.println("So pode mover esse peão se tirar 6");
-                    return;
-                } else {
-                    controller.setDado(1);
-                }
-            }
-            //recuperando posição do peao no tabuleiro
-            controller.checarPosicao(peao);
-            int[] posicoes = controller.getPosicaoMap(peao.getPosicao());
-            int i = posicoes[0];
-            int j = posicoes[1];
-            //recuperando possíveis peões na nova posição
-            ArrayList<Peao> currPeoes = tabuleiro[i][j].getPeoes();
-            for (Peao p : currPeoes) {
-                //Se existe um peão na nova posição e ele é do inimigo, movemos ele para a casa inicial
-                if (p.getCor() != peao.getCor()) {
-                    controller.move(p, 0);
-                    controller.proximoJogador();
-                    int[] posicoesInciais = controller.getPosicaoInicialDisponivel(this.tabuleiro);
-                    int m = posicoesInciais[0];
-                    int n = posicoesInciais[1];
-                    tabuleiro[m][n].addPeao(p);
-                    tabuleiro[i][j].removePeao(p);
-                    controller.proximoJogador();
-                    break;
-                }
-            }
-            tabuleiro[i][j].addPeao(peao);
-            square.removePeao(peao);
-            controller.setDado(0);
-            buttonJogarDado.setEnabled(true);
-            jogarSelecionado.setEnabled(true);
-            System.out.println(peao.toString() + " - " + peao.getPosicao());
-            if (jogarDeNovo) {
-                jogarDeNovo = false;
-            } else {
-                controller.proximoJogador();
-            }
-        } else {
-            System.out.println("Jogada nao permitida");
+//        if (peao != null && controller.jogadaPermitida(peao.getCor())) {
+        Dado dado = new Dado();
+        dado.setDado(controller.getDado());
+        if (peao.getPosicao() == 57) {
+            System.out.println("Peao ja chegou na zona final");
+            return;
         }
+        if (peao.getPosicao() == 0) {
+            if (controller.getDado() != 6) {
+                System.out.println("So pode mover esse peão se tirar 6");
+                return;
+            } else {
+                controller.setDado(1);
+            }
+        }
+        //recuperando posição do peao no tabuleiro
+        controller.checarPosicao(peao);
+        int[] posicoes = controller.getPosicaoMap(peao.getPosicao());
+        int i = posicoes[0];
+        int j = posicoes[1];
+        //recuperando possíveis peões na nova posição
+        ArrayList<Peao> currPeoes = tabuleiro[i][j].getPeoes();
+        for (Peao p : currPeoes) {
+            //Se existe um peão na nova posição e ele é do inimigo, movemos ele para a casa inicial
+            if (p.getCor() != peao.getCor()) {
+                controller.move(p, 0);
+//                controller.proximoJogador();
+                int[] posicoesInciais = controller.getPosicaoInicialDisponivel(this.tabuleiro);
+                int m = posicoesInciais[0];
+                int n = posicoesInciais[1];
+                tabuleiro[m][n].addPeao(p);
+                tabuleiro[i][j].removePeao(p);
+//                controller.proximoJogador();
+                break;
+            }
+        }
+        tabuleiro[i][j].addPeao(peao);
+        square.removePeao(peao);
+        enableButton();
+        System.out.println(peao.toString() + " - " + peao.getPosicao());
+
+        controller.sendMove(new Move(controller.getJogadorAtual(), dado, peao, square));
+        controller.setBoard(this);
+        controller.setDado(0);
+
+        if (jogarDeNovo) {
+            jogarDeNovo = false;
+        } else {
+//            controller.proximoJogador();
+        }
+//        } else {
+//            System.out.println("Jogada nao permitida");
+//        }
+//        controller.setBoard(this);
+    }
+
+    /**
+     *
+     * @param move
+     */
+    public void moverPeao(Move move) {
+        //peao != null verifica se o jogador não clicou numa casa vazia
+        //controlador.jogadaPermitida verifica se o jogador não tentou mover um peão inimigo
+//        int[] oldposicoes = controller.getPosicaoMap(peao.getPosicao());
+        int[] oldposicoes = move.getJogador().getPosicaoMap(move.getPeao().getPosicao());
+        int oldi = oldposicoes[0];
+        int oldj = oldposicoes[1];
+//        ButtonSquare square = tabuleiro[oldi][oldj];
+
+//        int[] posicoes = null;
+//        if (controller.getJogador1().equals(controller.getJogadorAtual())) {
+//            posicoes = new PosicoesPeaoVernelho().posicao.get(peao.getPosicao());
+//
+//        }
+//        if (controller.getJogador2().equals(controller.getJogadorAtual())) {
+//            posicoes = new PosicoesPeaoAmarelo().posicao.get(peao.getPosicao());
+//        }
+        move.getOldSquare().removePeao(move.getPeao());
+        int[] posicoes = move.getJogador().getPosicaoMap(move.getPeao().getPosicao());
+        int i = posicoes[0];
+        int j = posicoes[1];
+        tabuleiro[i][j].addPeao(move.getPeao());
+//            square.removePeao(peao);
+        controller.setDado(0);
+        enableButton();
+        System.out.println(move.getPeao().toString() + " - " + move.getPeao().getPosicao());
+
     }
 
     /**
@@ -292,6 +362,8 @@ public class Board extends javax.swing.JFrame {
         menuJogar = new javax.swing.JMenu();
         menuSerHost = new javax.swing.JMenuItem();
         menuConectar = new javax.swing.JMenuItem();
+        menuClienteLocal = new javax.swing.JMenuItem();
+        menuConexaoLocal = new javax.swing.JMenuItem();
         menuDesconectar = new javax.swing.JMenuItem();
         menuDebug = new javax.swing.JCheckBoxMenuItem();
         menuRegras = new javax.swing.JMenu();
@@ -375,6 +447,22 @@ public class Board extends javax.swing.JFrame {
             }
         });
         menuJogar.add(menuConectar);
+
+        menuClienteLocal.setText("Host local");
+        menuClienteLocal.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuClienteLocalActionPerformed(evt);
+            }
+        });
+        menuJogar.add(menuClienteLocal);
+
+        menuConexaoLocal.setText("Conexão local");
+        menuConexaoLocal.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuConexaoLocalActionPerformed(evt);
+            }
+        });
+        menuJogar.add(menuConexaoLocal);
 
         menuDesconectar.setText("Desconectar");
         menuDesconectar.addActionListener(new java.awt.event.ActionListener() {
@@ -470,21 +558,12 @@ public class Board extends javax.swing.JFrame {
         controller.jogarDado();
         textJogadas.setText(textJogadas.getText() + "\nJogador " + controller.getJogadorAtual().toString() + ": " + controller.getDado());
         dadoImage.setIcon(dadoImages[controller.getDado() - 1]);
-//        if (controlador.ismyTurn()) {
-        if (controller.getJogadorAtual().todosOsPeoesNoInicioOuFim()) {
-            if (controller.getDado() == 6) {
-                jogarDeNovo = true;
-                buttonJogarDado.setEnabled(false);
-            } else {
-                controller.setDado(0);
-                controller.proximoJogador();
-            }
+        if (controller.getDado() == 6) {
+            jogarDeNovo = true;
+            disableButton();
         } else {
-            if (controller.getDado() == 6) {
-                jogarDeNovo = true;
-            }
-            buttonJogarDado.setEnabled(false);
-//            }
+            controller.sendMove(new Move(controller.getJogadorAtual(), controller.getInformation(), null, null));
+            disableButton();
         }
     }//GEN-LAST:event_buttonJogarDadoActionPerformed
 
@@ -492,7 +571,7 @@ public class Board extends javax.swing.JFrame {
         // TODO add your handling code here:
         controller.jogarDado((int) selecaoNumero.getValue());
         textJogadas.setText(textJogadas.getText() + "\nJogador " + controller.getJogadorAtual().toString() + ": " + controller.getDado());
-        controller.proximoJogador();
+//        controller.proximoJogador();
         dadoImage.setIcon(dadoImages[controller.getDado() - 1]);
 
         if (controller.getJogadorAtual().todosOsPeoesNoInicioOuFim()) {
@@ -501,15 +580,12 @@ public class Board extends javax.swing.JFrame {
                 buttonJogarDado.setEnabled(false);
             } else {
                 controller.setDado(0);
-                controller.proximoJogador();
             }
         } else {
             if (controller.getDado() == 6) {
                 jogarDeNovo = true;
             }
-            buttonJogarDado.setEnabled(false);
-            buttonJogarDado.setEnabled(false);
-            jogarSelecionado.setEnabled(false);
+//            disableButton();
         }
 
     }//GEN-LAST:event_jogarSelecionadoActionPerformed
@@ -517,11 +593,9 @@ public class Board extends javax.swing.JFrame {
     private void menuDebugActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuDebugActionPerformed
         // TODO add your handling code here:
         if (menuDebug.isSelected()) {
-            jogarSelecionado.setVisible(true);
-            selecaoNumero.setVisible(true);
+            enableButton();
         } else {
-            jogarSelecionado.setVisible(false);
-            selecaoNumero.setVisible(false);
+            disableButton();
         }
     }//GEN-LAST:event_menuDebugActionPerformed
 
@@ -529,6 +603,29 @@ public class Board extends javax.swing.JFrame {
         // TODO add your handling code here:
         controller.cancel();
     }//GEN-LAST:event_menuDesconectarActionPerformed
+
+    private void menuClienteLocalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuClienteLocalActionPerformed
+        // TODO add your handling code here:
+//            Deixar a porta padrão em 5000
+//        try {
+//            ipAddress.setText(InetAddress.getLocalHost().getHostAddress());
+        controller.host();
+//        } catch (UnknownHostException e) {
+//            System.out.println(e);
+//            JOptionPane.showMessageDialog(null, "Não foi possivel obter o IP!", "Erro", JOptionPane.ERROR_MESSAGE);
+//        }
+    }//GEN-LAST:event_menuClienteLocalActionPerformed
+
+    private void menuConexaoLocalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuConexaoLocalActionPerformed
+        // TODO add your handling code here:
+
+//            Deixar a porta padrão em 5000
+        try {
+            controller.connect(InetAddress.getLocalHost().getHostAddress(), 5000);
+        } catch (Exception ex) {
+            System.out.println(ex);
+        }
+    }//GEN-LAST:event_menuConexaoLocalActionPerformed
 
     /**
      * @param args the command line arguments
@@ -586,7 +683,9 @@ public class Board extends javax.swing.JFrame {
     private javax.swing.JButton dadoImage;
     private javax.swing.JButton jogarSelecionado;
     private javax.swing.JMenuBar menuBar;
+    private javax.swing.JMenuItem menuClienteLocal;
     private javax.swing.JMenuItem menuConectar;
+    private javax.swing.JMenuItem menuConexaoLocal;
     private javax.swing.JCheckBoxMenuItem menuDebug;
     private javax.swing.JMenuItem menuDesconectar;
     private javax.swing.JMenu menuJogar;

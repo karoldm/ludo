@@ -18,7 +18,6 @@ public class Host extends javax.swing.JFrame {
     /**
      * Creates new form IP
      *
-     * @param controller
      */
     public Host() {
         Controller controller = Controller.getInstance();
@@ -26,7 +25,6 @@ public class Host extends javax.swing.JFrame {
         try {
             ipAddress.setText(InetAddress.getLocalHost().getHostAddress());
             controller.host();
-
         } catch (UnknownHostException e) {
             System.out.println(e);
             JOptionPane.showMessageDialog(null, "Não foi possivel obter o IP!", "Erro", JOptionPane.ERROR_MESSAGE);
@@ -69,7 +67,7 @@ public class Host extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel1)
-                        .addGap(0, 225, Short.MAX_VALUE))
+                        .addGap(0, 195, Short.MAX_VALUE))
                     .addComponent(ipAddress))
                 .addContainerGap())
         );
@@ -92,7 +90,6 @@ public class Host extends javax.swing.JFrame {
 
     /**
      * @param args the command line arguments
-     * @param controller
      */
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
