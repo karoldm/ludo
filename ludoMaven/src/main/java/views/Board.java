@@ -258,9 +258,13 @@ public class Board extends javax.swing.JFrame {
         if (peao == null) {
             return;
         }
+        if(peao.getCor() != controller.getJogadorAtual().getPeao(0).getCor()){
+            return;
+        }
 
         Dado dado = new Dado();
         dado.setDado(controller.getDado());
+        
         if (peao.getPosicao() == 57) {
             System.out.println("Peao ja chegou na zona final");
             return;
@@ -319,19 +323,14 @@ public class Board extends javax.swing.JFrame {
         int oldi = oldposicoes[0];
         int oldj = oldposicoes[1];
 
-        System.out.println(oldi);
-        System.out.println(oldj);
-
         tabuleiro[oldi][oldj].removePeao(move.getPeao());
-        System.out.println(tabuleiro[oldi][oldj].getIcon());
+        
         int[] posicoes = move.getJogador().getPosicaoMap(move.getPeao().getPosicao());
         int i = posicoes[0];
         int j = posicoes[1];
         tabuleiro[i][j].addPeao(move.getPeao());
         controller.setDado(0);
         enableButton();
-        System.out.println(move.getPeao().toString() + " - " + move.getPeao().getPosicao());
-
     }
 
     /**
