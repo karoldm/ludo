@@ -248,17 +248,17 @@ public class Board extends javax.swing.JFrame {
     }
 
     private void moverPeao(ButtonSquare square, int squarei, int squarej) {
-        
+
         if (controller.getDado() == 0) {
             return;
         }
         //recuperando o peão do quadrado clicado
         Peao peao = square.getPeao();
-        
-        if(peao == null){
+
+        if (peao == null) {
             return;
         }
-        
+
         Dado dado = new Dado();
         dado.setDado(controller.getDado());
         if (peao.getPosicao() == 57) {
@@ -307,19 +307,19 @@ public class Board extends javax.swing.JFrame {
 
         if (jogarDeNovo) {
             jogarDeNovo = false;
-        } 
+        }
     }
 
     /**
      *
      * @param move
      */
-    public void moverPeao(Move move) {
+    public void updateMove(Move move) {
         int[] oldposicoes = move.getOldPosition();
         int oldi = oldposicoes[0];
         int oldj = oldposicoes[1];
-        
-        System.out.println(oldi);        
+
+        System.out.println(oldi);
         System.out.println(oldj);
 
         tabuleiro[oldi][oldj].removePeao(move.getPeao());

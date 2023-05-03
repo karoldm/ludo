@@ -16,7 +16,7 @@ public class Peao implements Serializable {
     private int posicao;
     //0 = vermelho, 1 = azul, 2 = verde, 3 = amarelo
     private byte cor;
-    private int id;
+    private String id;
 
     /**
      *
@@ -105,7 +105,7 @@ public class Peao implements Serializable {
      *
      * @return
      */
-    public int getId() {
+    public String getId() {
         return id;
     }
 
@@ -113,7 +113,7 @@ public class Peao implements Serializable {
      *
      * @param id
      */
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 
