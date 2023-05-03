@@ -10,7 +10,7 @@ public class Peao implements Serializable {
     private int posicao; //posicao atual do peao no tabuleiro, considerando
     //o tabuleiro como um array
     private byte cor; //0 = vermelho, 1 = azul, 2 = verde, 3 = amarelo
-    private int id;
+    private String id;
 
     /**
      *
@@ -22,8 +22,9 @@ public class Peao implements Serializable {
      *
      * @param cor
      * @param posicaoInicial
+     * @param id
      */
-    public Peao(byte cor, int posicaoInicial, int id) {
+    public Peao(byte cor, int posicaoInicial, String id) {
         this.id = id;
         this.posicaoInicial = posicaoInicial;
         this.cor = cor;
@@ -93,11 +94,11 @@ public class Peao implements Serializable {
         this.cor = cor;
     }
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 
