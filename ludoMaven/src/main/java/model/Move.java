@@ -13,6 +13,8 @@ public class Move implements Serializable {
     private Dado dado;
     private Peao peaoAtual;
     private int[] oldPosition;
+    private boolean jogador1;
+    private boolean jogador2;
 
     /**
      * Construtor da classe para ser enviado pela rede
