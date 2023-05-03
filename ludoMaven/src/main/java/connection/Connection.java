@@ -46,11 +46,6 @@ public class Connection implements Runnable {
     public Controller controller;
 
     /**
-     * Informa se o turno é do jogador ou do oponente
-     */
-    private boolean myTurn;
-
-    /**
      * Construtor da classe
      *
      * @param controller ControladorJogo
@@ -93,20 +88,11 @@ public class Connection implements Runnable {
 
     /**
      *
-     * @return
-     */
-    public boolean isMyTurn() {
-        return myTurn;
-    }
-
-    /**
-     *
      */
     @Override
     public void run() {
         while (true) {
             receiveMove();
-            myTurn = true;
         }
     }
 
@@ -115,7 +101,6 @@ public class Connection implements Runnable {
      */
     public void initializeConnection() {
         try {
-            this.myTurn = true;
             this.ip = InetAddress.getLocalHost();
             this.socketServidor = new ServerSocket(5000);
             this.port = this.socketServidor.getLocalPort();
@@ -166,7 +151,6 @@ public class Connection implements Runnable {
      */
     public void connect() {
         try {
-            this.myTurn = false;
             this.socket = new Socket(ip, port);
             System.out.println("Conectado");
             this.controller.jogadorConectado();
@@ -201,14 +185,6 @@ public class Connection implements Runnable {
      */
     public void cancelHost() {
         this.hostThread.interrupt();
-    }
-
-    /**
-     *
-     * @param myTurn
-     */
-    public void setMyTurn(boolean myTurn) {
-        this.myTurn = myTurn;
     }
 
 }
