@@ -4,6 +4,10 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import utils.PosicaoPeaoMap;
 
+/**
+ *
+ * @author willm
+ */
 public class Jogador implements Serializable {
 
     private int iInicial;
@@ -14,6 +18,7 @@ public class Jogador implements Serializable {
     private ArrayList<Peao> peoes = new ArrayList<>();
 
     /**
+     * Construtor da classe de jgoador que possui
      *
      * @param iInicial
      * @param jInicial

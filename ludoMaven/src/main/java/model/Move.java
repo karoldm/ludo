@@ -3,6 +3,10 @@ package model;
 import java.io.Serializable;
 import views.ButtonSquare;
 
+/**
+ *
+ * @author willm
+ */
 public class Move implements Serializable {
 
     private Jogador jogador;
@@ -11,6 +15,7 @@ public class Move implements Serializable {
     private int[] oldPosition;
 
     /**
+     * Construtor da classe para ser enviado pela rede
      *
      * @param jogador
      * @param dado
@@ -88,10 +93,18 @@ public class Move implements Serializable {
         this.peaoAtual = peaoAtual;
     }
 
+    /**
+     *
+     * @return
+     */
     public int[] getOldPosition() {
         return oldPosition;
     }
 
+    /**
+     *
+     * @param oldPosition
+     */
     public void setOldPosition(int[] oldPosition) {
         this.oldPosition = oldPosition;
     }
