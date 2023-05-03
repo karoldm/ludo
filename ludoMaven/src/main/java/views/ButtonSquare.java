@@ -59,12 +59,12 @@ public class ButtonSquare extends JButton implements Serializable {
 
     /**
      *
-     * @param p
+     * @param peao
      */
     public void removePeao(Peao peao) {
         Peao peaoToRemove = null;
         for (Peao p : this.peoes) {
-            if (p.getId() == peao.getId()) {
+            if (p.getId().equals(peao.getId())) {
                 peaoToRemove = p;
                 break;
             }

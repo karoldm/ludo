@@ -33,7 +33,7 @@ public class Jogador implements Serializable {
         this.nome = nome;
 
         for (int i = 0; i < 4; i++) {
-            this.peoes.add(new Peao(cor, 0, i));
+            this.peoes.add(new Peao(cor, 0, (nome+"-"+i)));
         }
 
         //Iniciando tabuleiro com 58 casas

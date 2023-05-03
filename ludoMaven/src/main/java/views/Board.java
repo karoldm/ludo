@@ -9,7 +9,6 @@ import java.awt.event.ActionEvent;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.net.InetAddress;
-import java.net.UnknownHostException;
 import java.util.ArrayList;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
@@ -105,8 +104,10 @@ public class Board extends javax.swing.JFrame {
         for (int i = 0; i < 15; i++) {
             for (int j = 0; j < 15; j++) {
                 ButtonSquare squareButton = new ButtonSquare();
+                final int squarei = i;
+                final int squarej = j;
                 squareButton.addActionListener((ActionEvent e) -> {
-                    moverPeao(squareButton);
+                    moverPeao(squareButton, squarei, squarej);
                 });
                 boardGame.add(squareButton, i, j);
                 tabuleiro[i][j] = squareButton;
@@ -246,15 +247,18 @@ public class Board extends javax.swing.JFrame {
         textJogadas.setText(textJogadas.getText() + "\nJogada do oponente: " + texto);
     }
 
-    private void moverPeao(ButtonSquare square) {
+    private void moverPeao(ButtonSquare square, int squarei, int squarej) {
+
         if (controller.getDado() == 0) {
             return;
         }
         //recuperando o peão do quadrado clicado
         Peao peao = square.getPeao();
-        //peao != null verifica se o jogador não clicou numa casa vazia
-        //controlador.jogadaPermitida verifica se o jogador não tentou mover um peão inimigo
-//        if (peao != null && controller.jogadaPermitida(peao.getCor())) {
+
+        if (peao == null) {
+            return;
+        }
+
         Dado dado = new Dado();
         dado.setDado(controller.getDado());
         if (peao.getPosicao() == 57) {
@@ -269,6 +273,8 @@ public class Board extends javax.swing.JFrame {
                 controller.setDado(1);
             }
         }
+        int[] oldPositions = new int[]{squarei, squarej};
+
         //recuperando posição do peao no tabuleiro
         controller.checarPosicao(peao);
         int[] posicoes = controller.getPosicaoMap(peao.getPosicao());
@@ -295,19 +301,13 @@ public class Board extends javax.swing.JFrame {
         enableButton();
         System.out.println(peao.toString() + " - " + peao.getPosicao());
 
-        controller.sendMove(new Move(controller.getJogadorAtual(), dado, peao, posicoes));
+        controller.sendMove(new Move(controller.getJogadorAtual(), dado, peao, oldPositions));
         controller.setBoard(this);
         controller.setDado(0);
 
         if (jogarDeNovo) {
             jogarDeNovo = false;
-        } else {
-//            controller.proximoJogador();
         }
-//        } else {
-//            System.out.println("Jogada nao permitida");
-//        }
-//        controller.setBoard(this);
     }
 
     /**
@@ -315,12 +315,15 @@ public class Board extends javax.swing.JFrame {
      * @param move
      */
     public void updateMove(Move move) {
-        //peao != null verifica se o jogador não clicou numa casa vazia
-        //controlador.jogadaPermitida verifica se o jogador não tentou mover um peão inimigo
-        int[] oldposicoes = move.getJogador().getPosicaoMap(move.getPeao().getPosicao());
+        int[] oldposicoes = move.getOldPosition();
         int oldi = oldposicoes[0];
         int oldj = oldposicoes[1];
-        tabuleiro[move.getOldPosition()[0]][move.getOldPosition()[1]].removePeao(move.getPeao());
+
+        System.out.println(oldi);
+        System.out.println(oldj);
+
+        tabuleiro[oldi][oldj].removePeao(move.getPeao());
+        System.out.println(tabuleiro[oldi][oldj].getIcon());
         int[] posicoes = move.getJogador().getPosicaoMap(move.getPeao().getPosicao());
         int i = posicoes[0];
         int j = posicoes[1];
