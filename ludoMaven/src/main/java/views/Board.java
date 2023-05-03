@@ -563,7 +563,6 @@ public class Board extends javax.swing.JFrame {
         // TODO add your handling code here:
         controller.jogarDado((int) spinnerSelecaoNumero.getValue());
         textJogadas.setText(textJogadas.getText() + "\nJogador " + controller.getJogadorAtual().toString() + ": " + controller.getDado());
-//        controller.proximoJogador();
         dadoImage.setIcon(dadoImages[controller.getDado() - 1]);
 
         if (controller.getJogadorAtual().todosOsPeoesNoInicioOuFim()) {
@@ -577,9 +576,7 @@ public class Board extends javax.swing.JFrame {
             if (controller.getDado() == 6) {
                 jogarDeNovo = true;
             }
-//            disableButton();
         }
-
     }//GEN-LAST:event_buttonJogarSelecionadoActionPerformed
 
     private void menuDebugActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuDebugActionPerformed
@@ -592,20 +589,13 @@ public class Board extends javax.swing.JFrame {
     }//GEN-LAST:event_menuDebugActionPerformed
 
     private void menuDesconectarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuDesconectarActionPerformed
-        // TODO add your handling code here:
+
         controller.cancel();
     }//GEN-LAST:event_menuDesconectarActionPerformed
 
     private void menuHostLocalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuHostLocalActionPerformed
-        // TODO add your handling code here:
-//            Deixar a porta padrão em 5000
-//        try {
-//            ipAddress.setText(InetAddress.getLocalHost().getHostAddress());
+
         controller.host();
-//        } catch (UnknownHostException e) {
-//            System.out.println(e);
-//            JOptionPane.showMessageDialog(null, "Não foi possivel obter o IP!", "Erro", JOptionPane.ERROR_MESSAGE);
-//        }
         disableButton();
     }//GEN-LAST:event_menuHostLocalActionPerformed
 
