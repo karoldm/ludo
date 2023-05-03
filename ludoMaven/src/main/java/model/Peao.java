@@ -5,12 +5,18 @@ import java.io.Serializable;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 
+/**
+ *
+ * @author willm
+ */
 public class Peao implements Serializable {
 
-    private int posicao; //posicao atual do peao no tabuleiro, considerando
+    //posicao atual do peao no tabuleiro, considerando
     //o tabuleiro como um array
-    private byte cor; //0 = vermelho, 1 = azul, 2 = verde, 3 = amarelo
-    private String id;
+    private int posicao;
+    //0 = vermelho, 1 = azul, 2 = verde, 3 = amarelo
+    private byte cor;
+    private int id;
 
     /**
      *
@@ -19,6 +25,7 @@ public class Peao implements Serializable {
     private int posicaoInicial;
 
     /**
+     * A cor é definido pelo
      *
      * @param cor
      * @param posicaoInicial
@@ -94,11 +101,19 @@ public class Peao implements Serializable {
         this.cor = cor;
     }
 
-    public String getId() {
+    /**
+     *
+     * @return
+     */
+    public int getId() {
         return id;
     }
 
-    public void setId(String id) {
+    /**
+     *
+     * @param id
+     */
+    public void setId(int id) {
         this.id = id;
     }
 
