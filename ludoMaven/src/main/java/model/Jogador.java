@@ -63,7 +63,14 @@ public class Jogador implements Serializable {
         }
         return true;
     }
-
+    
+    public boolean todosOsPeoesNoFim(){
+        for(Peao p: this.peoes){
+            if(p.getPosicao() != 57) 
+                return false;
+        }
+        return true;
+    }
     /**
      *
      * @return
@@ -71,7 +78,7 @@ public class Jogador implements Serializable {
     public int getiInicial() {
         return iInicial;
     }
-
+    
     /**
      *
      * @param iInicial
