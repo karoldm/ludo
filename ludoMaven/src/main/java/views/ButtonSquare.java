@@ -61,8 +61,15 @@ public class ButtonSquare extends JButton implements Serializable {
      *
      * @param p
      */
-    public void removePeao(Peao p) {
-        peoes.remove(p);
+    public void removePeao(Peao peao) {
+        Peao peaoToRemove = null;
+        for (Peao p : this.peoes) {
+            if (p.getId() == peao.getId()) {
+                peaoToRemove = p;
+                break;
+            }
+        }
+        this.peoes.remove(peaoToRemove);
         if (peoes.isEmpty()) {
             this.setIcon(null);
         }

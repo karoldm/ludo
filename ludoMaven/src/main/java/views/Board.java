@@ -294,7 +294,7 @@ public class Board extends javax.swing.JFrame {
         enableButton();
         System.out.println(peao.toString() + " - " + peao.getPosicao());
 
-        controller.sendMove(new Move(controller.getJogadorAtual(), dado, peao, square));
+        controller.sendMove(new Move(controller.getJogadorAtual(), dado, peao, posicoes));
         controller.setBoard(this);
         controller.setDado(0);
 
@@ -330,7 +330,7 @@ public class Board extends javax.swing.JFrame {
 //        if (controller.getJogador2().equals(controller.getJogadorAtual())) {
 //            posicoes = new PosicoesPeaoAmarelo().posicao.get(peao.getPosicao());
 //        }
-        move.getOldSquare().removePeao(move.getPeao());
+        tabuleiro[move.getOldPosition()[0]][move.getOldPosition()[1]].removePeao(move.getPeao());
         int[] posicoes = move.getJogador().getPosicaoMap(move.getPeao().getPosicao());
         int i = posicoes[0];
         int j = posicoes[1];
@@ -559,6 +559,7 @@ public class Board extends javax.swing.JFrame {
         textJogadas.setText(textJogadas.getText() + "\nJogador " + controller.getJogadorAtual().toString() + ": " + controller.getDado());
         dadoImage.setIcon(dadoImages[controller.getDado() - 1]);
         if (controller.getDado() == 6) {
+            controller.sendMove(new Move(controller.getJogadorAtual(), controller.getInformation(), null, null));
             jogarDeNovo = true;
             disableButton();
         } else {
