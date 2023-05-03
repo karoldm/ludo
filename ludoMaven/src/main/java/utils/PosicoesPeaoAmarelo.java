@@ -1,9 +1,5 @@
 package utils;
 
-/**
- *
- * @author Karol
- */
 public class PosicoesPeaoAmarelo extends PosicaoPeaoMap {
 
     /**

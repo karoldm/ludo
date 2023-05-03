@@ -5,10 +5,6 @@ import java.io.Serializable;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 
-/**
- *
- * @author Karol
- */
 public class Peao implements Serializable {
 
     private int posicao; //posicao atual do peao no tabuleiro, considerando
