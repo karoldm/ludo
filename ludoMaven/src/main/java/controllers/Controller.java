@@ -257,14 +257,6 @@ public class Controller {
      *
      * @return
      */
-    public boolean ismyTurn() {
-        return connection.isMyTurn();
-    }
-
-    /**
-     *
-     * @return
-     */
     public Dado getInformation() {
         return dado;
     }
