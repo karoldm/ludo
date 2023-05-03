@@ -2,10 +2,6 @@ package utils;
 
 import java.io.Serializable;
 
-/**
- *
- * @author Karol
- */
 public class PosicoesPeaoAzul extends PosicaoPeaoMap implements Serializable {
 
     /**

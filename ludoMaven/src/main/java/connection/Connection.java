@@ -1,6 +1,3 @@
-/*
- * Classe responsável pela conexão entre os jogadores
- */
 package connection;
 
 import controllers.Controller;
@@ -16,10 +13,6 @@ import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import model.Move;
 
-/**
- *
- * @author Willian
- */
 public class Connection implements Runnable {
 
     /**
@@ -112,7 +105,7 @@ public class Connection implements Runnable {
     @Override
     public void run() {
         while (true) {
-            receivePeao();
+            receiveMove();
             myTurn = true;
         }
     }
@@ -135,7 +128,7 @@ public class Connection implements Runnable {
     }
 
     /**
-     * Envia o tabuleiro com a jogada do jogador
+     * Envia o movimento realizado pelo jogador
      *
      * @param move
      */
@@ -151,9 +144,9 @@ public class Connection implements Runnable {
     }
 
     /**
-     * Recebe o tabuleiro com a jogada do oponente
+     * Recebe o movimento realizado pelo jogador
      */
-    private void receivePeao() {
+    private void receiveMove() {
         try {
             ObjectInputStream in = new ObjectInputStream(this.socket.getInputStream());
             Move move = (Move) in.readObject();

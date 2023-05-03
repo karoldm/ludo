@@ -17,10 +17,6 @@ import utils.PosicoesPeaoVerde;
 import views.Board;
 import views.ButtonSquare;
 
-/**
- *
- * @author Karol
- */
 public class Controller {
 
     private final Jogador jogador1 = new Jogador(
@@ -73,7 +69,6 @@ public class Controller {
             board.moverPeao(move);
         }
         board.enableButton();
-
         board.updateChat(String.valueOf(move.getDado().getDado()));
     }
 

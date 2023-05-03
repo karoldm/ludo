@@ -1,12 +1,5 @@
-/*
- * Thread para que o host fique esperando uma nova conexão
- */
 package connection;
 
-/**
- *
- * @author fabio
- */
 public class Host implements Runnable {
 
     /**

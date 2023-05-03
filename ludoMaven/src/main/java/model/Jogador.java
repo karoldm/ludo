@@ -4,10 +4,6 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import utils.PosicaoPeaoMap;
 
-/**
- *
- * @author Karol
- */
 public class Jogador implements Serializable {
 
     private int iInicial;
