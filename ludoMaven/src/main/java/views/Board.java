@@ -37,8 +37,9 @@ public class Board extends javax.swing.JFrame {
         initPawns();
         initDado();
         controller.setBoard(this);
-        selecaoNumero.setVisible(false);
-        jogarSelecionado.setVisible(false);
+        spinnerSelecaoNumero.setVisible(false);
+        buttonJogarSelecionado.setVisible(false);
+        disableButton();
     }
 
     private void initDado() {
@@ -224,7 +225,7 @@ public class Board extends javax.swing.JFrame {
      */
     public void enableButton() {
         buttonJogarDado.setEnabled(true);
-        jogarSelecionado.setEnabled(true);
+        buttonJogarSelecionado.setEnabled(true);
 
     }
 
@@ -233,7 +234,7 @@ public class Board extends javax.swing.JFrame {
      */
     public void disableButton() {
         buttonJogarDado.setEnabled(false);
-        jogarSelecionado.setEnabled(true);
+        buttonJogarSelecionado.setEnabled(true);
 
     }
 
@@ -343,14 +344,14 @@ public class Board extends javax.swing.JFrame {
         buttonJogarDado = new javax.swing.JButton();
         scrollPaneJogadas = new javax.swing.JScrollPane();
         textJogadas = new javax.swing.JTextArea();
-        selecaoNumero = new javax.swing.JSpinner();
-        jogarSelecionado = new javax.swing.JButton();
+        spinnerSelecaoNumero = new javax.swing.JSpinner();
+        buttonJogarSelecionado = new javax.swing.JButton();
         dadoImage = new javax.swing.JButton();
         menuBar = new javax.swing.JMenuBar();
         menuJogar = new javax.swing.JMenu();
         menuSerHost = new javax.swing.JMenuItem();
         menuConectar = new javax.swing.JMenuItem();
-        menuClienteLocal = new javax.swing.JMenuItem();
+        menuHostLocal = new javax.swing.JMenuItem();
         menuConexaoLocal = new javax.swing.JMenuItem();
         menuDesconectar = new javax.swing.JMenuItem();
         menuDebug = new javax.swing.JCheckBoxMenuItem();
@@ -402,10 +403,10 @@ public class Board extends javax.swing.JFrame {
         textJogadas.setRows(5);
         scrollPaneJogadas.setViewportView(textJogadas);
 
-        jogarSelecionado.setText("Jogar número selecionado");
-        jogarSelecionado.addActionListener(new java.awt.event.ActionListener() {
+        buttonJogarSelecionado.setText("Jogar número selecionado");
+        buttonJogarSelecionado.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jogarSelecionadoActionPerformed(evt);
+                buttonJogarSelecionadoActionPerformed(evt);
             }
         });
 
@@ -436,13 +437,13 @@ public class Board extends javax.swing.JFrame {
         });
         menuJogar.add(menuConectar);
 
-        menuClienteLocal.setText("Host local");
-        menuClienteLocal.addActionListener(new java.awt.event.ActionListener() {
+        menuHostLocal.setText("Host local");
+        menuHostLocal.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                menuClienteLocalActionPerformed(evt);
+                menuHostLocalActionPerformed(evt);
             }
         });
-        menuJogar.add(menuClienteLocal);
+        menuJogar.add(menuHostLocal);
 
         menuConexaoLocal.setText("Conexão local");
         menuConexaoLocal.addActionListener(new java.awt.event.ActionListener() {
@@ -493,8 +494,8 @@ public class Board extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(scrollPaneJogadas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(selecaoNumero)
-                    .addComponent(jogarSelecionado, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(spinnerSelecaoNumero)
+                    .addComponent(buttonJogarSelecionado, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(buttonJogarDado, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -512,9 +513,9 @@ public class Board extends javax.swing.JFrame {
                             .addComponent(dadoImage, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(buttonJogarDado, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(selecaoNumero, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(spinnerSelecaoNumero, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jogarSelecionado, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(buttonJogarSelecionado, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 32, Short.MAX_VALUE))
                     .addComponent(boardGame, javax.swing.GroupLayout.DEFAULT_SIZE, 586, Short.MAX_VALUE))
                 .addContainerGap())
@@ -527,6 +528,7 @@ public class Board extends javax.swing.JFrame {
         Host hostIP = new Host();
         hostIP.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         hostIP.setVisible(true);
+        disableButton();
     }//GEN-LAST:event_menuSerHostActionPerformed
 
     private void menuConectarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuConectarActionPerformed
@@ -534,6 +536,7 @@ public class Board extends javax.swing.JFrame {
         Connect connect = new Connect();
         connect.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         connect.setVisible(true);
+        enableButton();
     }//GEN-LAST:event_menuConectarActionPerformed
 
     private void menuVerRegrasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuVerRegrasActionPerformed
@@ -556,9 +559,9 @@ public class Board extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_buttonJogarDadoActionPerformed
 
-    private void jogarSelecionadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jogarSelecionadoActionPerformed
+    private void buttonJogarSelecionadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonJogarSelecionadoActionPerformed
         // TODO add your handling code here:
-        controller.jogarDado((int) selecaoNumero.getValue());
+        controller.jogarDado((int) spinnerSelecaoNumero.getValue());
         textJogadas.setText(textJogadas.getText() + "\nJogador " + controller.getJogadorAtual().toString() + ": " + controller.getDado());
 //        controller.proximoJogador();
         dadoImage.setIcon(dadoImages[controller.getDado() - 1]);
@@ -577,7 +580,7 @@ public class Board extends javax.swing.JFrame {
 //            disableButton();
         }
 
-    }//GEN-LAST:event_jogarSelecionadoActionPerformed
+    }//GEN-LAST:event_buttonJogarSelecionadoActionPerformed
 
     private void menuDebugActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuDebugActionPerformed
         // TODO add your handling code here:
@@ -593,7 +596,7 @@ public class Board extends javax.swing.JFrame {
         controller.cancel();
     }//GEN-LAST:event_menuDesconectarActionPerformed
 
-    private void menuClienteLocalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuClienteLocalActionPerformed
+    private void menuHostLocalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuHostLocalActionPerformed
         // TODO add your handling code here:
 //            Deixar a porta padrão em 5000
 //        try {
@@ -603,17 +606,18 @@ public class Board extends javax.swing.JFrame {
 //            System.out.println(e);
 //            JOptionPane.showMessageDialog(null, "Não foi possivel obter o IP!", "Erro", JOptionPane.ERROR_MESSAGE);
 //        }
-    }//GEN-LAST:event_menuClienteLocalActionPerformed
+        disableButton();
+    }//GEN-LAST:event_menuHostLocalActionPerformed
 
     private void menuConexaoLocalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuConexaoLocalActionPerformed
         // TODO add your handling code here:
-
 //            Deixar a porta padrão em 5000
         try {
             controller.connect(InetAddress.getLocalHost().getHostAddress(), 5000);
         } catch (Exception ex) {
             System.out.println(ex);
         }
+        enableButton();
     }//GEN-LAST:event_menuConexaoLocalActionPerformed
 
     /**
@@ -669,20 +673,20 @@ public class Board extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel boardGame;
     private javax.swing.JButton buttonJogarDado;
+    private javax.swing.JButton buttonJogarSelecionado;
     private javax.swing.JButton dadoImage;
-    private javax.swing.JButton jogarSelecionado;
     private javax.swing.JMenuBar menuBar;
-    private javax.swing.JMenuItem menuClienteLocal;
     private javax.swing.JMenuItem menuConectar;
     private javax.swing.JMenuItem menuConexaoLocal;
     private javax.swing.JCheckBoxMenuItem menuDebug;
     private javax.swing.JMenuItem menuDesconectar;
+    private javax.swing.JMenuItem menuHostLocal;
     private javax.swing.JMenu menuJogar;
     private javax.swing.JMenu menuRegras;
     private javax.swing.JMenuItem menuSerHost;
     private javax.swing.JMenuItem menuVerRegras;
     private javax.swing.JScrollPane scrollPaneJogadas;
-    private javax.swing.JSpinner selecaoNumero;
+    private javax.swing.JSpinner spinnerSelecaoNumero;
     private javax.swing.JTextArea textJogadas;
     // End of variables declaration//GEN-END:variables
 }
