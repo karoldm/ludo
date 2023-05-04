@@ -1,7 +1,6 @@
 package model;
 
 import java.io.Serializable;
-import views.ButtonSquare;
 
 /**
  *
@@ -15,6 +14,8 @@ public class Move implements Serializable {
     private int[] oldPosition;
     private boolean jogador1;
     private boolean jogador2;
+    private boolean playAgain;
+    private boolean jogadorDesistiu = false;
 
     /**
      * Construtor da classe para ser enviado pela rede
@@ -24,11 +25,21 @@ public class Move implements Serializable {
      * @param peao
      * @param oldPosition
      */
-    public Move(Jogador jogador, Dado dado, Peao peao, int[] oldPosition) {
+    public Move(Jogador jogador, Dado dado, Peao peao, int[] oldPosition, boolean playAgain) {
         this.jogador = jogador;
         this.dado = dado;
         this.peaoAtual = peao;
         this.oldPosition = oldPosition;
+        this.playAgain = playAgain;
+    }
+
+    public Move(Jogador jogador, Dado dado, Peao peao, int[] oldPosition, boolean playAgain, boolean jogadorDesistiu) {
+        this.jogador = jogador;
+        this.dado = dado;
+        this.peaoAtual = peao;
+        this.oldPosition = oldPosition;
+        this.playAgain = playAgain;
+        this.jogadorDesistiu = jogadorDesistiu;
     }
 
     /**
@@ -111,4 +122,21 @@ public class Move implements Serializable {
         this.oldPosition = oldPosition;
     }
 
+    public boolean isPlayAgain() {
+        return playAgain;
+    }
+
+    public void setPlayAgain(boolean playAgain) {
+        this.playAgain = playAgain;
+    }
+
+    public boolean isJogadorDesistiu() {
+        return jogadorDesistiu;
+    }
+
+    public void setJogadorDesistiu(boolean jogadorDesistiu) {
+        this.jogadorDesistiu = jogadorDesistiu;
+    }
+
+    
 }

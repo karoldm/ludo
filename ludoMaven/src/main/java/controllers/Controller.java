@@ -5,6 +5,7 @@ import model.Peao;
 import connection.Connection;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
+import java.util.ArrayList;
 import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -12,6 +13,7 @@ import java.util.random.RandomGenerator;
 import javax.swing.JOptionPane;
 import model.Dado;
 import model.Move;
+import model.Square;
 import utils.PosicoesPeaoAzul;
 import utils.PosicoesPeaoVerde;
 import views.Board;
@@ -69,10 +71,20 @@ public class Controller {
      * @param move
      */
     public void updateMove(Move move) {
+        if (move.isJogadorDesistiu()) {
+            desistir();
+            JOptionPane.showMessageDialog(board, "Seu inimigo desistiu do Jogo!");
+            board.disableButton();
+            return;
+        }
         if (move.getPeao() != null) {
             board.updateMove(move);
         }
-        board.enableButton();
+        if (!move.isPlayAgain()) {
+            board.enableButton();
+        } else {
+            board.disableButton();
+        }
         board.updateChat(String.valueOf(move.getDado().getDado()));
     }
 
@@ -82,7 +94,9 @@ public class Controller {
      */
     public void sendMove(Move move) {
         connection.sendMove(move);
-        board.disableButton();
+        if (!move.isPlayAgain()) {
+            board.disableButton();
+        }
     }
 
     /**
@@ -371,5 +385,17 @@ public class Controller {
      */
     public void setDado(int dado) {
         this.dado.setDado(dado);
+    }
+
+    public void checkVictory(Jogador jogadorAtual) {
+        if (jogadorAtual.todosOsPeoesNoFim()) {
+            String message = "Vencedor: " + jogadorAtual.toString();
+            JOptionPane.showMessageDialog(null, message);
+        }
+
+    }
+
+    public void desistir() {
+        board.resetGame();
     }
 }
