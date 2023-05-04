@@ -188,20 +188,20 @@ public class Board extends javax.swing.JFrame {
         try {
             Image img = ImageIO.read(new FileInputStream("src\\main\\java\\assets\\center.png"));
             Image newImage = img.getScaledInstance(40, 40, Image.SCALE_DEFAULT);
-            tabuleiro[7][7].setIcon(new ImageIcon(newImage));
+            tabuleiro[7][7].setDefaultIcon(new ImageIcon(newImage));
             tabuleiro[7][7].setBorder(null);
 
             img = ImageIO.read(new FileInputStream("src\\main\\java\\assets\\arrow-red.png"));
             newImage = img.getScaledInstance(45, 40, Image.SCALE_DEFAULT);
-            tabuleiro[0][7].setIcon(new ImageIcon(newImage));
+            tabuleiro[0][7].setDefaultIcon(new ImageIcon(newImage));
 
             img = ImageIO.read(new FileInputStream("src\\main\\java\\assets\\arrow-blue.png"));
             newImage = img.getScaledInstance(45, 40, Image.SCALE_DEFAULT);
-            tabuleiro[7][14].setIcon(new ImageIcon(newImage));
+            tabuleiro[7][14].setDefaultIcon(new ImageIcon(newImage));
 
             img = ImageIO.read(new FileInputStream("src\\main\\java\\assets\\arrow-green.png"));
             newImage = img.getScaledInstance(45, 40, Image.SCALE_DEFAULT);
-            tabuleiro[7][0].setIcon(new ImageIcon(newImage));
+            tabuleiro[7][0].setDefaultIcon(new ImageIcon(newImage));
 
             img = ImageIO.read(new FileInputStream("src\\main\\java\\assets\\arrow-yellow.png"));
             newImage = img.getScaledInstance(45, 40, Image.SCALE_DEFAULT);
@@ -209,10 +209,10 @@ public class Board extends javax.swing.JFrame {
 
             img = ImageIO.read(new FileInputStream("src\\main\\java\\assets\\star.png"));
             newImage = img.getScaledInstance(30, 30, Image.SCALE_DEFAULT);
-            tabuleiro[6][2].setIcon(new ImageIcon(newImage));
-            tabuleiro[2][8].setIcon(new ImageIcon(newImage));
-            tabuleiro[12][6].setIcon(new ImageIcon(newImage));
-            tabuleiro[8][12].setIcon(new ImageIcon(newImage));
+            tabuleiro[6][2].setDefaultIcon(new ImageIcon(newImage));
+            tabuleiro[2][8].setDefaultIcon(new ImageIcon(newImage));
+            tabuleiro[12][6].setDefaultIcon(new ImageIcon(newImage));
+            tabuleiro[8][12].setDefaultIcon(new ImageIcon(newImage));
 
         } catch (IOException ex) {
             System.out.println(ex);

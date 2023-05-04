@@ -6,6 +6,7 @@ import java.awt.Dimension;
 import java.io.Serializable;
 import java.util.ArrayList;
 import javax.swing.BorderFactory;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.border.Border;
 
@@ -16,6 +17,7 @@ import javax.swing.border.Border;
 public class ButtonSquare extends JButton implements Serializable {
 
     private final ArrayList<Peao> peoes;
+    private ImageIcon defaultIcon = null;
 
     /**
      *
@@ -71,8 +73,16 @@ public class ButtonSquare extends JButton implements Serializable {
         }
         this.peoes.remove(peaoToRemove);
         if (peoes.isEmpty()) {
-            this.setIcon(null);
+            this.setIcon(defaultIcon);
         }
     }
 
+    public ImageIcon getDefaultIcon() {
+        return defaultIcon;
+    }
+
+    public void setDefaultIcon(ImageIcon defaultIcon) {
+        this.defaultIcon = defaultIcon;
+    }
+   
 }
