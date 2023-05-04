@@ -45,7 +45,7 @@ public class Board extends javax.swing.JFrame {
     }
 
     /**
-     *
+     * Reinicia o jogo e o tabuleiro
      */
     public void resetGame() {
         boardGame.removeAll();
@@ -105,7 +105,6 @@ public class Board extends javax.swing.JFrame {
     }
 
     private void generateLudoBoard() {
-
         boardGame.setSize(600, 600);
         boardGame.setLayout(new GridLayout(15, 15));
 

@@ -21,7 +21,10 @@ import views.ButtonSquare;
 
 /**
  *
- * @author willm
+ * @author Bruno Augusto Furquim
+ * @author Gabriel Ribeiro Ferreira
+ * @author Karolyne Domiciano Marques
+ * @author Willian Yoshio Murayama
  */
 public class Controller {
 
@@ -67,6 +70,8 @@ public class Controller {
     }
 
     /**
+     * A conexão chama este método e atualiza o tabuleiro com a jogada do
+     * oponente
      *
      * @param move
      */
@@ -89,6 +94,7 @@ public class Controller {
     }
 
     /**
+     * Envia o objeto serializado para o oponente atraves da conexão
      *
      * @param move
      */
@@ -100,14 +106,7 @@ public class Controller {
     }
 
     /**
-     *
-     */
-    public void updateChat() {
-
-    }
-
-    /**
-     * Conexão do jogo
+     * Inicializa a conexão do jogo e define a aplicação como cliente
      *
      * @param ip
      * @param port
@@ -123,7 +122,7 @@ public class Controller {
     }
 
     /**
-     *
+     * Cancela a conexão do jogo
      */
     public void cancel() {
         connection.cancelHost();
@@ -131,7 +130,7 @@ public class Controller {
     }
 
     /**
-     *
+     * Define a aplicação como host
      */
     public void host() {
         this.connection.host();
@@ -139,7 +138,7 @@ public class Controller {
     }
 
     /**
-     *
+     * Interrompe a thread
      */
     public void interrupt() {
         thread.interrupt();
@@ -185,21 +184,14 @@ public class Controller {
     /**
      *
      */
-//    public void proximoJogador() {
-//        this.jogadorAtual = this.jogadorAtual == jogador1 ? jogador2 : jogador1;
-//    }
-    /**
-     *
-     */
     public void jogadorConectado() {
         this.thread = new Thread(this.connection);
         this.thread.start();
         JOptionPane.showMessageDialog(null, "Oponente conectado!");
     }
 
-    //retorna um numero aleatório entre 1 e 6 para simular o dado D6
     /**
-     *
+     * Retorna um numero aleatório entre 1 e 6 para simular o dado D6
      */
     public void jogarDado() {
         RandomGenerator randomGenerator = new Random();
@@ -207,6 +199,7 @@ public class Controller {
     }
 
     /**
+     * Retorna o número escolhido pelo jogador para debug
      *
      * @param numero
      */
@@ -240,6 +233,7 @@ public class Controller {
     }
 
     /**
+     * Realiza a movimentação do peão
      *
      * @param p
      * @param novaPosicao
@@ -250,8 +244,8 @@ public class Controller {
         p.setPosicao(novaPosicao); //atualiza a posicao do peao
     }
 
-    //Checa se um peao pode ser movido para a nova posição
     /**
+     * Checa se um peao pode ser movido para a nova posição
      *
      * @param p
      */
@@ -265,6 +259,18 @@ public class Controller {
         }
 
         this.move(p, novaPosicao);
+    }
+
+    /**
+     * Checa se existe um vencedor
+     *
+     * @param jogadorAtual
+     */
+    public void checkVictory(Jogador jogadorAtual) {
+        if (jogadorAtual.todosOsPeoesNoFim()) {
+            String message = "Vencedor: " + jogadorAtual.toString();
+            JOptionPane.showMessageDialog(null, message);
+        }
     }
 
     /**
@@ -385,18 +391,6 @@ public class Controller {
      */
     public void setDado(int dado) {
         this.dado.setDado(dado);
-    }
-
-    /**
-     *
-     * @param jogadorAtual
-     */
-    public void checkVictory(Jogador jogadorAtual) {
-        if (jogadorAtual.todosOsPeoesNoFim()) {
-            String message = "Vencedor: " + jogadorAtual.toString();
-            JOptionPane.showMessageDialog(null, message);
-        }
-
     }
 
     /**
