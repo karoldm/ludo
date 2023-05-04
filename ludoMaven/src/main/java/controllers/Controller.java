@@ -72,7 +72,12 @@ public class Controller {
         if (move.getPeao() != null) {
             board.updateMove(move);
         }
-        board.enableButton();
+        if(!move.isPlayAgain()){
+            board.enableButton();
+        }
+        else{
+            board.disableButton();
+        }
         board.updateChat(String.valueOf(move.getDado().getDado()));
     }
 
@@ -82,7 +87,9 @@ public class Controller {
      */
     public void sendMove(Move move) {
         connection.sendMove(move);
-        board.disableButton();
+        if(!move.isPlayAgain()){
+            board.disableButton();
+        }
     }
 
     /**
