@@ -305,12 +305,13 @@ public class Board extends javax.swing.JFrame {
         enableButton();
         System.out.println(peao.toString() + " - " + peao.getPosicao());
 
-        controller.sendMove(new Move(controller.getJogadorAtual(), dado, peao, oldPositions));
-        controller.setBoard(this);
-        controller.setDado(0);
-
         if (jogarDeNovo) {
             jogarDeNovo = false;
+        }
+        else{
+            controller.sendMove(new Move(controller.getJogadorAtual(), dado, peao, oldPositions));
+            controller.setBoard(this);
+            controller.setDado(0);
         }
     }
 
@@ -552,7 +553,6 @@ public class Board extends javax.swing.JFrame {
         textJogadas.setText(textJogadas.getText() + "\nJogador " + controller.getJogadorAtual().toString() + ": " + controller.getDado());
         dadoImage.setIcon(dadoImages[controller.getDado() - 1]);
         if (controller.getDado() == 6) {
-            controller.sendMove(new Move(controller.getJogadorAtual(), controller.getInformation(), null, null));
             jogarDeNovo = true;
             disableButton();
         } else {
