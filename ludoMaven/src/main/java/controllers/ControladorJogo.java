@@ -2,6 +2,7 @@ package controllers;
 
 import model.Jogador;
 import model.Peao;
+import model.Square;
 import connection.Client;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
@@ -14,7 +15,7 @@ import utils.PosicoesPeaoAzul;
 import utils.PosicoesPeaoVerde;
 import views.ButtonSquare;
 import javax.swing.JOptionPane;
-
+import java.util.ArrayList;
 
 /**
  *
@@ -177,7 +178,7 @@ public class ControladorJogo {
      * @param novaPosicao
      */
     public void move(Peao p, int novaPosicao) {
-        jogadorAtual.getTabuleiro().get(p.getPosicao()).remove(p); //remove o peao da casa atua
+        jogadorAtual.getTabuleiro().get(p.getPosicao()).remove(p); //remove o peao da casa atual
         jogadorAtual.getTabuleiro().get(novaPosicao).addPeao(p); //adiciona o peao a nova casa
         p.setPosicao(novaPosicao); //atualiza a posicao do peao
         this.checkVictory(jogadorAtual);
@@ -199,13 +200,37 @@ public class ControladorJogo {
 
         this.move(p, novaPosicao);
     }
-    
-    public void checkVictory(Jogador jogadorAtual){
-        if (jogadorAtual.todosOsPeoesNoFim()){
+
+    public void checkVictory(Jogador jogadorAtual) {
+        if (jogadorAtual.todosOsPeoesNoFim()) {
             String message = "Vencedor: " + jogadorAtual.toString();
             JOptionPane.showMessageDialog(null, message);
-            System.out.println("Vencedor = Jogador " + jogadorAtual.toString());
         }
+
+    }
+
+    public void desistir() {
+        Jogador jogador1 = this.getJogador1();
+        Jogador jogador2 = this.getJogador2();
+        ArrayList<Peao> peoes = new ArrayList<Peao>();
+        ArrayList<Square> squares = new ArrayList<Square>();
+
+        peoes = jogador1.getPeoes();
+        peoes.addAll(jogador2.getPeoes());
+        squares = jogador1.getTabuleiro();
+
+        //for (Square sq : squares ) {
+        //    for (Peao p : peoes){
+        //        //jogador1.getTabuleiro().get(p.getPosicao()).remove(p); //remove o peao da casa atual
+        //        sq.remove(p);
+        //        System.out.println("cu");
+        //    }
+        //}
         
+        for (Peao p : peoes){
+            jogador1.getTabuleiro().get(p.getPosicao()).remove(p); //remove o peao da casa atual
+            jogador2.getTabuleiro().get(p.getPosicao()).remove(p); //remove o peao da casa atual
+            System.out.println("cu");
+        }
     }
 }

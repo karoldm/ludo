@@ -256,6 +256,7 @@ public class Board extends javax.swing.JFrame {
         menuSerHost = new javax.swing.JMenuItem();
         menuConectar = new javax.swing.JMenuItem();
         debug = new javax.swing.JCheckBoxMenuItem();
+        Desistir = new javax.swing.JMenuItem();
         menuRegras = new javax.swing.JMenu();
         menuVerRegras = new javax.swing.JMenuItem();
 
@@ -339,6 +340,14 @@ public class Board extends javax.swing.JFrame {
             }
         });
         menuJogar.add(debug);
+
+        Desistir.setText("Desistir");
+        Desistir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                DesistirActionPerformed(evt);
+            }
+        });
+        menuJogar.add(Desistir);
 
         menuBar.add(menuJogar);
 
@@ -465,6 +474,11 @@ public class Board extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_debugActionPerformed
 
+    private void DesistirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DesistirActionPerformed
+        controlador.desistir();
+        //this.initPawns();
+    }//GEN-LAST:event_DesistirActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -516,6 +530,7 @@ public class Board extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JMenuItem Desistir;
     private javax.swing.JPanel boardGame;
     private javax.swing.JButton buttonJogarDado;
     private javax.swing.JCheckBoxMenuItem debug;

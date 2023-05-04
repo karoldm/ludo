@@ -41,4 +41,10 @@ public class Square {
     public void remove(Peao p){
         this.peoes.remove(p); 
     }
+    
+    //public void removeAllPaws(){
+    //    for (Peao p : this.peoes){
+    //        this.remove(p);
+    //    }
+    //}
 }
