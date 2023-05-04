@@ -12,7 +12,13 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import model.Move;
-
+/**
+ *
+ * @author Bruno Augusto Furquim
+ * @author Gabriel Ribeiro Ferreira
+ * @author Karolyne Domiciano Marques
+ * @author Willian Yoshio Murayama 
+ */
 public class Connection implements Runnable {
 
     /**

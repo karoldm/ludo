@@ -1,5 +1,11 @@
 package utils;
-
+/**
+ *
+ * @author Bruno Augusto Furquim
+ * @author Gabriel Ribeiro Ferreira
+ * @author Karolyne Domiciano Marques
+ * @author Willian Yoshio Murayama 
+ */
 public class PosicoesPeaoVernelho extends PosicaoPeaoMap {
 
     /**

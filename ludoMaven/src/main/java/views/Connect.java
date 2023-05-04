@@ -10,7 +10,10 @@ import controllers.Controller;
 
 /**
  *
- * @author Willian Murayama
+ * @author Bruno Augusto Furquim
+ * @author Gabriel Ribeiro Ferreira
+ * @author Karolyne Domiciano Marques
+ * @author Willian Yoshio Murayama 
  */
 public class Connect extends javax.swing.JFrame {
 

@@ -18,7 +18,10 @@ import model.Move;
 
 /**
  *
- * @author Karol
+ * @author Bruno Augusto Furquim
+ * @author Gabriel Ribeiro Ferreira
+ * @author Karolyne Domiciano Marques
+ * @author Willian Yoshio Murayama
  */
 public class Board extends javax.swing.JFrame {
 
@@ -41,6 +44,9 @@ public class Board extends javax.swing.JFrame {
         disableButton();
     }
 
+    /**
+     *
+     */
     public void resetGame() {
         boardGame.removeAll();
         generateLudoBoard();

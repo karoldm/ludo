@@ -387,6 +387,10 @@ public class Controller {
         this.dado.setDado(dado);
     }
 
+    /**
+     *
+     * @param jogadorAtual
+     */
     public void checkVictory(Jogador jogadorAtual) {
         if (jogadorAtual.todosOsPeoesNoFim()) {
             String message = "Vencedor: " + jogadorAtual.toString();
@@ -395,6 +399,9 @@ public class Controller {
 
     }
 
+    /**
+     *
+     */
     public void desistir() {
         board.resetGame();
     }

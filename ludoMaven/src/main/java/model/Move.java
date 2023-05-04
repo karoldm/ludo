@@ -4,7 +4,10 @@ import java.io.Serializable;
 
 /**
  *
- * @author willm
+ * @author Bruno Augusto Furquim
+ * @author Gabriel Ribeiro Ferreira
+ * @author Karolyne Domiciano Marques
+ * @author Willian Yoshio Murayama 
  */
 public class Move implements Serializable {
 
@@ -24,6 +27,7 @@ public class Move implements Serializable {
      * @param dado
      * @param peao
      * @param oldPosition
+     * @param playAgain
      */
     public Move(Jogador jogador, Dado dado, Peao peao, int[] oldPosition, boolean playAgain) {
         this.jogador = jogador;
@@ -33,6 +37,15 @@ public class Move implements Serializable {
         this.playAgain = playAgain;
     }
 
+    /**
+     *
+     * @param jogador
+     * @param dado
+     * @param peao
+     * @param oldPosition
+     * @param playAgain
+     * @param jogadorDesistiu
+     */
     public Move(Jogador jogador, Dado dado, Peao peao, int[] oldPosition, boolean playAgain, boolean jogadorDesistiu) {
         this.jogador = jogador;
         this.dado = dado;
@@ -122,18 +135,34 @@ public class Move implements Serializable {
         this.oldPosition = oldPosition;
     }
 
+    /**
+     *
+     * @return
+     */
     public boolean isPlayAgain() {
         return playAgain;
     }
 
+    /**
+     *
+     * @param playAgain
+     */
     public void setPlayAgain(boolean playAgain) {
         this.playAgain = playAgain;
     }
 
+    /**
+     *
+     * @return
+     */
     public boolean isJogadorDesistiu() {
         return jogadorDesistiu;
     }
 
+    /**
+     *
+     * @param jogadorDesistiu
+     */
     public void setJogadorDesistiu(boolean jogadorDesistiu) {
         this.jogadorDesistiu = jogadorDesistiu;
     }

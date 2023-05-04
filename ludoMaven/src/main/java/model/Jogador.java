@@ -6,7 +6,10 @@ import utils.PosicaoPeaoMap;
 
 /**
  *
- * @author willm
+ * @author Bruno Augusto Furquim
+ * @author Gabriel Ribeiro Ferreira
+ * @author Karolyne Domiciano Marques
+ * @author Willian Yoshio Murayama 
  */
 public class Jogador implements Serializable {
 
@@ -64,6 +67,10 @@ public class Jogador implements Serializable {
         return true;
     }
     
+    /**
+     *
+     * @return
+     */
     public boolean todosOsPeoesNoFim(){
         for(Peao p: this.peoes){
             if(p.getPosicao() != 57) 

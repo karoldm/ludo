@@ -1,7 +1,13 @@
 package utils;
 
 import java.io.Serializable;
-
+/**
+ *
+ * @author Bruno Augusto Furquim
+ * @author Gabriel Ribeiro Ferreira
+ * @author Karolyne Domiciano Marques
+ * @author Willian Yoshio Murayama 
+ */
 public class PosicoesPeaoVerde extends PosicaoPeaoMap implements Serializable {
 
     /**

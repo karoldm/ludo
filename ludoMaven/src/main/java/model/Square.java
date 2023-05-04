@@ -2,7 +2,13 @@ package model;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-
+/**
+ *
+ * @author Bruno Augusto Furquim
+ * @author Gabriel Ribeiro Ferreira
+ * @author Karolyne Domiciano Marques
+ * @author Willian Yoshio Murayama 
+ */
 public class Square implements Serializable {
 
     //Peões ocupando esse quadrado do tabuleiro
