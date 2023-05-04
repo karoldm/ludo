@@ -41,6 +41,13 @@ public class Board extends javax.swing.JFrame {
         disableButton();
     }
 
+    public void resetGame() {
+        boardGame.removeAll();
+        generateLudoBoard();
+        initPawns();
+        initDado();
+    }
+
     private void initDado() {
         try {
             Image img = ImageIO.read(new FileInputStream("src\\main\\java\\assets\\dado-2.png"));
@@ -188,20 +195,20 @@ public class Board extends javax.swing.JFrame {
         try {
             Image img = ImageIO.read(new FileInputStream("src\\main\\java\\assets\\center.png"));
             Image newImage = img.getScaledInstance(40, 40, Image.SCALE_DEFAULT);
-            tabuleiro[7][7].setIcon(new ImageIcon(newImage));
+            tabuleiro[7][7].setDefaultIcon(new ImageIcon(newImage));
             tabuleiro[7][7].setBorder(null);
 
             img = ImageIO.read(new FileInputStream("src\\main\\java\\assets\\arrow-red.png"));
             newImage = img.getScaledInstance(45, 40, Image.SCALE_DEFAULT);
-            tabuleiro[0][7].setIcon(new ImageIcon(newImage));
+            tabuleiro[0][7].setDefaultIcon(new ImageIcon(newImage));
 
             img = ImageIO.read(new FileInputStream("src\\main\\java\\assets\\arrow-blue.png"));
             newImage = img.getScaledInstance(45, 40, Image.SCALE_DEFAULT);
-            tabuleiro[7][14].setIcon(new ImageIcon(newImage));
+            tabuleiro[7][14].setDefaultIcon(new ImageIcon(newImage));
 
             img = ImageIO.read(new FileInputStream("src\\main\\java\\assets\\arrow-green.png"));
             newImage = img.getScaledInstance(45, 40, Image.SCALE_DEFAULT);
-            tabuleiro[7][0].setIcon(new ImageIcon(newImage));
+            tabuleiro[7][0].setDefaultIcon(new ImageIcon(newImage));
 
             img = ImageIO.read(new FileInputStream("src\\main\\java\\assets\\arrow-yellow.png"));
             newImage = img.getScaledInstance(45, 40, Image.SCALE_DEFAULT);
@@ -209,10 +216,10 @@ public class Board extends javax.swing.JFrame {
 
             img = ImageIO.read(new FileInputStream("src\\main\\java\\assets\\star.png"));
             newImage = img.getScaledInstance(30, 30, Image.SCALE_DEFAULT);
-            tabuleiro[6][2].setIcon(new ImageIcon(newImage));
-            tabuleiro[2][8].setIcon(new ImageIcon(newImage));
-            tabuleiro[12][6].setIcon(new ImageIcon(newImage));
-            tabuleiro[8][12].setIcon(new ImageIcon(newImage));
+            tabuleiro[6][2].setDefaultIcon(new ImageIcon(newImage));
+            tabuleiro[2][8].setDefaultIcon(new ImageIcon(newImage));
+            tabuleiro[12][6].setDefaultIcon(new ImageIcon(newImage));
+            tabuleiro[8][12].setDefaultIcon(new ImageIcon(newImage));
 
         } catch (IOException ex) {
             System.out.println(ex);
@@ -258,13 +265,13 @@ public class Board extends javax.swing.JFrame {
         if (peao == null) {
             return;
         }
-        if(peao.getCor() != controller.getJogadorAtual().getPeao(0).getCor()){
+        if (peao.getCor() != controller.getJogadorAtual().getPeao(0).getCor()) {
             return;
         }
 
         Dado dado = new Dado();
         dado.setDado(controller.getDado());
-        
+
         if (peao.getPosicao() == 57) {
             System.out.println("Peao ja chegou na zona final");
             return;
@@ -305,9 +312,9 @@ public class Board extends javax.swing.JFrame {
         enableButton();
         System.out.println(peao.toString() + " - " + peao.getPosicao());
 
-        controller.sendMove(new Move(controller.getJogadorAtual(), dado, peao, oldPositions));
-        controller.setBoard(this);
+        controller.sendMove(new Move(controller.getJogadorAtual(), dado, peao, oldPositions, jogarDeNovo));
         controller.setDado(0);
+        controller.setBoard(this);
 
         if (jogarDeNovo) {
             jogarDeNovo = false;
@@ -324,7 +331,7 @@ public class Board extends javax.swing.JFrame {
         int oldj = oldposicoes[1];
 
         tabuleiro[oldi][oldj].removePeao(move.getPeao());
-        
+
         int[] posicoes = move.getJogador().getPosicaoMap(move.getPeao().getPosicao());
         int i = posicoes[0];
         int j = posicoes[1];
@@ -357,6 +364,7 @@ public class Board extends javax.swing.JFrame {
         menuConexaoLocal = new javax.swing.JMenuItem();
         menuDesconectar = new javax.swing.JMenuItem();
         menuDebug = new javax.swing.JCheckBoxMenuItem();
+        jMenuItem1 = new javax.swing.JMenuItem();
         menuRegras = new javax.swing.JMenu();
         menuVerRegras = new javax.swing.JMenuItem();
 
@@ -471,6 +479,14 @@ public class Board extends javax.swing.JFrame {
         });
         menuJogar.add(menuDebug);
 
+        jMenuItem1.setText("Desistir");
+        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem1ActionPerformed(evt);
+            }
+        });
+        menuJogar.add(jMenuItem1);
+
         menuBar.add(menuJogar);
 
         menuRegras.setText("Regras");
@@ -552,11 +568,10 @@ public class Board extends javax.swing.JFrame {
         textJogadas.setText(textJogadas.getText() + "\nJogador " + controller.getJogadorAtual().toString() + ": " + controller.getDado());
         dadoImage.setIcon(dadoImages[controller.getDado() - 1]);
         if (controller.getDado() == 6) {
-            controller.sendMove(new Move(controller.getJogadorAtual(), controller.getInformation(), null, null));
             jogarDeNovo = true;
             disableButton();
         } else {
-            controller.sendMove(new Move(controller.getJogadorAtual(), controller.getInformation(), null, null));
+            controller.sendMove(new Move(controller.getJogadorAtual(), controller.getInformation(), null, null, jogarDeNovo));
             disableButton();
         }
     }//GEN-LAST:event_buttonJogarDadoActionPerformed
@@ -611,6 +626,12 @@ public class Board extends javax.swing.JFrame {
         }
         enableButton();
     }//GEN-LAST:event_menuConexaoLocalActionPerformed
+
+    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+        controller.desistir();
+        controller.sendMove(new Move(controller.getJogadorAtual(), controller.getInformation(), null, null, jogarDeNovo, true));
+        JOptionPane.showMessageDialog(this, "Você desistiu do jogo!");
+    }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -667,6 +688,7 @@ public class Board extends javax.swing.JFrame {
     private javax.swing.JButton buttonJogarDado;
     private javax.swing.JButton buttonJogarSelecionado;
     private javax.swing.JButton dadoImage;
+    private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuBar menuBar;
     private javax.swing.JMenuItem menuConectar;
     private javax.swing.JMenuItem menuConexaoLocal;

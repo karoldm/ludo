@@ -119,7 +119,6 @@ public class Connection implements Runnable {
      */
     public void sendMove(Move move) {
         try {
-//            this.myTurn = false;
             ObjectOutputStream out = new ObjectOutputStream(this.socket.getOutputStream());
             out.writeObject(move);
             System.out.println("Movimento enviado");
