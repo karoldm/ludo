@@ -234,14 +234,14 @@ public class Board extends javax.swing.JFrame {
             this.dispose();
         }
     }
-    
+
     /**
-     *@param dado
+     * @param dado
      */
-    public void updateDado(int dado){
+    public void updateDado(int dado) {
         dadoImage.setIcon(dadoImages[dado - 1]);
     }
-    
+
     /**
      *
      */
@@ -279,26 +279,26 @@ public class Board extends javax.swing.JFrame {
         menuConectar.setEnabled(false);
     }
 
-    public void disableIniciarJogo(){
+    public void disableIniciarJogo() {
         menuIniciarJogo.setEnabled(false);
     }
-    
-    public void disableDesistir(){
+
+    public void disableDesistir() {
         menuDesistir.setEnabled(false);
     }
-    
-    public void enableIniciarJogo(){
+
+    public void enableIniciarJogo() {
         menuIniciarJogo.setEnabled(true);
     }
-    
-    public void enableSerHost(){
+
+    public void enableSerHost() {
         menuSerHost.setEnabled(true);
     }
-    
-    public void enableConectar(){
+
+    public void enableConectar() {
         menuConectar.setEnabled(true);
     }
-    
+
     /**
      *
      * @param texto
@@ -350,18 +350,16 @@ public class Board extends javax.swing.JFrame {
         for (Peao p : currPeoes) {
             //Se existe um peão na nova posição e ele é do inimigo, movemos ele para a casa inicial
             if (p.getCor() != peao.getCor()) {
-                if (!controller.isConnected()) {
-                    controller.proximoJogador();
-                }
+                controller.proximoJogador();
+                int[] enemyOldPositions = controller.getPosicaoMap(p.getPosicao());
                 controller.move(p, 0);
                 int[] posicoesInciais = controller.getPosicaoInicialDisponivel(this.tabuleiro);
                 int m = posicoesInciais[0];
                 int n = posicoesInciais[1];
                 tabuleiro[m][n].addPeao(p);
                 tabuleiro[i][j].removePeao(p);
-                if (!controller.isConnected()) {
-                    controller.proximoJogador();
-                }
+                controller.sendMove(new Move(controller.getJogadorAtual(), dado, p, enemyOldPositions, jogarDeNovo));
+                controller.proximoJogador();
                 break;
             }
         }
@@ -398,6 +396,10 @@ public class Board extends javax.swing.JFrame {
         tabuleiro[oldi][oldj].removePeao(move.getPeao());
 
         int[] posicoes = move.getJogador().getPosicaoMap(move.getPeao().getPosicao());
+        //caso em que o peao voltou a posição inicial
+        if (posicoes == null) {
+            posicoes = controller.getPosicaoInicialDisponivel(tabuleiro);
+        }
         int i = posicoes[0];
         int j = posicoes[1];
         tabuleiro[i][j].addPeao(move.getPeao());
@@ -645,7 +647,7 @@ public class Board extends javax.swing.JFrame {
             if (!controller.isConnected()) {
                 if (controller.getPosicaoInicialDisponivel(tabuleiro) != null) {
                     disableButton();
-                } else if(!jogarDeNovo) {
+                } else if (!jogarDeNovo) {
                     controller.proximoJogador();
                 }
             }
