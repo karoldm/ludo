@@ -42,6 +42,9 @@ public class Board extends javax.swing.JFrame {
         spinnerSelecaoNumero.setVisible(false);
         buttonJogarSelecionado.setVisible(false);
         disableButton();
+        menuDesistir.setEnabled(false);
+        menuDesconectar.setEnabled(false);
+
     }
 
     /**
@@ -52,6 +55,12 @@ public class Board extends javax.swing.JFrame {
         generateLudoBoard();
         initPawns();
         initDado();
+        disableButton();
+        disableDesconectar();
+        disableDesistir();
+        enableIniciarJogo();
+        enableSerHost();
+        enableConectar();
     }
 
     private void initDado() {
@@ -232,14 +241,34 @@ public class Board extends javax.swing.JFrame {
             this.dispose();
         }
     }
-
+    
+    /**
+     *@param dado
+     */
+    public void updateDado(int dado){
+        dadoImage.setIcon(dadoImages[dado - 1]);
+    }
+    
     /**
      *
      */
     public void enableButton() {
         buttonJogarDado.setEnabled(true);
         buttonJogarSelecionado.setEnabled(true);
+    }
 
+    /**
+     *
+     */
+    public void enableDesistir() {
+        menuDesistir.setEnabled(true);
+    }
+
+    /**
+     *
+     */
+    public void enableDesconectar() {
+        menuDesconectar.setEnabled(true);
     }
 
     /**
@@ -248,9 +277,46 @@ public class Board extends javax.swing.JFrame {
     public void disableButton() {
         buttonJogarDado.setEnabled(false);
         buttonJogarSelecionado.setEnabled(true);
-
     }
 
+    /**
+     *
+     */
+    public void disableSerHost() {
+        menuSerHost.setEnabled(false);
+    }
+
+    /**
+     *
+     */
+    public void disableConectar() {
+        menuConectar.setEnabled(false);
+    }
+
+    public void disableIniciarJogo(){
+        menuIniciarJogo.setEnabled(false);
+    }
+    
+    public void disableDesconectar(){
+        menuDesconectar.setEnabled(false);
+    }
+    
+    public void disableDesistir(){
+        menuDesistir.setEnabled(false);
+    }
+    
+    public void enableIniciarJogo(){
+        menuIniciarJogo.setEnabled(true);
+    }
+    
+    public void enableSerHost(){
+        menuSerHost.setEnabled(true);
+    }
+    
+    public void enableConectar(){
+        menuConectar.setEnabled(true);
+    }
+    
     /**
      *
      * @param texto
@@ -271,6 +337,7 @@ public class Board extends javax.swing.JFrame {
             return;
         }
         if (peao.getCor() != controller.getJogadorAtual().getPeao(0).getCor()) {
+            System.out.println("voce esta tentando mover um peao inimigo!");
             return;
         }
 
@@ -301,14 +368,18 @@ public class Board extends javax.swing.JFrame {
         for (Peao p : currPeoes) {
             //Se existe um peão na nova posição e ele é do inimigo, movemos ele para a casa inicial
             if (p.getCor() != peao.getCor()) {
+                if (!controller.isConnected()) {
+                    controller.proximoJogador();
+                }
                 controller.move(p, 0);
-//                controller.proximoJogador();
                 int[] posicoesInciais = controller.getPosicaoInicialDisponivel(this.tabuleiro);
                 int m = posicoesInciais[0];
                 int n = posicoesInciais[1];
                 tabuleiro[m][n].addPeao(p);
                 tabuleiro[i][j].removePeao(p);
-//                controller.proximoJogador();
+                if (!controller.isConnected()) {
+                    controller.proximoJogador();
+                }
                 break;
             }
         }
@@ -320,6 +391,13 @@ public class Board extends javax.swing.JFrame {
         controller.sendMove(new Move(controller.getJogadorAtual(), dado, peao, oldPositions, jogarDeNovo));
         controller.setDado(0);
         controller.setBoard(this);
+
+        if (!controller.isConnected()) {
+            if (!jogarDeNovo) {
+                controller.proximoJogador();
+            }
+            enableButton();
+        }
 
         if (jogarDeNovo) {
             jogarDeNovo = false;
@@ -363,13 +441,14 @@ public class Board extends javax.swing.JFrame {
         dadoImage = new javax.swing.JButton();
         menuBar = new javax.swing.JMenuBar();
         menuJogar = new javax.swing.JMenu();
+        menuIniciarJogo = new javax.swing.JMenuItem();
         menuSerHost = new javax.swing.JMenuItem();
         menuConectar = new javax.swing.JMenuItem();
         menuHostLocal = new javax.swing.JMenuItem();
         menuConexaoLocal = new javax.swing.JMenuItem();
         menuDesconectar = new javax.swing.JMenuItem();
         menuDebug = new javax.swing.JCheckBoxMenuItem();
-        jMenuItem1 = new javax.swing.JMenuItem();
+        menuDesistir = new javax.swing.JMenuItem();
         menuRegras = new javax.swing.JMenu();
         menuVerRegras = new javax.swing.JMenuItem();
 
@@ -436,6 +515,14 @@ public class Board extends javax.swing.JFrame {
 
         menuJogar.setText("Jogar");
 
+        menuIniciarJogo.setText("Iniciar Jogo");
+        menuIniciarJogo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuIniciarJogoActionPerformed(evt);
+            }
+        });
+        menuJogar.add(menuIniciarJogo);
+
         menuSerHost.setText("Ser host");
         menuSerHost.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -484,13 +571,13 @@ public class Board extends javax.swing.JFrame {
         });
         menuJogar.add(menuDebug);
 
-        jMenuItem1.setText("Desistir");
-        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+        menuDesistir.setText("Desistir");
+        menuDesistir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem1ActionPerformed(evt);
+                menuDesistirActionPerformed(evt);
             }
         });
-        menuJogar.add(jMenuItem1);
+        menuJogar.add(menuDesistir);
 
         menuBar.add(menuJogar);
 
@@ -560,6 +647,11 @@ public class Board extends javax.swing.JFrame {
         connect.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         connect.setVisible(true);
         enableButton();
+        enableDesconectar();
+        enableDesistir();
+        disableIniciarJogo();
+        disableSerHost();
+        disableConectar();
     }//GEN-LAST:event_menuConectarActionPerformed
 
     private void menuVerRegrasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuVerRegrasActionPerformed
@@ -571,13 +663,20 @@ public class Board extends javax.swing.JFrame {
     private void buttonJogarDadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonJogarDadoActionPerformed
         controller.jogarDado();
         textJogadas.setText(textJogadas.getText() + "\nJogador " + controller.getJogadorAtual().toString() + ": " + controller.getDado());
-        dadoImage.setIcon(dadoImages[controller.getDado() - 1]);
+        updateDado(controller.getDado());
+
         if (controller.getDado() == 6) {
             jogarDeNovo = true;
             disableButton();
         } else {
             controller.sendMove(new Move(controller.getJogadorAtual(), controller.getInformation(), null, null, jogarDeNovo));
-            disableButton();
+            if (!controller.isConnected()) {
+                if (controller.getPosicaoInicialDisponivel(tabuleiro) != null) {
+                    disableButton();
+                } else if(!jogarDeNovo) {
+                    controller.proximoJogador();
+                }
+            }
         }
     }//GEN-LAST:event_buttonJogarDadoActionPerformed
 
@@ -632,11 +731,17 @@ public class Board extends javax.swing.JFrame {
         enableButton();
     }//GEN-LAST:event_menuConexaoLocalActionPerformed
 
-    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+    private void menuDesistirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuDesistirActionPerformed
         controller.desistir();
         controller.sendMove(new Move(controller.getJogadorAtual(), controller.getInformation(), null, null, jogarDeNovo, true));
         JOptionPane.showMessageDialog(this, "Você desistiu do jogo!");
-    }//GEN-LAST:event_jMenuItem1ActionPerformed
+    }//GEN-LAST:event_menuDesistirActionPerformed
+
+    private void menuIniciarJogoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuIniciarJogoActionPerformed
+        disableSerHost();
+        disableConectar();
+        enableButton();
+    }//GEN-LAST:event_menuIniciarJogoActionPerformed
 
     /**
      * @param args the command line arguments
@@ -693,13 +798,14 @@ public class Board extends javax.swing.JFrame {
     private javax.swing.JButton buttonJogarDado;
     private javax.swing.JButton buttonJogarSelecionado;
     private javax.swing.JButton dadoImage;
-    private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuBar menuBar;
     private javax.swing.JMenuItem menuConectar;
     private javax.swing.JMenuItem menuConexaoLocal;
     private javax.swing.JCheckBoxMenuItem menuDebug;
     private javax.swing.JMenuItem menuDesconectar;
+    private javax.swing.JMenuItem menuDesistir;
     private javax.swing.JMenuItem menuHostLocal;
+    private javax.swing.JMenuItem menuIniciarJogo;
     private javax.swing.JMenu menuJogar;
     private javax.swing.JMenu menuRegras;
     private javax.swing.JMenuItem menuSerHost;
