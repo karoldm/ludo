@@ -39,6 +39,9 @@ public class Board extends javax.swing.JFrame {
         spinnerSelecaoNumero.setVisible(false);
         buttonJogarSelecionado.setVisible(false);
         disableButton();
+        menuDesistir.setEnabled(false);
+        menuDesconectar.setEnabled(false);
+
     }
 
     public void resetGame() {
@@ -46,6 +49,9 @@ public class Board extends javax.swing.JFrame {
         generateLudoBoard();
         initPawns();
         initDado();
+        disableButton();
+        menuDesconectar.setEnabled(false);
+        menuDesistir.setEnabled(false);
     }
 
     private void initDado() {
@@ -234,7 +240,20 @@ public class Board extends javax.swing.JFrame {
     public void enableButton() {
         buttonJogarDado.setEnabled(true);
         buttonJogarSelecionado.setEnabled(true);
-
+    }
+    
+    /**
+     *
+     */
+    public void enableDesistir() {
+        menuDesistir.setEnabled(true);
+    }
+    
+    /**
+     *
+     */
+    public void enableDesconectar() {
+        menuDesconectar.setEnabled(true);
     }
 
     /**
@@ -243,7 +262,6 @@ public class Board extends javax.swing.JFrame {
     public void disableButton() {
         buttonJogarDado.setEnabled(false);
         buttonJogarSelecionado.setEnabled(true);
-
     }
 
     /**
@@ -364,7 +382,7 @@ public class Board extends javax.swing.JFrame {
         menuConexaoLocal = new javax.swing.JMenuItem();
         menuDesconectar = new javax.swing.JMenuItem();
         menuDebug = new javax.swing.JCheckBoxMenuItem();
-        jMenuItem1 = new javax.swing.JMenuItem();
+        menuDesistir = new javax.swing.JMenuItem();
         menuRegras = new javax.swing.JMenu();
         menuVerRegras = new javax.swing.JMenuItem();
 
@@ -479,13 +497,13 @@ public class Board extends javax.swing.JFrame {
         });
         menuJogar.add(menuDebug);
 
-        jMenuItem1.setText("Desistir");
-        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+        menuDesistir.setText("Desistir");
+        menuDesistir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem1ActionPerformed(evt);
+                menuDesistirActionPerformed(evt);
             }
         });
-        menuJogar.add(jMenuItem1);
+        menuJogar.add(menuDesistir);
 
         menuBar.add(menuJogar);
 
@@ -555,6 +573,8 @@ public class Board extends javax.swing.JFrame {
         connect.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         connect.setVisible(true);
         enableButton();
+        enableDesconectar();
+        enableDesistir();
     }//GEN-LAST:event_menuConectarActionPerformed
 
     private void menuVerRegrasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuVerRegrasActionPerformed
@@ -627,11 +647,11 @@ public class Board extends javax.swing.JFrame {
         enableButton();
     }//GEN-LAST:event_menuConexaoLocalActionPerformed
 
-    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+    private void menuDesistirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuDesistirActionPerformed
         controller.desistir();
         controller.sendMove(new Move(controller.getJogadorAtual(), controller.getInformation(), null, null, jogarDeNovo, true));
         JOptionPane.showMessageDialog(this, "Você desistiu do jogo!");
-    }//GEN-LAST:event_jMenuItem1ActionPerformed
+    }//GEN-LAST:event_menuDesistirActionPerformed
 
     /**
      * @param args the command line arguments
@@ -688,12 +708,12 @@ public class Board extends javax.swing.JFrame {
     private javax.swing.JButton buttonJogarDado;
     private javax.swing.JButton buttonJogarSelecionado;
     private javax.swing.JButton dadoImage;
-    private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuBar menuBar;
     private javax.swing.JMenuItem menuConectar;
     private javax.swing.JMenuItem menuConexaoLocal;
     private javax.swing.JCheckBoxMenuItem menuDebug;
     private javax.swing.JMenuItem menuDesconectar;
+    private javax.swing.JMenuItem menuDesistir;
     private javax.swing.JMenuItem menuHostLocal;
     private javax.swing.JMenu menuJogar;
     private javax.swing.JMenu menuRegras;

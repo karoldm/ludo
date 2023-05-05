@@ -5,7 +5,6 @@ import model.Peao;
 import connection.Connection;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
-import java.util.ArrayList;
 import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -13,7 +12,6 @@ import java.util.random.RandomGenerator;
 import javax.swing.JOptionPane;
 import model.Dado;
 import model.Move;
-import model.Square;
 import utils.PosicoesPeaoAzul;
 import utils.PosicoesPeaoVerde;
 import views.Board;
@@ -195,6 +193,8 @@ public class Controller {
         this.thread = new Thread(this.connection);
         this.thread.start();
         JOptionPane.showMessageDialog(null, "Oponente conectado!");
+        board.enableDesconectar();
+        board.enableDesistir();
     }
 
     //retorna um numero aleatório entre 1 e 6 para simular o dado D6
