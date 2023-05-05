@@ -198,7 +198,6 @@ public class Controller {
         this.thread = new Thread(this.connection);
         this.thread.start();
         JOptionPane.showMessageDialog(null, "Oponente conectado!");
-        board.enableDesconectar();
         board.enableDesistir();
         board.disableIniciarJogo();
         board.disableConectar();
@@ -399,6 +398,7 @@ public class Controller {
         if (jogadorAtual.todosOsPeoesNoFim()) {
             String message = "Vencedor: " + jogadorAtual.toString();
             JOptionPane.showMessageDialog(null, message);
+            board.resetGame();
         }
 
     }

@@ -40,7 +40,6 @@ public class Board extends javax.swing.JFrame {
         buttonJogarSelecionado.setVisible(false);
         disableButton();
         menuDesistir.setEnabled(false);
-        menuDesconectar.setEnabled(false);
 
     }
 
@@ -50,7 +49,6 @@ public class Board extends javax.swing.JFrame {
         initPawns();
         initDado();
         disableButton();
-        disableDesconectar();
         disableDesistir();
         enableIniciarJogo();
         enableSerHost();
@@ -262,13 +260,6 @@ public class Board extends javax.swing.JFrame {
     /**
      *
      */
-    public void enableDesconectar() {
-        menuDesconectar.setEnabled(true);
-    }
-
-    /**
-     *
-     */
     public void disableButton() {
         buttonJogarDado.setEnabled(false);
         buttonJogarSelecionado.setEnabled(true);
@@ -290,10 +281,6 @@ public class Board extends javax.swing.JFrame {
 
     public void disableIniciarJogo(){
         menuIniciarJogo.setEnabled(false);
-    }
-    
-    public void disableDesconectar(){
-        menuDesconectar.setEnabled(false);
     }
     
     public void disableDesistir(){
@@ -441,7 +428,6 @@ public class Board extends javax.swing.JFrame {
         menuConectar = new javax.swing.JMenuItem();
         menuHostLocal = new javax.swing.JMenuItem();
         menuConexaoLocal = new javax.swing.JMenuItem();
-        menuDesconectar = new javax.swing.JMenuItem();
         menuDebug = new javax.swing.JCheckBoxMenuItem();
         menuDesistir = new javax.swing.JMenuItem();
         menuRegras = new javax.swing.JMenu();
@@ -550,14 +536,6 @@ public class Board extends javax.swing.JFrame {
         });
         menuJogar.add(menuConexaoLocal);
 
-        menuDesconectar.setText("Desconectar");
-        menuDesconectar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                menuDesconectarActionPerformed(evt);
-            }
-        });
-        menuJogar.add(menuDesconectar);
-
         menuDebug.setText("Debug");
         menuDebug.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -642,7 +620,6 @@ public class Board extends javax.swing.JFrame {
         connect.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         connect.setVisible(true);
         enableButton();
-        enableDesconectar();
         enableDesistir();
         disableIniciarJogo();
         disableSerHost();
@@ -703,11 +680,6 @@ public class Board extends javax.swing.JFrame {
             disableButton();
         }
     }//GEN-LAST:event_menuDebugActionPerformed
-
-    private void menuDesconectarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuDesconectarActionPerformed
-
-        controller.cancel();
-    }//GEN-LAST:event_menuDesconectarActionPerformed
 
     private void menuHostLocalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuHostLocalActionPerformed
 
@@ -797,7 +769,6 @@ public class Board extends javax.swing.JFrame {
     private javax.swing.JMenuItem menuConectar;
     private javax.swing.JMenuItem menuConexaoLocal;
     private javax.swing.JCheckBoxMenuItem menuDebug;
-    private javax.swing.JMenuItem menuDesconectar;
     private javax.swing.JMenuItem menuDesistir;
     private javax.swing.JMenuItem menuHostLocal;
     private javax.swing.JMenuItem menuIniciarJogo;
