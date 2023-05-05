@@ -52,6 +52,7 @@ public class Board extends javax.swing.JFrame {
         disableButton();
         menuDesconectar.setEnabled(false);
         menuDesistir.setEnabled(false);
+        menuIniciarJogo.setEnabled(true);
     }
 
     private void initDado() {
