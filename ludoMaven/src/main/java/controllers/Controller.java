@@ -83,7 +83,10 @@ public class Controller {
             board.updateMove(move);
         }
         if (!move.isPlayAgain()) {
-            board.enableButton();
+            this.proximoJogador();
+            if(move.getPeao() != null || this.getPosicaoInicialDisponivel(board.getTabuleiro()) == null)
+                board.enableButton();
+            this.proximoJogador();
         } else {
             board.disableButton();
         }
@@ -100,13 +103,6 @@ public class Controller {
         if (!move.isPlayAgain() && isConnected()) {
             board.disableButton();
         }
-    }
-
-    /**
-     *
-     */
-    public void updateChat() {
-
     }
 
     /**

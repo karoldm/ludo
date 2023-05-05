@@ -42,6 +42,10 @@ public class Board extends javax.swing.JFrame {
         menuDesistir.setEnabled(false);
 
     }
+    
+    public ButtonSquare[][] getTabuleiro(){
+        return this.tabuleiro;
+    }
 
     public void resetGame() {
         boardGame.removeAll();
@@ -366,7 +370,6 @@ public class Board extends javax.swing.JFrame {
         tabuleiro[i][j].addPeao(peao);
         square.removePeao(peao);
         enableButton();
-        System.out.println(peao.toString() + " - " + peao.getPosicao());
 
         controller.sendMove(new Move(controller.getJogadorAtual(), dado, peao, oldPositions, jogarDeNovo));
         controller.setDado(0);
