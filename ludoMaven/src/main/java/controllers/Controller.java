@@ -199,7 +199,7 @@ public class Controller {
         JOptionPane.showMessageDialog(null, "Oponente conectado!");
         board.enableDesconectar();
         board.enableDesistir();
-        disableIniciarJogo().
+        board.disableIniciarJogo();
     }
 
     //retorna um numero aleatório entre 1 e 6 para simular o dado D6
