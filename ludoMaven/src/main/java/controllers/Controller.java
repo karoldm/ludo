@@ -63,6 +63,10 @@ public class Controller {
         }
         return controller;
     }
+    
+    public boolean isConnected(){
+        return connection.getSocket() != null;
+    }
 
     /**
      *
@@ -92,7 +96,7 @@ public class Controller {
      */
     public void sendMove(Move move) {
         connection.sendMove(move);
-        if (!move.isPlayAgain()) {
+        if (!move.isPlayAgain() && isConnected()) {
             board.disableButton();
         }
     }
@@ -397,5 +401,10 @@ public class Controller {
 
     public void desistir() {
         board.resetGame();
+    }
+    
+    public void proximoJogador(){
+        this.jogadorAtual = this.jogadorAtual == this.jogador1 ? this.jogador2 : this.jogador1;
+        System.out.println("trocou de jogador, jogador atual: " + this.jogadorAtual.toString());
     }
 }

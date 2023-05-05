@@ -56,7 +56,7 @@ public class Board extends javax.swing.JFrame {
 
     private void initDado() {
         try {
-            Image img = ImageIO.read(new FileInputStream("src\\main\\java\\assets\\dado-2.png"));
+            Image img = ImageIO.read(new FileInputStream("src\\main\\java\\assets\\dado-1.png"));
             Image newImage = img.getScaledInstance(40, 40, Image.SCALE_DEFAULT);
             dadoImages[0] = new ImageIcon(newImage);
 
@@ -241,14 +241,14 @@ public class Board extends javax.swing.JFrame {
         buttonJogarDado.setEnabled(true);
         buttonJogarSelecionado.setEnabled(true);
     }
-    
+
     /**
      *
      */
     public void enableDesistir() {
         menuDesistir.setEnabled(true);
     }
-    
+
     /**
      *
      */
@@ -262,6 +262,20 @@ public class Board extends javax.swing.JFrame {
     public void disableButton() {
         buttonJogarDado.setEnabled(false);
         buttonJogarSelecionado.setEnabled(true);
+    }
+
+    /**
+     *
+     */
+    public void disableSerHost() {
+        menuSerHost.setEnabled(false);
+    }
+
+    /**
+     *
+     */
+    public void disableConectar() {
+        menuConectar.setEnabled(false);
     }
 
     /**
@@ -284,6 +298,7 @@ public class Board extends javax.swing.JFrame {
             return;
         }
         if (peao.getCor() != controller.getJogadorAtual().getPeao(0).getCor()) {
+            System.out.println("voce esta tentando mover um peao inimigo!");
             return;
         }
 
@@ -314,14 +329,18 @@ public class Board extends javax.swing.JFrame {
         for (Peao p : currPeoes) {
             //Se existe um peão na nova posição e ele é do inimigo, movemos ele para a casa inicial
             if (p.getCor() != peao.getCor()) {
+                if (!controller.isConnected()) {
+                    controller.proximoJogador();
+                }
                 controller.move(p, 0);
-//                controller.proximoJogador();
                 int[] posicoesInciais = controller.getPosicaoInicialDisponivel(this.tabuleiro);
                 int m = posicoesInciais[0];
                 int n = posicoesInciais[1];
                 tabuleiro[m][n].addPeao(p);
                 tabuleiro[i][j].removePeao(p);
-//                controller.proximoJogador();
+                if (!controller.isConnected()) {
+                    controller.proximoJogador();
+                }
                 break;
             }
         }
@@ -333,6 +352,14 @@ public class Board extends javax.swing.JFrame {
         controller.sendMove(new Move(controller.getJogadorAtual(), dado, peao, oldPositions, jogarDeNovo));
         controller.setDado(0);
         controller.setBoard(this);
+
+        if (!controller.isConnected()) {
+            if (!jogarDeNovo) {
+                System.out.println("trocar jogador dentro de mover peao");
+                controller.proximoJogador();
+            }
+            enableButton();
+        }
 
         if (jogarDeNovo) {
             jogarDeNovo = false;
@@ -376,6 +403,7 @@ public class Board extends javax.swing.JFrame {
         dadoImage = new javax.swing.JButton();
         menuBar = new javax.swing.JMenuBar();
         menuJogar = new javax.swing.JMenu();
+        menuIniciarJogo = new javax.swing.JMenuItem();
         menuSerHost = new javax.swing.JMenuItem();
         menuConectar = new javax.swing.JMenuItem();
         menuHostLocal = new javax.swing.JMenuItem();
@@ -448,6 +476,14 @@ public class Board extends javax.swing.JFrame {
         menuBar.setPreferredSize(new java.awt.Dimension(95, 20));
 
         menuJogar.setText("Jogar");
+
+        menuIniciarJogo.setText("Iniciar Jogo");
+        menuIniciarJogo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuIniciarJogoActionPerformed(evt);
+            }
+        });
+        menuJogar.add(menuIniciarJogo);
 
         menuSerHost.setText("Ser host");
         menuSerHost.addActionListener(new java.awt.event.ActionListener() {
@@ -587,12 +623,20 @@ public class Board extends javax.swing.JFrame {
         controller.jogarDado();
         textJogadas.setText(textJogadas.getText() + "\nJogador " + controller.getJogadorAtual().toString() + ": " + controller.getDado());
         dadoImage.setIcon(dadoImages[controller.getDado() - 1]);
+
         if (controller.getDado() == 6) {
             jogarDeNovo = true;
             disableButton();
         } else {
             controller.sendMove(new Move(controller.getJogadorAtual(), controller.getInformation(), null, null, jogarDeNovo));
-            disableButton();
+            if (!controller.isConnected()) {
+                if (controller.getPosicaoInicialDisponivel(tabuleiro) != null) {
+                    disableButton();
+                } else {
+                    System.out.println("trocar jogador dentro de jogar dado");
+                    controller.proximoJogador();
+                }
+            }
         }
     }//GEN-LAST:event_buttonJogarDadoActionPerformed
 
@@ -652,6 +696,12 @@ public class Board extends javax.swing.JFrame {
         controller.sendMove(new Move(controller.getJogadorAtual(), controller.getInformation(), null, null, jogarDeNovo, true));
         JOptionPane.showMessageDialog(this, "Você desistiu do jogo!");
     }//GEN-LAST:event_menuDesistirActionPerformed
+
+    private void menuIniciarJogoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuIniciarJogoActionPerformed
+        disableSerHost();
+        disableConectar();
+        enableButton();
+    }//GEN-LAST:event_menuIniciarJogoActionPerformed
 
     /**
      * @param args the command line arguments
@@ -715,6 +765,7 @@ public class Board extends javax.swing.JFrame {
     private javax.swing.JMenuItem menuDesconectar;
     private javax.swing.JMenuItem menuDesistir;
     private javax.swing.JMenuItem menuHostLocal;
+    private javax.swing.JMenuItem menuIniciarJogo;
     private javax.swing.JMenu menuJogar;
     private javax.swing.JMenu menuRegras;
     private javax.swing.JMenuItem menuSerHost;
