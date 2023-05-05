@@ -233,7 +233,14 @@ public class Board extends javax.swing.JFrame {
             this.dispose();
         }
     }
-
+    
+    /**
+     *@param dado
+     */
+    public void updateDado(int dado){
+        dadoImage.setIcon(dadoImages[dado - 1]);
+    }
+    
     /**
      *
      */
@@ -626,7 +633,7 @@ public class Board extends javax.swing.JFrame {
     private void buttonJogarDadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonJogarDadoActionPerformed
         controller.jogarDado();
         textJogadas.setText(textJogadas.getText() + "\nJogador " + controller.getJogadorAtual().toString() + ": " + controller.getDado());
-        dadoImage.setIcon(dadoImages[controller.getDado() - 1]);
+        updateDado(controller.getDado());
 
         if (controller.getDado() == 6) {
             jogarDeNovo = true;

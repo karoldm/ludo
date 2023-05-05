@@ -88,6 +88,7 @@ public class Controller {
             board.disableButton();
         }
         board.updateChat(String.valueOf(move.getDado().getDado()));
+        board.updateDado(move.getDado().getDado());
     }
 
     /**
