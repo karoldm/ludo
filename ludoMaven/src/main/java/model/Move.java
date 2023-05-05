@@ -12,8 +12,6 @@ public class Move implements Serializable {
     private Dado dado;
     private Peao peaoAtual;
     private int[] oldPosition;
-    private boolean jogador1;
-    private boolean jogador2;
     private boolean playAgain;
     private boolean jogadorDesistiu = false;
 
@@ -24,6 +22,7 @@ public class Move implements Serializable {
      * @param dado
      * @param peao
      * @param oldPosition
+     * @param playAgain
      */
     public Move(Jogador jogador, Dado dado, Peao peao, int[] oldPosition, boolean playAgain) {
         this.jogador = jogador;

@@ -7,7 +7,7 @@ public class Square implements Serializable {
 
     //Peões ocupando esse quadrado do tabuleiro
     //Mais de um peao pode estar nessa casa se eles forem do mesmo jogador
-    private ArrayList<Peao> peoes = new ArrayList<>();
+    private final ArrayList<Peao> peoes = new ArrayList<>();
 
     /**
      *

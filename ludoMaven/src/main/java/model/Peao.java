@@ -1,6 +1,7 @@
 package model;
 
 import java.io.FileInputStream;
+import java.io.IOException;
 import java.io.Serializable;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
@@ -47,7 +48,7 @@ public class Peao implements Serializable {
                 case 3 ->
                     this.icon = new ImageIcon(ImageIO.read(new FileInputStream("src\\main\\java\\assets\\peao-verde.png")));
             }
-        } catch (Exception ex) {
+        } catch (IOException ex) {
             System.out.println(ex);
         }
 
