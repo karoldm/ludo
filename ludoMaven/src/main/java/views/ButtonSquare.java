@@ -83,6 +83,7 @@ public class ButtonSquare extends JButton implements Serializable {
 
     public void setDefaultIcon(ImageIcon defaultIcon) {
         this.defaultIcon = defaultIcon;
+        this.setIcon(defaultIcon);
     }
    
 }
