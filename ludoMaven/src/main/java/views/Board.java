@@ -241,14 +241,14 @@ public class Board extends javax.swing.JFrame {
             this.dispose();
         }
     }
-    
+
     /**
-     *@param dado
+     * @param dado
      */
-    public void updateDado(int dado){
+    public void updateDado(int dado) {
         dadoImage.setIcon(dadoImages[dado - 1]);
     }
-    
+
     /**
      *
      */
@@ -293,30 +293,30 @@ public class Board extends javax.swing.JFrame {
         menuConectar.setEnabled(false);
     }
 
-    public void disableIniciarJogo(){
+    public void disableIniciarJogo() {
         menuIniciarJogo.setEnabled(false);
     }
-    
-    public void disableDesconectar(){
+
+    public void disableDesconectar() {
         menuDesconectar.setEnabled(false);
     }
-    
-    public void disableDesistir(){
+
+    public void disableDesistir() {
         menuDesistir.setEnabled(false);
     }
-    
-    public void enableIniciarJogo(){
+
+    public void enableIniciarJogo() {
         menuIniciarJogo.setEnabled(true);
     }
-    
-    public void enableSerHost(){
+
+    public void enableSerHost() {
         menuSerHost.setEnabled(true);
     }
-    
-    public void enableConectar(){
+
+    public void enableConectar() {
         menuConectar.setEnabled(true);
     }
-    
+
     /**
      *
      * @param texto
@@ -440,15 +440,17 @@ public class Board extends javax.swing.JFrame {
         buttonJogarSelecionado = new javax.swing.JButton();
         dadoImage = new javax.swing.JButton();
         menuBar = new javax.swing.JMenuBar();
-        menuJogar = new javax.swing.JMenu();
-        menuIniciarJogo = new javax.swing.JMenuItem();
+        menuJogo = new javax.swing.JMenu();
+        menuDesistir = new javax.swing.JMenuItem();
+        menuDebug = new javax.swing.JCheckBoxMenuItem();
+        menuMultiplayer = new javax.swing.JMenu();
         menuSerHost = new javax.swing.JMenuItem();
         menuConectar = new javax.swing.JMenuItem();
+        menuDesconectar = new javax.swing.JMenuItem();
+        menuLocal = new javax.swing.JMenu();
+        menuIniciarJogo = new javax.swing.JMenuItem();
         menuHostLocal = new javax.swing.JMenuItem();
         menuConexaoLocal = new javax.swing.JMenuItem();
-        menuDesconectar = new javax.swing.JMenuItem();
-        menuDebug = new javax.swing.JCheckBoxMenuItem();
-        menuDesistir = new javax.swing.JMenuItem();
         menuRegras = new javax.swing.JMenu();
         menuVerRegras = new javax.swing.JMenuItem();
 
@@ -513,63 +515,7 @@ public class Board extends javax.swing.JFrame {
 
         menuBar.setPreferredSize(new java.awt.Dimension(95, 20));
 
-        menuJogar.setText("Jogar");
-
-        menuIniciarJogo.setText("Iniciar Jogo");
-        menuIniciarJogo.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                menuIniciarJogoActionPerformed(evt);
-            }
-        });
-        menuJogar.add(menuIniciarJogo);
-
-        menuSerHost.setText("Ser host");
-        menuSerHost.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                menuSerHostActionPerformed(evt);
-            }
-        });
-        menuJogar.add(menuSerHost);
-
-        menuConectar.setText("Conectar");
-        menuConectar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                menuConectarActionPerformed(evt);
-            }
-        });
-        menuJogar.add(menuConectar);
-
-        menuHostLocal.setText("Host local");
-        menuHostLocal.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                menuHostLocalActionPerformed(evt);
-            }
-        });
-        menuJogar.add(menuHostLocal);
-
-        menuConexaoLocal.setText("Conexão local");
-        menuConexaoLocal.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                menuConexaoLocalActionPerformed(evt);
-            }
-        });
-        menuJogar.add(menuConexaoLocal);
-
-        menuDesconectar.setText("Desconectar");
-        menuDesconectar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                menuDesconectarActionPerformed(evt);
-            }
-        });
-        menuJogar.add(menuDesconectar);
-
-        menuDebug.setText("Debug");
-        menuDebug.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                menuDebugActionPerformed(evt);
-            }
-        });
-        menuJogar.add(menuDebug);
+        menuJogo.setText("Jogo");
 
         menuDesistir.setText("Desistir");
         menuDesistir.addActionListener(new java.awt.event.ActionListener() {
@@ -577,9 +523,73 @@ public class Board extends javax.swing.JFrame {
                 menuDesistirActionPerformed(evt);
             }
         });
-        menuJogar.add(menuDesistir);
+        menuJogo.add(menuDesistir);
 
-        menuBar.add(menuJogar);
+        menuDebug.setText("Debug");
+        menuDebug.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuDebugActionPerformed(evt);
+            }
+        });
+        menuJogo.add(menuDebug);
+
+        menuBar.add(menuJogo);
+
+        menuMultiplayer.setText("Multiplayer");
+
+        menuSerHost.setText("Ser host");
+        menuSerHost.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuSerHostActionPerformed(evt);
+            }
+        });
+        menuMultiplayer.add(menuSerHost);
+
+        menuConectar.setText("Conectar");
+        menuConectar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuConectarActionPerformed(evt);
+            }
+        });
+        menuMultiplayer.add(menuConectar);
+
+        menuDesconectar.setText("Desconectar");
+        menuDesconectar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuDesconectarActionPerformed(evt);
+            }
+        });
+        menuMultiplayer.add(menuDesconectar);
+
+        menuBar.add(menuMultiplayer);
+
+        menuLocal.setText("Local");
+
+        menuIniciarJogo.setText("Iniciar Jogo");
+        menuIniciarJogo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuIniciarJogoActionPerformed(evt);
+            }
+        });
+        menuLocal.add(menuIniciarJogo);
+
+        menuHostLocal.setText("Host local");
+        menuHostLocal.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuHostLocalActionPerformed(evt);
+            }
+        });
+        menuLocal.add(menuHostLocal);
+
+        menuConexaoLocal.setText("Conexão local");
+        menuConexaoLocal.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuConexaoLocalActionPerformed(evt);
+            }
+        });
+        menuLocal.add(menuConexaoLocal);
+
+        menuBar.add(menuLocal);
 
         menuRegras.setText("Regras");
 
@@ -673,7 +683,7 @@ public class Board extends javax.swing.JFrame {
             if (!controller.isConnected()) {
                 if (controller.getPosicaoInicialDisponivel(tabuleiro) != null) {
                     disableButton();
-                } else if(!jogarDeNovo) {
+                } else if (!jogarDeNovo) {
                     controller.proximoJogador();
                 }
             }
@@ -806,7 +816,9 @@ public class Board extends javax.swing.JFrame {
     private javax.swing.JMenuItem menuDesistir;
     private javax.swing.JMenuItem menuHostLocal;
     private javax.swing.JMenuItem menuIniciarJogo;
-    private javax.swing.JMenu menuJogar;
+    private javax.swing.JMenu menuJogo;
+    private javax.swing.JMenu menuLocal;
+    private javax.swing.JMenu menuMultiplayer;
     private javax.swing.JMenu menuRegras;
     private javax.swing.JMenuItem menuSerHost;
     private javax.swing.JMenuItem menuVerRegras;
