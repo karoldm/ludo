@@ -181,12 +181,7 @@ public class Controller {
         return false;
     }
 
-    /**
-     *
-     */
-//    public void proximoJogador() {
-//        this.jogadorAtual = this.jogadorAtual == jogador1 ? jogador2 : jogador1;
-//    }
+
     /**
      *
      */
@@ -406,6 +401,5 @@ public class Controller {
     
     public void proximoJogador(){
         this.jogadorAtual = this.jogadorAtual == this.jogador1 ? this.jogador2 : this.jogador1;
-        System.out.println("trocou de jogador, jogador atual: " + this.jogadorAtual.toString());
     }
 }

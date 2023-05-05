@@ -38,30 +38,6 @@
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="menuConectarActionPerformed"/>
               </Events>
             </MenuItem>
-            <MenuItem class="javax.swing.JMenuItem" name="menuHostLocal">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="Host local"/>
-              </Properties>
-              <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="menuHostLocalActionPerformed"/>
-              </Events>
-            </MenuItem>
-            <MenuItem class="javax.swing.JMenuItem" name="menuConexaoLocal">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="Conex&#xe3;o local"/>
-              </Properties>
-              <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="menuConexaoLocalActionPerformed"/>
-              </Events>
-            </MenuItem>
-            <MenuItem class="javax.swing.JCheckBoxMenuItem" name="menuDebug">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="Debug"/>
-              </Properties>
-              <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="menuDebugActionPerformed"/>
-              </Events>
-            </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="menuDesistir">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Desistir"/>
@@ -127,8 +103,6 @@
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
                   <Component id="scrollPaneJogadas" max="32767" attributes="0"/>
-                  <Component id="spinnerSelecaoNumero" max="32767" attributes="0"/>
-                  <Component id="buttonJogarSelecionado" alignment="0" max="32767" attributes="0"/>
                   <Group type="102" alignment="0" attributes="0">
                       <Component id="buttonJogarDado" pref="0" max="32767" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
@@ -144,17 +118,12 @@
           <Group type="102" attributes="0">
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" attributes="0">
-                      <Component id="scrollPaneJogadas" min="-2" pref="426" max="-2" attributes="0"/>
+                      <Component id="scrollPaneJogadas" max="32767" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                          <Component id="dadoImage" max="32767" attributes="0"/>
-                          <Component id="buttonJogarDado" pref="0" max="32767" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="buttonJogarDado" alignment="1" min="-2" pref="40" max="-2" attributes="0"/>
+                          <Component id="dadoImage" alignment="1" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Component id="spinnerSelecaoNumero" min="-2" pref="30" max="-2" attributes="0"/>
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Component id="buttonJogarSelecionado" min="-2" pref="40" max="-2" attributes="0"/>
-                      <EmptySpace min="0" pref="32" max="32767" attributes="0"/>
                   </Group>
                   <Component id="boardGame" pref="586" max="32767" attributes="0"/>
               </Group>
@@ -246,16 +215,6 @@
         </Component>
       </SubComponents>
     </Container>
-    <Component class="javax.swing.JSpinner" name="spinnerSelecaoNumero">
-    </Component>
-    <Component class="javax.swing.JButton" name="buttonJogarSelecionado">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="Jogar n&#xfa;mero selecionado"/>
-      </Properties>
-      <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="buttonJogarSelecionadoActionPerformed"/>
-      </Events>
-    </Component>
     <Component class="javax.swing.JButton" name="dadoImage">
       <Properties>
         <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
