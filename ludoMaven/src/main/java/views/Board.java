@@ -56,7 +56,7 @@ public class Board extends javax.swing.JFrame {
 
     private void initDado() {
         try {
-            Image img = ImageIO.read(new FileInputStream("src\\main\\java\\assets\\dado-1.png"));
+            Image img = ImageIO.read(new FileInputStream("src\\main\\java\\assets\\dado-2.png"));
             Image newImage = img.getScaledInstance(40, 40, Image.SCALE_DEFAULT);
             dadoImages[0] = new ImageIcon(newImage);
 
@@ -278,6 +278,10 @@ public class Board extends javax.swing.JFrame {
         menuConectar.setEnabled(false);
     }
 
+    public void disableIniciarJogo(){
+        menuIniciarJogo.setEnabled(false);
+    }
+    
     /**
      *
      * @param texto
@@ -355,7 +359,6 @@ public class Board extends javax.swing.JFrame {
 
         if (!controller.isConnected()) {
             if (!jogarDeNovo) {
-                System.out.println("trocar jogador dentro de mover peao");
                 controller.proximoJogador();
             }
             enableButton();
@@ -611,6 +614,7 @@ public class Board extends javax.swing.JFrame {
         enableButton();
         enableDesconectar();
         enableDesistir();
+        disableIniciarJogo();
     }//GEN-LAST:event_menuConectarActionPerformed
 
     private void menuVerRegrasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuVerRegrasActionPerformed
@@ -632,8 +636,7 @@ public class Board extends javax.swing.JFrame {
             if (!controller.isConnected()) {
                 if (controller.getPosicaoInicialDisponivel(tabuleiro) != null) {
                     disableButton();
-                } else {
-                    System.out.println("trocar jogador dentro de jogar dado");
+                } else if(!jogarDeNovo) {
                     controller.proximoJogador();
                 }
             }
