@@ -5,7 +5,6 @@ import model.Peao;
 import connection.Connection;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
-import java.util.ArrayList;
 import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -13,7 +12,6 @@ import java.util.random.RandomGenerator;
 import javax.swing.JOptionPane;
 import model.Dado;
 import model.Move;
-import model.Square;
 import utils.PosicoesPeaoAzul;
 import utils.PosicoesPeaoVerde;
 import views.Board;
@@ -65,6 +63,10 @@ public class Controller {
         }
         return controller;
     }
+    
+    public boolean isConnected(){
+        return connection.getSocket() != null;
+    }
 
     /**
      *
@@ -72,7 +74,7 @@ public class Controller {
      */
     public void updateMove(Move move) {
         if (move.isJogadorDesistiu()) {
-            desistir();
+            this.desistir();
             JOptionPane.showMessageDialog(board, "Seu inimigo desistiu do Jogo!");
             board.disableButton();
             return;
@@ -81,11 +83,15 @@ public class Controller {
             board.updateMove(move);
         }
         if (!move.isPlayAgain()) {
-            board.enableButton();
+            this.proximoJogador();
+            if(move.getPeao() != null || this.getPosicaoInicialDisponivel(board.getTabuleiro()) == null)
+                board.enableButton();
+            this.proximoJogador();
         } else {
             board.disableButton();
         }
         board.updateChat(String.valueOf(move.getDado().getDado()));
+        board.updateDado(move.getDado().getDado());
     }
 
     /**
@@ -94,16 +100,9 @@ public class Controller {
      */
     public void sendMove(Move move) {
         connection.sendMove(move);
-        if (!move.isPlayAgain()) {
+        if (!move.isPlayAgain() && isConnected()) {
             board.disableButton();
         }
-    }
-
-    /**
-     *
-     */
-    public void updateChat() {
-
     }
 
     /**
@@ -195,6 +194,10 @@ public class Controller {
         this.thread = new Thread(this.connection);
         this.thread.start();
         JOptionPane.showMessageDialog(null, "Oponente conectado!");
+        board.enableDesistir();
+        board.disableIniciarJogo();
+        board.disableConectar();
+        board.disableSerHost();
     }
 
     //retorna um numero aleatório entre 1 e 6 para simular o dado D6
@@ -391,11 +394,18 @@ public class Controller {
         if (jogadorAtual.todosOsPeoesNoFim()) {
             String message = "Vencedor: " + jogadorAtual.toString();
             JOptionPane.showMessageDialog(null, message);
+            board.resetGame();
         }
 
     }
 
     public void desistir() {
         board.resetGame();
+        this.cancel();
+    }
+    
+    public void proximoJogador(){
+        this.jogadorAtual = this.jogadorAtual == this.jogador1 ? this.jogador2 : this.jogador1;
+        System.out.println("trocou de jogador, jogador atual: " + this.jogadorAtual.toString());
     }
 }

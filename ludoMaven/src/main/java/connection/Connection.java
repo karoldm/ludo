@@ -119,9 +119,11 @@ public class Connection implements Runnable {
      */
     public void sendMove(Move move) {
         try {
-            ObjectOutputStream out = new ObjectOutputStream(this.socket.getOutputStream());
-            out.writeObject(move);
-            System.out.println("Movimento enviado");
+            if (this.socket != null) {
+                ObjectOutputStream out = new ObjectOutputStream(this.socket.getOutputStream());
+                out.writeObject(move);
+                System.out.println("Movimento enviado");
+            }
         } catch (IOException ex) {
             Logger.getLogger(Connection.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -184,6 +186,10 @@ public class Connection implements Runnable {
      */
     public void cancelHost() {
         this.hostThread.interrupt();
+    }
+
+    public Socket getSocket() {
+        return socket;
     }
 
 }
