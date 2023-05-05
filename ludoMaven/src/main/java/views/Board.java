@@ -50,9 +50,11 @@ public class Board extends javax.swing.JFrame {
         initPawns();
         initDado();
         disableButton();
-        menuDesconectar.setEnabled(false);
-        menuDesistir.setEnabled(false);
-        menuIniciarJogo.setEnabled(true);
+        disableDesconectar();
+        disableDesistir();
+        enableIniciarJogo();
+        enableSerHost();
+        enableConectar();
     }
 
     private void initDado() {
@@ -288,6 +290,26 @@ public class Board extends javax.swing.JFrame {
 
     public void disableIniciarJogo(){
         menuIniciarJogo.setEnabled(false);
+    }
+    
+    public void disableDesconectar(){
+        menuDesconectar.setEnabled(false);
+    }
+    
+    public void disableDesistir(){
+        menuDesistir.setEnabled(false);
+    }
+    
+    public void enableIniciarJogo(){
+        menuIniciarJogo.setEnabled(true);
+    }
+    
+    public void enableSerHost(){
+        menuSerHost.setEnabled(true);
+    }
+    
+    public void enableConectar(){
+        menuConectar.setEnabled(true);
     }
     
     /**
@@ -623,6 +645,8 @@ public class Board extends javax.swing.JFrame {
         enableDesconectar();
         enableDesistir();
         disableIniciarJogo();
+        disableSerHost();
+        disableConectar();
     }//GEN-LAST:event_menuConectarActionPerformed
 
     private void menuVerRegrasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuVerRegrasActionPerformed

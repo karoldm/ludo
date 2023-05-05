@@ -74,7 +74,7 @@ public class Controller {
      */
     public void updateMove(Move move) {
         if (move.isJogadorDesistiu()) {
-            desistir();
+            this.desistir();
             JOptionPane.showMessageDialog(board, "Seu inimigo desistiu do Jogo!");
             board.disableButton();
             return;
@@ -201,6 +201,8 @@ public class Controller {
         board.enableDesconectar();
         board.enableDesistir();
         board.disableIniciarJogo();
+        board.disableConectar();
+        board.disableSerHost();
     }
 
     //retorna um numero aleatório entre 1 e 6 para simular o dado D6
@@ -403,6 +405,7 @@ public class Controller {
 
     public void desistir() {
         board.resetGame();
+        this.cancel();
     }
     
     public void proximoJogador(){
