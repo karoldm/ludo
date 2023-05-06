@@ -573,7 +573,13 @@ public class Board extends javax.swing.JFrame {
 
     private void buttonJogarDadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonJogarDadoActionPerformed
         controller.jogarDado();
-        textJogadas.setText(textJogadas.getText() + "\nJogador " + controller.getJogadorAtual().toString() + ": " + controller.getDado());
+        if(controller.isConnected()){
+            textJogadas.setText(textJogadas.getText() + "\nSua jogada: " + controller.getDado());
+        }
+        else{
+            textJogadas.setText(textJogadas.getText() + "\nJogada do " + controller.getJogadorAtual().toString() + ": " + controller.getDado());
+        }
+        
         updateDado(controller.getDado());
 
         if (controller.getDado() == 6) {

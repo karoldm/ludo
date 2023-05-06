@@ -93,13 +93,15 @@ public class Controller {
             this.proximoJogador();
         } else {
             board.disableButton();
+            board.updateChat(String.valueOf(move.getDado().getDado()));
         }
         // if move.getPeao() == null, o jogador rolou o dado, mas não moveu o peão
         // nesse caso, atualizamos o chat e o icone do dado
         if(move.getPeao() == null){
             board.updateChat(String.valueOf(move.getDado().getDado()));
-            board.updateDado(move.getDado().getDado());
         }
+        
+        board.updateDado(move.getDado().getDado());
     }
 
     /**
@@ -263,6 +265,8 @@ public class Controller {
      */
     public void checarPosicao(Peao p) {
         int novaPosicao = p.getPosicao() + dado.getDado();
+        System.out.println("antiga: " + p.getPosicao());
+        System.out.println("nova: " + novaPosicao);
         //Se o jogador passou da casa final, ele deve voltar
         //Só pode chegar na casa final se tirar o número exato no dado para parar nela
         if (novaPosicao > 57) {
