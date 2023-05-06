@@ -166,6 +166,7 @@ public class Connection implements Runnable {
     public void disconnect() {
         try {
             this.socket.close();
+            this.socket = null;
         } catch (IOException ex) {
             Logger.getLogger(Connection.class
                     .getName()).log(Level.SEVERE, null, ex);
@@ -185,7 +186,9 @@ public class Connection implements Runnable {
      * Mata a thread do host
      */
     public void cancelHost() {
-        this.hostThread.interrupt();
+        if(this.hostThread != null){
+            this.hostThread.interrupt();
+        }
     }
 
     public Socket getSocket() {

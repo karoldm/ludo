@@ -50,10 +50,15 @@ public class Board extends javax.swing.JFrame {
         initPawns();
         initDado();
         disableButton();
+        controller.setBoard(this);
         disableDesistir();
         enableIniciarJogo();
         enableSerHost();
         enableConectar();
+    }
+    
+    public void resetChat(){
+        textJogadas.setText("");
     }
 
     private void initDado() {
@@ -602,6 +607,7 @@ public class Board extends javax.swing.JFrame {
             controller.desistir();
             controller.sendMove(new Move(controller.getJogadorAtual(), controller.getInformation(), null, null, jogarDeNovo, true));
             JOptionPane.showMessageDialog(this, "Você desistiu do jogo!");
+            controller.cancel();
         }
     }//GEN-LAST:event_menuDesistirActionPerformed
 
