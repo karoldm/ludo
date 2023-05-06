@@ -40,13 +40,13 @@ public class Peao implements Serializable {
         try {
             switch (cor) {
                 case 0 ->
-                    this.icon = new ImageIcon(ImageIO.read(new FileInputStream("src\\main\\java\\assets\\peao-vermelho.png")));
+                    this.icon = new ImageIcon(ImageIO.read(getClass().getResourceAsStream("/peao-vermelho.png")));
                 case 1 ->
-                    this.icon = new ImageIcon(ImageIO.read(new FileInputStream("src\\main\\java\\assets\\peao-amarelo.png")));
+                    this.icon = new ImageIcon(ImageIO.read(getClass().getResourceAsStream("/peao-amarelo.png")));
                 case 2 ->
-                    this.icon = new ImageIcon(ImageIO.read(new FileInputStream("src\\main\\java\\assets\\peao-azul.png")));
+                    this.icon = new ImageIcon(ImageIO.read(getClass().getResourceAsStream("/peao-azul.png")));
                 case 3 ->
-                    this.icon = new ImageIcon(ImageIO.read(new FileInputStream("src\\main\\java\\assets\\peao-verde.png")));
+                    this.icon = new ImageIcon(ImageIO.read(getClass().getResourceAsStream("/peao-verde.png")));
             }
         } catch (IOException ex) {
             System.out.println(ex);

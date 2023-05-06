@@ -12,8 +12,8 @@ import java.util.random.RandomGenerator;
 import javax.swing.JOptionPane;
 import model.Dado;
 import model.Move;
-import utils.PosicoesPeaoAzul;
-import utils.PosicoesPeaoVerde;
+import utils.PosicoesPeaoVermelho;
+import utils.PosicoesPeaoAmarelo;
 import views.Board;
 import views.ButtonSquare;
 
@@ -26,13 +26,13 @@ public class Controller {
     private final Jogador jogador1 = new Jogador(
             1,
             4,
-            new PosicoesPeaoAzul(),
+            new PosicoesPeaoVermelho(),
             "Jogador 1",
             (byte) 0);
     private final Jogador jogador2 = new Jogador(
             10,
             13,
-            new PosicoesPeaoVerde(),
+            new PosicoesPeaoAmarelo(),
             "Jogador 2",
             (byte) 1);
     private Dado dado = new Dado();
@@ -63,9 +63,9 @@ public class Controller {
         }
         return controller;
     }
-    
-    public boolean isConnected(){
-        return connection.getSocket() != null;
+
+    public boolean isConnected() {
+        return connection == null || connection.getSocket() != null;
     }
 
     /**
@@ -77,6 +77,7 @@ public class Controller {
             this.desistir();
             JOptionPane.showMessageDialog(board, "Seu inimigo desistiu do Jogo!");
             board.disableButton();
+            this.cancel();
             return;
         }
         // if move.getPeao() != null, o jogador moveu o peão 
@@ -88,28 +89,33 @@ public class Controller {
             this.proximoJogador();
             // this.getPosicaoInicialDisponivel(board.getTabuleiro()) == null verifica
             // se todos os peões do jogador estão nas casas iniciais
-            if(move.getPeao() != null || this.getPosicaoInicialDisponivel(board.getTabuleiro()) == null)
+            if (move.getPeao() != null || this.getPosicaoInicialDisponivel(board.getTabuleiro()) == null) {
                 board.enableButton();
+            }
             this.proximoJogador();
         } else {
             board.disableButton();
+            board.updateChat(String.valueOf(move.getDado().getDado()));
         }
         // if move.getPeao() == null, o jogador rolou o dado, mas não moveu o peão
         // nesse caso, atualizamos o chat e o icone do dado
-        if(move.getPeao() == null){
+        if (move.getPeao() == null) {
             board.updateChat(String.valueOf(move.getDado().getDado()));
-            board.updateDado(move.getDado().getDado());
         }
+
+        board.updateDado(move.getDado().getDado());
     }
 
     /**
      *
      * @param move
-     */
+     */ 
     public void sendMove(Move move) {
-        connection.sendMove(move);
-        if (!move.isPlayAgain() && isConnected()) {
-            board.disableButton();
+        if (connection.getSocket() != null && !connection.getSocket().isClosed()) {
+            connection.sendMove(move);
+            if (!move.isPlayAgain() && isConnected()) {
+                board.disableButton();
+            }
         }
     }
 
@@ -135,6 +141,7 @@ public class Controller {
     public void cancel() {
         connection.cancelHost();
         connection.disconnect();
+        controller = new Controller();
     }
 
     /**
@@ -188,7 +195,6 @@ public class Controller {
         }
         return false;
     }
-
 
     /**
      *
@@ -404,10 +410,10 @@ public class Controller {
 
     public void desistir() {
         board.resetGame();
-        this.cancel();
+        board.resetChat();
     }
-    
-    public void proximoJogador(){
+
+    public void proximoJogador() {
         this.jogadorAtual = this.jogadorAtual == this.jogador1 ? this.jogador2 : this.jogador1;
     }
 }
