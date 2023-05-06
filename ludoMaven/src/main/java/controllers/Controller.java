@@ -89,7 +89,7 @@ public class Controller {
             this.proximoJogador();
             // this.getPosicaoInicialDisponivel(board.getTabuleiro()) == null verifica
             // se todos os peões do jogador estão nas casas iniciais
-            if (move.getPeao() != null || this.getPosicaoInicialDisponivel(board.getTabuleiro()) == null) {
+            if (move.getPeao() != null || this.getPosicaoInicialDisponivel(board.getTabuleiro()) == null || this.getJogadorAtual().todosOsPeoesNoInicioOuFim()) {
                 board.enableButton();
             }
             this.proximoJogador();

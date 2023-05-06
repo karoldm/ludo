@@ -592,7 +592,7 @@ public class Board extends javax.swing.JFrame {
         } else {
             controller.sendMove(new Move(controller.getJogadorAtual(), controller.getInformation(), null, null, jogarDeNovo));
             if (!controller.isConnected()) {
-                if (controller.getPosicaoInicialDisponivel(tabuleiro) != null) {
+                if (controller.getPosicaoInicialDisponivel(tabuleiro) != null && !controller.getJogadorAtual().todosOsPeoesNoInicioOuFim()) {
                     disableButton();
                 } else if (!jogarDeNovo) {
                     controller.proximoJogador();
