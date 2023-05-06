@@ -79,19 +79,27 @@ public class Controller {
             board.disableButton();
             return;
         }
+        // if move.getPeao() != null, o jogador moveu o peão 
+        // nesse caso, atualizamos o tabuleiro
         if (move.getPeao() != null) {
             board.updateMove(move);
         }
         if (!move.isPlayAgain()) {
             this.proximoJogador();
+            // this.getPosicaoInicialDisponivel(board.getTabuleiro()) == null verifica
+            // se todos os peões do jogador estão nas casas iniciais
             if(move.getPeao() != null || this.getPosicaoInicialDisponivel(board.getTabuleiro()) == null)
                 board.enableButton();
             this.proximoJogador();
         } else {
             board.disableButton();
         }
-        board.updateChat(String.valueOf(move.getDado().getDado()));
-        board.updateDado(move.getDado().getDado());
+        // if move.getPeao() == null, o jogador rolou o dado, mas não moveu o peão
+        // nesse caso, atualizamos o chat e o icone do dado
+        if(move.getPeao() == null){
+            board.updateChat(String.valueOf(move.getDado().getDado()));
+            board.updateDado(move.getDado().getDado());
+        }
     }
 
     /**

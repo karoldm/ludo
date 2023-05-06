@@ -40,8 +40,8 @@ public class Board extends javax.swing.JFrame {
         menuDesistir.setEnabled(false);
 
     }
-    
-    public ButtonSquare[][] getTabuleiro(){
+
+    public ButtonSquare[][] getTabuleiro() {
         return this.tabuleiro;
     }
 
@@ -592,9 +592,12 @@ public class Board extends javax.swing.JFrame {
     }//GEN-LAST:event_buttonJogarDadoActionPerformed
 
     private void menuDesistirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuDesistirActionPerformed
-        controller.desistir();
-        controller.sendMove(new Move(controller.getJogadorAtual(), controller.getInformation(), null, null, jogarDeNovo, true));
-        JOptionPane.showMessageDialog(this, "Você desistiu do jogo!");
+        int option = JOptionPane.showConfirmDialog(this, "Tem certeza que deseja desistir da partida?");
+        if (option == JOptionPane.YES_OPTION) {
+            controller.desistir();
+            controller.sendMove(new Move(controller.getJogadorAtual(), controller.getInformation(), null, null, jogarDeNovo, true));
+            JOptionPane.showMessageDialog(this, "Você desistiu do jogo!");
+        }
     }//GEN-LAST:event_menuDesistirActionPerformed
 
     private void menuConectarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuConectarActionPerformed
