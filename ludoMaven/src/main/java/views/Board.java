@@ -58,27 +58,27 @@ public class Board extends javax.swing.JFrame {
 
     private void initDado() {
         try {
-            Image img = ImageIO.read(new FileInputStream("src\\main\\java\\assets\\dado-2.png"));
+            Image img = ImageIO.read(getClass().getResourceAsStream("/dado-1.png"));
             Image newImage = img.getScaledInstance(40, 40, Image.SCALE_DEFAULT);
             dadoImages[0] = new ImageIcon(newImage);
 
-            img = ImageIO.read(new FileInputStream("src\\main\\java\\assets\\dado-2.png"));
+            img = ImageIO.read(getClass().getResourceAsStream("/dado-2.png"));
             newImage = img.getScaledInstance(40, 40, Image.SCALE_DEFAULT);
             dadoImages[1] = new ImageIcon(newImage);
 
-            img = ImageIO.read(new FileInputStream("src\\main\\java\\assets\\dado-3.png"));
+            img = ImageIO.read(getClass().getResourceAsStream("/dado-3.png"));
             newImage = img.getScaledInstance(40, 40, Image.SCALE_DEFAULT);
             dadoImages[2] = new ImageIcon(newImage);
 
-            img = ImageIO.read(new FileInputStream("src\\main\\java\\assets\\dado-4.png"));
+            img = ImageIO.read(getClass().getResourceAsStream("/dado-4.png"));
             newImage = img.getScaledInstance(40, 40, Image.SCALE_DEFAULT);
             dadoImages[3] = new ImageIcon(newImage);
 
-            img = ImageIO.read(new FileInputStream("src\\main\\java\\assets\\dado-5.png"));
+            img = ImageIO.read(getClass().getResourceAsStream("/dado-5.png"));
             newImage = img.getScaledInstance(40, 40, Image.SCALE_DEFAULT);
             dadoImages[4] = new ImageIcon(newImage);
 
-            img = ImageIO.read(new FileInputStream("src\\main\\java\\assets\\dado-6.png"));
+            img = ImageIO.read(getClass().getResourceAsStream("/dado-6.png"));
             newImage = img.getScaledInstance(40, 40, Image.SCALE_DEFAULT);
             dadoImages[5] = new ImageIcon(newImage);
 
@@ -201,28 +201,28 @@ public class Board extends javax.swing.JFrame {
         }
 
         try {
-            Image img = ImageIO.read(new FileInputStream("src\\main\\java\\assets\\center.png"));
+            Image img =ImageIO.read(getClass().getResourceAsStream("/center.png"));
             Image newImage = img.getScaledInstance(40, 40, Image.SCALE_DEFAULT);
             tabuleiro[7][7].setDefaultIcon(new ImageIcon(newImage));
             tabuleiro[7][7].setBorder(null);
 
-            img = ImageIO.read(new FileInputStream("src\\main\\java\\assets\\arrow-red.png"));
+            img = ImageIO.read(getClass().getResourceAsStream("/arrow-red.png"));
             newImage = img.getScaledInstance(45, 40, Image.SCALE_DEFAULT);
             tabuleiro[0][7].setDefaultIcon(new ImageIcon(newImage));
 
-            img = ImageIO.read(new FileInputStream("src\\main\\java\\assets\\arrow-blue.png"));
+            img = ImageIO.read(getClass().getResourceAsStream("/arrow-blue.png"));
             newImage = img.getScaledInstance(45, 40, Image.SCALE_DEFAULT);
             tabuleiro[7][14].setDefaultIcon(new ImageIcon(newImage));
 
-            img = ImageIO.read(new FileInputStream("src\\main\\java\\assets\\arrow-green.png"));
+            img = ImageIO.read(getClass().getResourceAsStream("/arrow-green.png"));
             newImage = img.getScaledInstance(45, 40, Image.SCALE_DEFAULT);
             tabuleiro[7][0].setDefaultIcon(new ImageIcon(newImage));
 
-            img = ImageIO.read(new FileInputStream("src\\main\\java\\assets\\arrow-yellow.png"));
+            img = ImageIO.read(getClass().getResourceAsStream("/arrow-yellow.png"));
             newImage = img.getScaledInstance(45, 40, Image.SCALE_DEFAULT);
             tabuleiro[14][7].setIcon(new ImageIcon(newImage));
 
-            img = ImageIO.read(new FileInputStream("src\\main\\java\\assets\\star.png"));
+            img = ImageIO.read(getClass().getResourceAsStream("/star.png"));
             newImage = img.getScaledInstance(30, 30, Image.SCALE_DEFAULT);
             tabuleiro[6][2].setDefaultIcon(new ImageIcon(newImage));
             tabuleiro[2][8].setDefaultIcon(new ImageIcon(newImage));
