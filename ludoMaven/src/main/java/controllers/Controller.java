@@ -12,8 +12,8 @@ import java.util.random.RandomGenerator;
 import javax.swing.JOptionPane;
 import model.Dado;
 import model.Move;
-import utils.PosicoesPeaoAzul;
-import utils.PosicoesPeaoVerde;
+import utils.PosicoesPeaoVermelho;
+import utils.PosicoesPeaoAmarelo;
 import views.Board;
 import views.ButtonSquare;
 
@@ -26,13 +26,13 @@ public class Controller {
     private final Jogador jogador1 = new Jogador(
             1,
             4,
-            new PosicoesPeaoAzul(),
+            new PosicoesPeaoVermelho(),
             "Jogador 1",
             (byte) 0);
     private final Jogador jogador2 = new Jogador(
             10,
             13,
-            new PosicoesPeaoVerde(),
+            new PosicoesPeaoAmarelo(),
             "Jogador 2",
             (byte) 1);
     private Dado dado = new Dado();
@@ -265,8 +265,6 @@ public class Controller {
      */
     public void checarPosicao(Peao p) {
         int novaPosicao = p.getPosicao() + dado.getDado();
-        System.out.println("antiga: " + p.getPosicao());
-        System.out.println("nova: " + novaPosicao);
         //Se o jogador passou da casa final, ele deve voltar
         //Só pode chegar na casa final se tirar o número exato no dado para parar nela
         if (novaPosicao > 57) {

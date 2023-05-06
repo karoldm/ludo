@@ -8,7 +8,6 @@ import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.net.InetAddress;
 import java.util.ArrayList;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
